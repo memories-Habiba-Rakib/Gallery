@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="LATA & RAKIB — Our beautiful memories."
+    >
+
+    <title>LATA & RAKIB ❤️</title>
+
+    <link
+        rel="stylesheet"
+        href="assets/css/style.css"
+    >
+</head>
+
+<body>
+
+    <!-- =========================================
+         BACKGROUND EFFECTS
+    ========================================== -->
+
+    <div class="background-effects">
+
+        <div class="pink-orb orb-one"></div>
+        <div class="pink-orb orb-two"></div>
+        <div class="pink-orb orb-three"></div>
+
+        <div class="particles" id="particles"></div>
+
+        <div class="rose-petals" id="rosePetals"></div>
+
+    </div>
+
+
+    <!-- =========================================
+         HEADER
+    ========================================== -->
+
+    <header class="main-header">
+
+        <div class="header-inner">
+
+            <a
+                href="index.html"
+                class="logo"
+            >
+                <span class="logo-heart">♥</span>
+                LATA & RAKIB
+            </a>
+
+
+            <nav class="main-nav">
+
+                <a
+                    href="#home"
+                    class="nav-link active"
+                >
+                    Home
+                </a>
+
+                <a
+                    href="#memories"
+                    class="nav-link"
+                >
+                    Memories
+                </a>
+                 <a
+                    href="diary.html"
+                    class="nav-link"
+                >
+                    E-Diary
+                </a>
+                <a
+                    href="admin/login.html"
+                    class="nav-link admin-link"
+                >
+                    Admin
+                </a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =========================================
+         HERO
+    ========================================== -->
+
+    <main>
+
+        <section
+            id="home"
+            class="hero-section"
+        >
+
+            <div class="hero-content">
+
+                <div class="hero-badge">
+                    ♥ OUR BEAUTIFUL STORY ♥
+                </div>
+
+
+                <h1 class="hero-title">
+
+                    Two Hearts.
+                    <br>
+
+                    <span>
+                        One Beautiful Story.
+                    </span>
+
+                </h1>
+
+
+                <div
+                    id="typewriter"
+                    class="typewriter"
+                >
+                    Every picture tells a story...
+                </div>
+
+
+                <p class="hero-description">
+
+                    Welcome to our little world of
+                    love, memories and beautiful moments.
+
+                    <br>
+
+                    Every photo holds a special memory
+                    close to our hearts. ❤️
+
+                </p>
+
+
+                <a
+                    href="#memories"
+                    class="hero-button"
+                >
+                    <span>Explore Our Memories</span>
+                    <span class="button-heart">♥</span>
+                </a>
+
+            </div>
+
+
+
+            <!-- =====================================
+                 3D HEART
+            ====================================== -->
+
+            <div class="hero-visual">
+
+                <div class="heart-orbit orbit-one"></div>
+                <div class="heart-orbit orbit-two"></div>
+                <div class="heart-orbit orbit-three"></div>
+
+
+                <div class="heart-scene">
+
+                    <div class="heart-3d">
+
+                        <div class="heart-face heart-front">
+                            ♥
+                        </div>
+
+                        <div class="heart-face heart-back">
+                            ♥
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="mini-heart mini-heart-one">
+                    ♥
+                </div>
+
+                <div class="mini-heart mini-heart-two">
+                    ♥
+                </div>
+
+                <div class="mini-heart mini-heart-three">
+                    ♥
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =========================================
+             MEMORIES / GALLERY
+        ========================================== -->
+
+        <section
+            id="memories"
+            class="gallery-section"
+        >
+
+            <div class="section-heading">
+
+                <div class="section-kicker">
+                    OUR MEMORIES
+                </div>
+
+                <h2>
+                    Moments We Treasure
+                </h2>
+
+                <p>
+                    Every photo is a little piece
+                    of our beautiful story. ❤️
+                </p>
+
+            </div>
+
+
+
+            <!-- SEARCH -->
+
+            <div class="gallery-tools">
+
+                <div class="search-wrapper">
+
+                    <span class="search-icon">
+                        🔍
+                    </span>
+
+                    <input
+                        type="search"
+                        id="searchInput"
+                        placeholder="Search memories..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+            </div>
+
+
+
+            <!-- LOADING -->
+
+            <div
+                id="loading"
+                class="gallery-state loading-state"
+            >
+
+                <div class="loading-heart">
+                    ♥
+                </div>
+
+                <p>
+                    Loading our beautiful memories...
+                </p>
+
+            </div>
+
+
+
+            <!-- ERROR -->
+
+            <div
+                id="error"
+                class="gallery-state error-state"
+                style="display:none;"
+            >
+
+                <div class="state-icon">
+                    💔
+                </div>
+
+                <h3>
+                    Something went wrong
+                </h3>
+
+                <p id="errorMessage">
+                    Unable to load memories.
+                </p>
+
+                <button
+                    onclick="location.reload()"
+                    class="retry-button"
+                >
+                    Try Again
+                </button>
+
+            </div>
+
+
+
+            <!-- EMPTY -->
+
+            <div
+                id="noPhotos"
+                class="gallery-state empty-state"
+                style="display:none;"
+            >
+
+                <div class="state-icon">
+                    🌹
+                </div>
+
+                <h3>
+                    No Memories Yet
+                </h3>
+
+                <p>
+                    Our beautiful memories will appear here.
+                </p>
+
+            </div>
+
+
+
+            <!-- GALLERY -->
+
+            <div
+                id="gallery"
+                class="photo-grid"
+            ></div>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================================
+         FOOTER
+    ========================================== -->
+
+    <footer class="main-footer">
+
+        <div class="footer-heart">
+            ♥
+        </div>
+
+        <div class="footer-title">
+            LATA & RAKIB
+        </div>
+
+        <p>
+            Made with love, memories & forever. ❤️
+        </p>
+
+        <div class="footer-line"></div>
+
+        <small>
+            © <span id="currentYear"></span>
+            LATA & RAKIB
+        </small>
+
+    </footer>
+
+
+
+    <!-- =========================================
+         BIRTHDAY OVERLAY
+    ========================================== -->
+
+    <div
+        id="birthdayOverlay"
+        class="birthday-overlay"
+        aria-hidden="true"
+    >
+
+        <!-- Background Glow -->
+
+        <div class="birthday-glow glow-one"></div>
+        <div class="birthday-glow glow-two"></div>
+        <div class="birthday-glow glow-three"></div>
+
+
+        <!-- Effects -->
+
+        <div
+            id="birthdayConfetti"
+            class="birthday-confetti"
+        ></div>
+
+        <div
+            id="birthdayBalloons"
+            class="birthday-balloons"
+        ></div>
+
+        <div
+            id="birthdayHearts"
+            class="birthday-hearts"
+        ></div>
+
+        <div
+            id="birthdayPetals"
+            class="birthday-petals"
+        ></div>
+
+        <div
+            id="birthdaySparkles"
+            class="birthday-sparkles"
+        ></div>
+
+
+
+        <!-- =====================================
+             BIRTHDAY CONTENT
+        ====================================== -->
+
+        <div class="birthday-content">
+
+
+            <!-- =================================
+                 COUNTDOWN BOX
+            ================================== -->
+
+            <div
+                id="birthdayCountdownBox"
+                class="birthday-countdown-box"
+            >
+
+                <div class="birthday-small-title">
+                    ✨ SOMETHING SPECIAL IS COMING ✨
+                </div>
+
+
+                <div class="birthday-countdown-title">
+                    COUNTDOWN TO
+                </div>
+
+
+                <div
+                    id="countdownName"
+                    class="birthday-countdown-name"
+                >
+                    HABIBA ❤️
+                </div>
+
+
+                <div
+                    id="birthdayCountdown"
+                    class="birthday-countdown"
+                >
+
+                    <div class="count-box">
+
+                        <span id="countDays">
+                            00
+                        </span>
+
+                        <small>
+                            DAYS
+                        </small>
+
+                    </div>
+
+
+                    <div class="count-box">
+
+                        <span id="countHours">
+                            00
+                        </span>
+
+                        <small>
+                            HOURS
+                        </small>
+
+                    </div>
+
+
+                    <div class="count-box">
+
+                        <span id="countMinutes">
+                            00
+                        </span>
+
+                        <small>
+                            MINUTES
+                        </small>
+
+                    </div>
+
+
+                    <div class="count-box">
+
+                        <span id="countSeconds">
+                            00
+                        </span>
+
+                        <small>
+                            SECONDS
+                        </small>
+
+                    </div>
+
+                </div>
+
+
+                <div class="countdown-love-text">
+                    Until a very special day... ❤️
+                </div>
+
+
+                <button
+                    id="countdownClose"
+                    class="birthday-close"
+                    type="button"
+                >
+                    Enter Our Memories ♥
+                </button>
+
+            </div>
+
+
+
+            <!-- =================================
+                 BIRTHDAY MESSAGE
+            ================================== -->
+
+            <div
+                id="birthdayMessageBox"
+                class="birthday-message-box"
+            >
+
+                <div class="birthday-small-title">
+                    ✨ TODAY IS A SPECIAL DAY ✨
+                </div>
+
+
+                <div class="birthday-message">
+                    HAPPY BIRTHDAY
+                </div>
+
+
+                <div
+                    id="birthdayName"
+                    class="birthday-name"
+                >
+                    HABIBA
+                </div>
+
+
+                <div
+                    id="birthdaySubtitle"
+                    class="birthday-subtitle"
+                >
+                    May your day be filled with love,
+                    happiness & beautiful memories. ❤️
+                </div>
+
+
+                <div class="birthday-hearts-line">
+                    ♥　♥　♥　♥　♥
+                </div>
+
+
+                <button
+                    id="birthdayClose"
+                    class="birthday-close"
+                    type="button"
+                >
+                    Enter Our Memories ♥
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =========================================
+         SCRIPTS
+    ========================================== -->
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+    <script
+        src="assets/js/supabase.js"
+    ></script>
+
+    <script
+        src="assets/js/gallery.js"
+    ></script>
+
+    <script
+        src="assets/js/birthday.js"
+    ></script>
+
+
+
+    <!-- =========================================
+         EXTRA PAGE SCRIPTS
+    ========================================== -->
+
+    <script>
+
+        /* Current Year */
+
+        const yearElement =
+            document.getElementById("currentYear");
+
+        if (yearElement) {
+
+            yearElement.textContent =
+                new Date().getFullYear();
+
+        }
+
+
+
+        /* Typewriter */
+
+        const typewriter =
+            document.getElementById("typewriter");
+
+        const typewriterTexts = [
+            "Every picture tells a story...",
+            "Every memory is a treasure...",
+            "Two hearts, countless memories...",
+            "Our story lives in every moment. ❤️"
+        ];
+
+        let typeIndex = 0;
+        let characterIndex = 0;
+        let deleting = false;
+
+
+        function typeWriterEffect() {
+
+            if (!typewriter) return;
+
+
+            const currentText =
+                typewriterTexts[typeIndex];
+
+
+            if (!deleting) {
+
+                typewriter.textContent =
+                    currentText.substring(
+                        0,
+                        characterIndex + 1
+                    );
+
+                characterIndex++;
+
+
+                if (
+                    characterIndex ===
+                    currentText.length
+                ) {
+
+                    deleting = true;
+
+                    setTimeout(
+                        typeWriterEffect,
+                        1800
+                    );
+
+                    return;
+                }
+
+            } else {
+
+                typewriter.textContent =
+                    currentText.substring(
+                        0,
+                        characterIndex - 1
+                    );
+
+                characterIndex--;
+
+
+                if (characterIndex === 0) {
+
+                    deleting = false;
+
+                    typeIndex =
+                        (typeIndex + 1) %
+                        typewriterTexts.length;
+
+                }
+
+            }
+
+
+            setTimeout(
+                typeWriterEffect,
+                deleting ? 45 : 80
+            );
+        }
+
+
+        typeWriterEffect();
+
+
+
+        /* =====================================
+           FLOATING PARTICLES
+        ====================================== */
+
+        const particles =
+            document.getElementById("particles");
+
+
+        if (particles) {
+
+            for (let i = 0; i < 35; i++) {
+
+                const particle =
+                    document.createElement("span");
+
+                particle.className =
+                    "particle";
+
+                particle.style.left =
+                    Math.random() * 100 + "%";
+
+                particle.style.top =
+                    Math.random() * 100 + "%";
+
+                particle.style.animationDelay =
+                    Math.random() * 8 + "s";
+
+                particle.style.animationDuration =
+                    5 + Math.random() * 8 + "s";
+
+                particles.appendChild(
+                    particle
+                );
+            }
+        }
+
+
+
+        /* =====================================
+           FLOATING ROSE PETALS
+        ====================================== */
+
+        const rosePetals =
+            document.getElementById("rosePetals");
+
+
+        if (rosePetals) {
+
+            for (let i = 0; i < 22; i++) {
+
+                const petal =
+                    document.createElement("span");
+
+                petal.textContent = "🌸";
+
+                petal.className =
+                    "floating-petal";
+
+                petal.style.left =
+                    Math.random() * 100 + "%";
+
+                petal.style.animationDelay =
+                    Math.random() * 10 + "s";
+
+                petal.style.animationDuration =
+                    9 + Math.random() * 9 + "s";
+
+                rosePetals.appendChild(
+                    petal
+                );
+            }
+        }
+
+    </script>
+
+</body>
+</html>

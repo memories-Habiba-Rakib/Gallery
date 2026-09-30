@@ -1,0 +1,1346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="A beautiful memory from LATA & RAKIB"
+    >
+
+    <title>Memory — LATA & RAKIB</title>
+
+
+    <!-- Main Website CSS -->
+    <link
+        rel="stylesheet"
+        href="assets/css/style.css"
+    >
+
+
+    <style>
+
+        /* =====================================================
+           PHOTO DETAIL PAGE
+           ===================================================== */
+
+        .photo-detail-page {
+            min-height: 100vh;
+
+            padding:
+                110px
+                20px
+                70px;
+
+            position: relative;
+
+            overflow: hidden;
+        }
+
+
+        /* Background glow */
+
+        .photo-detail-page::before {
+            content: "";
+
+            position: fixed;
+
+            width: 500px;
+            height: 500px;
+
+            top: 10%;
+            left: -180px;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(255, 80, 140, 0.15),
+                    transparent 70%
+                );
+
+            pointer-events: none;
+        }
+
+
+        .photo-detail-page::after {
+            content: "";
+
+            position: fixed;
+
+            width: 500px;
+            height: 500px;
+
+            right: -180px;
+            bottom: 5%;
+
+            border-radius: 50%;
+
+            background:
+                radial-gradient(
+                    circle,
+                    rgba(214, 51, 108, 0.12),
+                    transparent 70%
+                );
+
+            pointer-events: none;
+        }
+
+
+        /* Container */
+
+        .photo-detail-container {
+            width: min(
+                1100px,
+                calc(100% - 20px)
+            );
+
+            margin: 0 auto;
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        /* Back button */
+
+        .photo-back {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            margin-bottom: 22px;
+
+            padding: 10px 16px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(255, 255, 255, 0.75);
+
+            border: 1px solid
+                rgba(214, 51, 108, 0.15);
+
+            color: #b51f55;
+
+            font-size: 14px;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            backdrop-filter: blur(12px);
+
+            transition:
+                transform .2s ease,
+                background .2s ease;
+        }
+
+
+        .photo-back:hover {
+            transform: translateX(-4px);
+
+            background: #fff;
+        }
+
+
+        /* Main card */
+
+        .photo-detail-card {
+            background:
+                rgba(255, 255, 255, 0.82);
+
+            border:
+                1px solid
+                rgba(255, 255, 255, 0.9);
+
+            border-radius: 28px;
+
+            padding: 20px;
+
+            box-shadow:
+                0 25px 70px
+                rgba(91, 27, 51, 0.13);
+
+            backdrop-filter: blur(18px);
+
+            overflow: hidden;
+        }
+
+
+        /* Image */
+
+        .photo-main-image-wrapper {
+            width: 100%;
+
+            min-height: 300px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff0f5,
+                    #ffe3ec
+                );
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            position: relative;
+        }
+
+
+        .photo-main-image {
+            display: block;
+
+            width: 100%;
+
+            max-height: 700px;
+
+            object-fit: contain;
+
+            border-radius: 18px;
+
+            transition:
+                transform .35s ease;
+        }
+
+
+        .photo-main-image:hover {
+            transform: scale(1.01);
+        }
+
+
+        /* Featured */
+
+        .photo-featured-badge {
+            position: absolute;
+
+            top: 18px;
+            left: 18px;
+
+            padding: 8px 13px;
+
+            border-radius: 999px;
+
+            background:
+                rgba(214, 51, 108, 0.95);
+
+            color: #fff;
+
+            font-size: 12px;
+
+            font-weight: 800;
+
+            box-shadow:
+                0 8px 20px
+                rgba(214, 51, 108, 0.25);
+
+            z-index: 2;
+        }
+
+
+        /* Information */
+
+        .photo-info {
+            padding:
+                28px
+                8px
+                8px;
+        }
+
+
+        .photo-title {
+            margin: 0;
+
+            font-size:
+                clamp(28px, 4vw, 44px);
+
+            line-height: 1.15;
+
+            font-weight: 850;
+
+            color: #351722;
+
+            letter-spacing: -0.7px;
+        }
+
+
+        .photo-description {
+            margin-top: 14px;
+
+            max-width: 800px;
+
+            color: #765763;
+
+            font-size: 16px;
+
+            line-height: 1.8;
+
+            white-space: pre-line;
+        }
+
+
+        /* Meta */
+
+        .photo-meta {
+            display: flex;
+
+            align-items: center;
+
+            flex-wrap: wrap;
+
+            gap: 10px;
+
+            margin-top: 22px;
+        }
+
+
+        .photo-meta-item {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            padding: 8px 12px;
+
+            border-radius: 999px;
+
+            background: #fff5f8;
+
+            border:
+                1px solid
+                #f1d8e0;
+
+            color: #765763;
+
+            font-size: 12px;
+
+            font-weight: 650;
+        }
+
+
+        /* Loading */
+
+        .photo-loading {
+            min-height: 500px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            color: #765763;
+        }
+
+
+        .photo-loader {
+            width: 45px;
+            height: 45px;
+
+            border:
+                4px solid
+                #f7d6e1;
+
+            border-top-color:
+                #d6336c;
+
+            border-radius: 50%;
+
+            animation:
+                photoSpin .8s linear infinite;
+
+            margin-bottom: 15px;
+        }
+
+
+        @keyframes photoSpin {
+
+            to {
+                transform: rotate(360deg);
+            }
+
+        }
+
+
+        /* Error */
+
+        .photo-error {
+            text-align: center;
+
+            padding: 80px 20px;
+
+            color: #765763;
+        }
+
+
+        .photo-error-icon {
+            font-size: 50px;
+
+            margin-bottom: 15px;
+        }
+
+
+        .photo-error h2 {
+            color: #351722;
+
+            margin-bottom: 8px;
+        }
+
+
+        .photo-error p {
+            margin-bottom: 22px;
+        }
+
+
+        .photo-error-btn {
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 11px 20px;
+
+            border-radius: 999px;
+
+            background: #d6336c;
+
+            color: #fff;
+
+            font-weight: 700;
+
+            text-decoration: none;
+        }
+
+
+        /* Bottom */
+
+        .photo-bottom {
+            margin-top: 22px;
+
+            text-align: center;
+
+            color: #9b7d87;
+
+            font-size: 13px;
+        }
+
+
+        /* Mobile */
+
+        @media (max-width: 700px) {
+
+            .photo-detail-page {
+                padding:
+                    90px
+                    12px
+                    45px;
+            }
+
+
+            .photo-detail-container {
+                width: 100%;
+            }
+
+
+            .photo-detail-card {
+                padding: 10px;
+
+                border-radius: 20px;
+            }
+
+
+            .photo-main-image-wrapper {
+                min-height: 220px;
+
+                border-radius: 14px;
+            }
+
+
+            .photo-main-image {
+                border-radius: 12px;
+
+                max-height: 520px;
+            }
+
+
+            .photo-featured-badge {
+                top: 12px;
+                left: 12px;
+            }
+
+
+            .photo-info {
+                padding:
+                    22px
+                    5px
+                    5px;
+            }
+
+
+            .photo-title {
+                font-size: 28px;
+            }
+
+
+            .photo-description {
+                font-size: 14px;
+
+                line-height: 1.7;
+            }
+
+
+            .photo-meta {
+                gap: 7px;
+            }
+
+
+            .photo-meta-item {
+                font-size: 11px;
+
+                padding: 7px 10px;
+            }
+
+        }
+
+
+        /* Reduced motion */
+
+        @media (prefers-reduced-motion: reduce) {
+
+            .photo-main-image,
+            .photo-back {
+                transition: none;
+            }
+
+            .photo-loader {
+                animation: none;
+            }
+
+        }
+        /* =====================================================
+   PHOTO IMAGE VISIBILITY FIX
+   ===================================================== */
+
+.photo-main-image-wrapper {
+    width: 100% !important;
+    min-height: 350px !important;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    background: #fff0f5 !important;
+
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+.photo-main-image {
+    display: block !important;
+
+    visibility: visible !important;
+    opacity: 1 !important;
+
+    width: auto !important;
+    max-width: 100% !important;
+
+    height: auto !important;
+    max-height: 700px !important;
+
+    min-width: 1px !important;
+    min-height: 1px !important;
+
+    object-fit: contain !important;
+
+    border-radius: 18px !important;
+
+    position: relative !important;
+    z-index: 5 !important;
+}
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         PAGE
+         ===================================================== -->
+
+    <main class="photo-detail-page">
+
+        <div class="photo-detail-container">
+
+
+            <!-- Back -->
+
+            <a
+                href="index.html#memories"
+                class="photo-back"
+            >
+                ← Back to Memories
+            </a>
+
+
+            <!-- =================================================
+                 LOADING
+                 ================================================= -->
+
+            <section
+                id="photoLoading"
+                class="photo-detail-card photo-loading"
+            >
+
+                <div class="photo-loader"></div>
+
+                <p>
+                    Loading memory...
+                </p>
+
+            </section>
+
+
+            <!-- =================================================
+                 ERROR
+                 ================================================= -->
+
+            <section
+                id="photoError"
+                class="photo-detail-card photo-error"
+                style="display:none;"
+            >
+
+                <div class="photo-error-icon">
+                    💔
+                </div>
+
+                <h2>
+                    Memory Not Found
+                </h2>
+
+                <p id="photoErrorMessage">
+                    This photo could not be loaded.
+                </p>
+
+                <a
+                    href="index.html#memories"
+                    class="photo-error-btn"
+                >
+                    ← Back to Memories
+                </a>
+
+            </section>
+
+
+            <!-- =================================================
+                 PHOTO
+                 ================================================= -->
+
+            <article
+                id="photoContent"
+                class="photo-detail-card"
+                style="display:none;"
+            >
+
+                <!-- Image -->
+
+                <div class="photo-main-image-wrapper">
+
+                    <span
+                        id="featuredBadge"
+                        class="photo-featured-badge"
+                        style="display:none;"
+                    >
+                        ♥ Featured Memory
+                    </span>
+
+
+                    <img
+                        id="photoImage"
+                        class="photo-main-image"
+                        src=""
+                        alt=""
+                    >
+
+                </div>
+
+
+                <!-- Information -->
+
+                <div class="photo-info">
+
+                    <h1
+                        id="photoTitle"
+                        class="photo-title"
+                    >
+                        Memory
+                    </h1>
+
+
+                    <p
+                        id="photoDescription"
+                        class="photo-description"
+                    ></p>
+
+
+                    <div
+                        id="photoMeta"
+                        class="photo-meta"
+                    >
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <div class="photo-bottom">
+                LATA & RAKIB ♥
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         SUPABASE
+         ===================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="assets/js/supabase.js"></script>
+
+
+    <!-- =====================================================
+         PHOTO SCRIPT
+         ===================================================== -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initializePhotoPage
+        );
+
+
+        async function initializePhotoPage() {
+
+            const loading =
+                document.getElementById("photoLoading");
+
+            const errorBox =
+                document.getElementById("photoError");
+
+            const content =
+                document.getElementById("photoContent");
+
+            const errorMessage =
+                document.getElementById("photoErrorMessage");
+
+
+            try {
+
+                /* ---------------------------------------------
+                   Get Photo ID
+                   --------------------------------------------- */
+
+                const params =
+                    new URLSearchParams(
+                        window.location.search
+                    );
+
+                const photoId =
+                    params.get("id");
+
+
+                if (!photoId) {
+
+                    throw new Error(
+                        "No photo ID was provided."
+                    );
+
+                }
+
+
+                /* ---------------------------------------------
+                   Get Photo
+                   --------------------------------------------- */
+
+                const {
+                    data: photo,
+                    error
+                } = await supabaseClient
+
+                    .from("photos")
+
+                    .select(`
+                        id,
+                        title,
+                        slug,
+                        description,
+                        category_id,
+                        thumbnail_url,
+                        preview_url,
+                        drive_url,
+                        alt_text,
+                        is_featured,
+                        sort_order,
+                        status,
+                        created_at
+                    `)
+
+                    .eq("id", photoId)
+
+                    .eq("status", "active")
+
+                    .single();
+
+
+                if (error) {
+
+                    console.error(
+                        "Photo query error:",
+                        error
+                    );
+
+                    throw new Error(
+                        "This photo could not be found."
+                    );
+
+                }
+
+
+                if (!photo) {
+
+                    throw new Error(
+                        "This photo does not exist."
+                    );
+
+                }
+
+
+/* ---------------------------------------------
+   Google Drive Image
+   --------------------------------------------- */
+
+const image = document.getElementById("photoImage");
+
+image.alt =
+    photo.alt_text ||
+    photo.title ||
+    "LATA & RAKIB memory";
+
+
+/* ---------------------------------------------
+   Extract Google Drive File ID
+   Supports multiple Drive URL formats
+   --------------------------------------------- */
+
+function extractDriveFileId(url) {
+
+    if (!url) return null;
+
+    const patterns = [
+
+        /* https://drive.google.com/file/d/FILE_ID/view */
+        /\/file\/d\/([a-zA-Z0-9_-]+)/,
+
+        /* https://drive.google.com/open?id=FILE_ID */
+        /[?&]id=([a-zA-Z0-9_-]+)/,
+
+        /* https://drive.google.com/uc?id=FILE_ID */
+        /\/uc\?.*id=([a-zA-Z0-9_-]+)/,
+
+        /* https://drive.google.com/thumbnail?id=FILE_ID */
+        /\/thumbnail\?.*id=([a-zA-Z0-9_-]+)/
+
+    ];
+
+    for (const pattern of patterns) {
+
+        const match = url.match(pattern);
+
+        if (match && match[1]) {
+            return match[1];
+        }
+
+    }
+
+    return null;
+}
+
+
+/* ---------------------------------------------
+   Find File ID
+   --------------------------------------------- */
+
+let driveFileId = null;
+
+
+/* First: drive_url */
+
+driveFileId =
+    extractDriveFileId(photo.drive_url);
+
+
+/* Second: preview_url */
+
+if (!driveFileId) {
+
+    driveFileId =
+        extractDriveFileId(photo.preview_url);
+
+}
+
+
+/* Third: thumbnail_url */
+
+if (!driveFileId) {
+
+    driveFileId =
+        extractDriveFileId(photo.thumbnail_url);
+
+}
+
+
+/* ---------------------------------------------
+   Create Image URLs
+   --------------------------------------------- */
+
+const imageUrls = [];
+
+
+if (driveFileId) {
+
+    imageUrls.push(
+        `https://drive.google.com/thumbnail?id=${driveFileId}&sz=w2000`
+    );
+
+    imageUrls.push(
+        `https://drive.google.com/thumbnail?id=${driveFileId}&sz=w1600`
+    );
+
+    imageUrls.push(
+        `https://drive.google.com/thumbnail?id=${driveFileId}&sz=w1200`
+    );
+
+    imageUrls.push(
+        `https://drive.google.com/uc?export=view&id=${driveFileId}`
+    );
+
+}
+
+
+/* Stored URLs as fallback */
+
+if (photo.preview_url) {
+
+    imageUrls.push(
+        photo.preview_url
+    );
+
+}
+
+if (photo.thumbnail_url) {
+
+    imageUrls.push(
+        photo.thumbnail_url
+    );
+
+}
+
+if (photo.drive_url) {
+
+    imageUrls.push(
+        photo.drive_url
+    );
+
+}
+
+
+/* Remove duplicate URLs */
+
+const uniqueImageUrls =
+    [...new Set(imageUrls.filter(Boolean))];
+
+
+console.log(
+    "Google Drive File ID:",
+    driveFileId
+);
+
+console.log(
+    "Image URLs:",
+    uniqueImageUrls
+);
+
+
+/* ---------------------------------------------
+   No URL
+   --------------------------------------------- */
+
+if (uniqueImageUrls.length === 0) {
+
+    throw new Error(
+        "No Google Drive image URL was found."
+    );
+
+}
+
+
+/* ---------------------------------------------
+   Load Images One By One
+   --------------------------------------------- */
+
+let currentImageIndex = 0;
+
+
+function loadNextImage() {
+
+    if (
+        currentImageIndex >=
+        uniqueImageUrls.length
+    ) {
+
+        image.style.display = "none";
+
+        showError(
+            "Google Drive image could not be loaded. Please make sure the file is shared as Anyone with the link → Viewer."
+        );
+
+        return;
+    }
+
+
+    const url =
+        uniqueImageUrls[currentImageIndex];
+
+
+    console.log(
+        `Trying image ${currentImageIndex + 1}:`,
+        url
+    );
+
+
+    currentImageIndex++;
+
+
+    image.src = url;
+
+}
+
+
+/* ---------------------------------------------
+   Image Loaded
+   --------------------------------------------- */
+
+image.onload = function() {
+
+    console.log(
+        "✅ Image loaded:",
+        this.src
+    );
+
+};
+
+
+/* ---------------------------------------------
+   Image Failed
+   --------------------------------------------- */
+
+image.onerror = function() {
+
+    console.warn(
+        "❌ Image failed:",
+        this.src
+    );
+
+    loadNextImage();
+
+};
+
+
+/* ---------------------------------------------
+   Start Loading
+   --------------------------------------------- */
+
+loadNextImage();
+
+
+                /* ---------------------------------------------
+                   Title
+                   --------------------------------------------- */
+
+                document.getElementById(
+                    "photoTitle"
+                ).textContent =
+                    photo.title ||
+                    "Beautiful Memory";
+
+
+                /* ---------------------------------------------
+                   Description
+                   --------------------------------------------- */
+
+                const description =
+                    document.getElementById(
+                        "photoDescription"
+                    );
+
+
+                if (photo.description) {
+
+                    description.textContent =
+                        photo.description;
+
+                    description.style.display =
+                        "block";
+
+                } else {
+
+                    description.style.display =
+                        "none";
+
+                }
+
+
+                /* ---------------------------------------------
+                   Featured
+                   --------------------------------------------- */
+
+                if (photo.is_featured) {
+
+                    document.getElementById(
+                        "featuredBadge"
+                    ).style.display =
+                        "block";
+
+                }
+
+
+                /* ---------------------------------------------
+                   Meta
+                   --------------------------------------------- */
+
+                const meta =
+                    document.getElementById(
+                        "photoMeta"
+                    );
+
+
+                meta.innerHTML = "";
+
+
+                if (photo.created_at) {
+
+                    const date =
+                        new Date(
+                            photo.created_at
+                        );
+
+
+                    meta.appendChild(
+                        createMetaItem(
+                            "📅",
+                            formatDate(date)
+                        )
+                    );
+
+                }
+
+
+                meta.appendChild(
+                    createMetaItem(
+                        "♥",
+                        "LATA & RAKIB"
+                    )
+                );
+
+
+                /* ---------------------------------------------
+                   Page Title
+                   --------------------------------------------- */
+
+                document.title =
+                    `${photo.title || "Memory"} — LATA & RAKIB`;
+
+
+                /* ---------------------------------------------
+                   Show Content
+                   --------------------------------------------- */
+
+                loading.style.display =
+                    "none";
+
+                content.style.display =
+                    "block";
+
+
+                /* ---------------------------------------------
+                   Record View
+                   --------------------------------------------- */
+
+                recordPhotoView(photo.id);
+
+
+            } catch (error) {
+
+                console.error(
+                    "Photo page error:",
+                    error
+                );
+
+                showError(
+                    error.message ||
+                    "Unable to load this memory."
+                );
+
+            }
+
+
+            /* ================================================
+               Show Error
+               ================================================ */
+
+            function showError(message) {
+
+                loading.style.display =
+                    "none";
+
+                content.style.display =
+                    "none";
+
+                errorBox.style.display =
+                    "block";
+
+                errorMessage.textContent =
+                    message;
+
+            }
+
+        }
+
+
+        /* =====================================================
+           CREATE META ITEM
+           ===================================================== */
+
+        function createMetaItem(icon, text) {
+
+            const item =
+                document.createElement("span");
+
+            item.className =
+                "photo-meta-item";
+
+
+            const iconElement =
+                document.createElement("span");
+
+            iconElement.textContent =
+                icon;
+
+
+            const textElement =
+                document.createElement("span");
+
+            textElement.textContent =
+                text;
+
+
+            item.appendChild(
+                iconElement
+            );
+
+            item.appendChild(
+                textElement
+            );
+
+
+            return item;
+
+        }
+
+
+        /* =====================================================
+           DATE FORMAT
+           ===================================================== */
+
+        function formatDate(date) {
+
+            return date.toLocaleDateString(
+                "en-US",
+                {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric"
+                }
+            );
+
+        }
+
+
+        /* =====================================================
+           RECORD PHOTO VIEW
+           ===================================================== */
+
+        async function recordPhotoView(photoId) {
+
+            try {
+
+                await supabaseClient
+                    .from("photo_views")
+                    .insert({
+                        photo_id: photoId
+                    });
+
+            } catch (error) {
+
+                /*
+                 View tracking failure should NOT
+                 prevent the photo from loading.
+                */
+
+                console.warn(
+                    "Could not record photo view:",
+                    error
+                );
+
+            }
+
+        }
+
+    </script>
+
+
+</body>
+</html>
