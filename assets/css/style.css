@@ -1,0 +1,3409 @@
+/* =====================================================
+   LATA & RAKIB
+   MAIN WEBSITE STYLE
+===================================================== */
+
+:root {
+
+    --pink-50: #fff7fa;
+    --pink-100: #ffeaf1;
+    --pink-200: #ffd2df;
+    --pink-300: #ffb0c6;
+    --pink-400: #ff82a5;
+    --pink-500: #ff5f8f;
+    --pink-600: #ed3972;
+    --pink-700: #c92358;
+
+    --rose-dark: #6e1635;
+
+    --white: #ffffff;
+
+    --text-dark: #4d1f31;
+    --text-light: #815466;
+
+    --glass: rgba(255,255,255,.52);
+    --glass-border: rgba(255,255,255,.72);
+
+    --shadow-soft:
+        0 20px 60px rgba(180, 50, 100, .12);
+
+    --shadow-pink:
+        0 20px 60px rgba(255, 75, 135, .22);
+
+    --radius-xl: 32px;
+    --radius-lg: 24px;
+    --radius-md: 18px;
+
+    --max-width: 1200px;
+}
+
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+body {
+
+    min-height: 100vh;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    color: var(--text-dark);
+
+    background:
+        radial-gradient(
+            circle at 10% 10%,
+            rgba(255, 182, 207, .55),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 90% 20%,
+            rgba(255, 210, 224, .55),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #fff8fb 0%,
+            #fff0f5 50%,
+            #ffeaf1 100%
+        );
+
+    overflow-x: hidden;
+}
+
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+button,
+input {
+    font: inherit;
+}
+
+
+button {
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   BACKGROUND
+===================================================== */
+
+.background-effects {
+
+    position: fixed;
+    inset: 0;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    z-index: -1;
+}
+
+
+.pink-orb {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    filter: blur(80px);
+
+    opacity: .45;
+
+    animation:
+        orbFloat 10s ease-in-out infinite;
+}
+
+
+.orb-one {
+
+    width: 330px;
+    height: 330px;
+
+    background: #ff9fbd;
+
+    left: -120px;
+    top: 15%;
+}
+
+
+.orb-two {
+
+    width: 420px;
+    height: 420px;
+
+    background: #ffd0df;
+
+    right: -160px;
+    top: 35%;
+
+    animation-delay: 2s;
+}
+
+
+.orb-three {
+
+    width: 280px;
+    height: 280px;
+
+    background: #ffb5cc;
+
+    left: 45%;
+    bottom: -140px;
+
+    animation-delay: 4s;
+}
+
+
+@keyframes orbFloat {
+
+    0%,
+    100% {
+        transform: translate3d(0,0,0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(30px,-35px,0) scale(1.08);
+    }
+}
+
+
+/* =====================================================
+   PARTICLES
+===================================================== */
+
+.particles {
+
+    position: absolute;
+    inset: 0;
+}
+
+
+.particle {
+
+    position: absolute;
+
+    width: 4px;
+    height: 4px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 100, 150, .4);
+
+    box-shadow:
+        0 0 12px rgba(255, 80, 140, .35);
+
+    animation:
+        particleFloat linear infinite;
+}
+
+
+@keyframes particleFloat {
+
+    0% {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    85% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-160px);
+    }
+}
+
+
+/* =====================================================
+   ROSE PETALS
+===================================================== */
+
+.rose-petals {
+    position: absolute;
+    inset: 0;
+}
+
+
+.floating-petal {
+
+    position: absolute;
+
+    font-size: 18px;
+
+    opacity: .35;
+
+    animation:
+        petalFall linear infinite;
+
+    transform-origin: center;
+}
+
+
+@keyframes petalFall {
+
+    0% {
+
+        transform:
+            translateY(-80px)
+            rotate(0deg);
+
+        opacity: 0;
+    }
+
+    10% {
+        opacity: .45;
+    }
+
+    90% {
+        opacity: .35;
+    }
+
+    100% {
+
+        transform:
+            translateY(110vh)
+            translateX(100px)
+            rotate(360deg);
+
+        opacity: 0;
+    }
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.main-header {
+
+    position: sticky;
+
+    top: 0;
+
+    z-index: 100;
+
+    padding: 14px 20px;
+
+    background:
+        rgba(255,255,255,.62);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.75);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+}
+
+
+.header-inner {
+
+    width: min(
+        var(--max-width),
+        100%
+    );
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+
+.logo {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    font-size: 20px;
+
+    font-weight: 900;
+
+    letter-spacing: 1px;
+
+    color: var(--rose-dark);
+}
+
+
+.logo-heart {
+
+    color: var(--pink-600);
+
+    font-size: 26px;
+
+    animation:
+        heartBeat 1.8s ease-in-out infinite;
+}
+
+
+@keyframes heartBeat {
+
+    0%,
+    100% {
+        transform: scale(1);
+    }
+
+    15% {
+        transform: scale(1.18);
+    }
+
+    30% {
+        transform: scale(1);
+    }
+
+    45% {
+        transform: scale(1.12);
+    }
+}
+
+
+.main-nav {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.nav-link {
+
+    padding: 10px 16px;
+
+    border-radius: 999px;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: var(--text-light);
+
+    transition:
+        .25s ease;
+}
+
+
+.nav-link:hover,
+.nav-link.active {
+
+    color: var(--pink-600);
+
+    background:
+        rgba(255, 111, 157, .1);
+}
+
+
+.admin-link {
+
+    border:
+        1px solid
+        rgba(237,57,114,.18);
+}
+
+
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero-section {
+
+    width: min(
+        var(--max-width),
+        100%
+    );
+
+    min-height: 690px;
+
+    margin: auto;
+
+    padding:
+        80px 24px
+        70px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    align-items: center;
+
+    gap: 50px;
+}
+
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+}
+
+
+.hero-badge {
+
+    display: inline-flex;
+
+    padding: 9px 16px;
+
+    border-radius: 999px;
+
+    background:
+        rgba(255,255,255,.62);
+
+    border:
+        1px solid
+        rgba(255,120,160,.2);
+
+    box-shadow:
+        0 10px 30px
+        rgba(230,50,100,.08);
+
+    color: var(--pink-600);
+
+    font-size: 12px;
+
+    font-weight: 800;
+
+    letter-spacing: 2px;
+}
+
+
+.hero-title {
+
+    margin-top: 25px;
+
+    font-size:
+        clamp(48px, 6vw, 82px);
+
+    line-height: .98;
+
+    letter-spacing: -3px;
+
+    font-weight: 950;
+
+    color: var(--rose-dark);
+}
+
+
+.hero-title span {
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff477f,
+            #ff8db0,
+            #c92358
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+}
+
+
+.typewriter {
+
+    min-height: 30px;
+
+    margin-top: 24px;
+
+    color: var(--pink-600);
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    letter-spacing: .5px;
+}
+
+
+.typewriter::after {
+
+    content: "|";
+
+    margin-left: 4px;
+
+    animation:
+        cursorBlink .7s infinite;
+}
+
+
+@keyframes cursorBlink {
+
+    0%,
+    50% {
+        opacity: 1;
+    }
+
+    51%,
+    100% {
+        opacity: 0;
+    }
+}
+
+
+.hero-description {
+
+    max-width: 590px;
+
+    margin-top: 18px;
+
+    color: var(--text-light);
+
+    font-size: 16px;
+
+    line-height: 1.9;
+}
+
+
+.hero-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-top: 30px;
+
+    padding: 15px 23px;
+
+    border-radius: 999px;
+
+    color: white;
+
+    font-size: 14px;
+
+    font-weight: 800;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff477f,
+            #e82d67
+        );
+
+    box-shadow:
+        0 16px 35px
+        rgba(232,45,103,.25);
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+
+.hero-button:hover {
+
+    transform:
+        translateY(-4px);
+
+    box-shadow:
+        0 22px 45px
+        rgba(232,45,103,.35);
+}
+
+
+.button-heart {
+
+    animation:
+        heartBeat 1.5s infinite;
+}
+
+
+/* =====================================================
+   3D HEART
+===================================================== */
+
+.hero-visual {
+
+    position: relative;
+
+    min-height: 520px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+}
+
+
+.heart-scene {
+
+    width: 300px;
+    height: 300px;
+
+    perspective: 900px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    position: relative;
+
+    z-index: 3;
+}
+
+
+.heart-3d {
+
+    position: relative;
+
+    width: 190px;
+    height: 190px;
+
+    transform-style: preserve-3d;
+
+    animation:
+        heart3DFloat
+        6s ease-in-out infinite,
+        heartRotate
+        12s linear infinite;
+}
+
+
+.heart-face {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    font-size: 185px;
+
+    line-height: 1;
+
+    color: #ff4c83;
+
+    text-shadow:
+        0 20px 30px rgba(190,30,80,.25),
+        0 0 30px rgba(255,70,130,.45);
+
+    -webkit-text-stroke:
+        1px rgba(255,255,255,.4);
+
+    backface-visibility: hidden;
+}
+
+
+.heart-back {
+
+    transform:
+        rotateY(180deg);
+}
+
+
+@keyframes heart3DFloat {
+
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotateY(0deg);
+    }
+
+    50% {
+        transform:
+            translateY(-22px)
+            rotateY(15deg);
+    }
+}
+
+
+@keyframes heartRotate {
+
+    0% {
+        filter:
+            drop-shadow(
+                0 30px 25px
+                rgba(190,30,80,.2)
+            );
+    }
+
+    50% {
+        filter:
+            drop-shadow(
+                0 45px 40px
+                rgba(255,50,120,.3)
+            );
+    }
+
+    100% {
+        filter:
+            drop-shadow(
+                0 30px 25px
+                rgba(190,30,80,.2)
+            );
+    }
+}
+
+
+/* =====================================================
+   HEART ORBITS
+===================================================== */
+
+.heart-orbit {
+
+    position: absolute;
+
+    border:
+        1px solid
+        rgba(255, 92, 143, .25);
+
+    border-radius: 50%;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    pointer-events: none;
+}
+
+
+.orbit-one {
+
+    width: 270px;
+    height: 270px;
+
+    animation:
+        orbitSpin 10s linear infinite;
+}
+
+
+.orbit-two {
+
+    width: 370px;
+    height: 170px;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(55deg);
+
+    animation:
+        orbitSpinReverse 14s linear infinite;
+}
+
+
+.orbit-three {
+
+    width: 430px;
+    height: 220px;
+
+    transform:
+        translate(-50%, -50%)
+        rotate(-35deg);
+
+    animation:
+        orbitSpin 18s linear infinite;
+}
+
+
+@keyframes orbitSpin {
+
+    from {
+        transform:
+            translate(-50%, -50%)
+            rotate(0deg);
+    }
+
+    to {
+        transform:
+            translate(-50%, -50%)
+            rotate(360deg);
+    }
+}
+
+
+@keyframes orbitSpinReverse {
+
+    from {
+        transform:
+            translate(-50%, -50%)
+            rotate(55deg);
+    }
+
+    to {
+        transform:
+            translate(-50%, -50%)
+            rotate(-305deg);
+    }
+}
+
+
+.mini-heart {
+
+    position: absolute;
+
+    color: var(--pink-500);
+
+    font-size: 24px;
+
+    z-index: 4;
+
+    text-shadow:
+        0 5px 15px
+        rgba(220,40,100,.25);
+
+    animation:
+        miniHeartFloat
+        4s ease-in-out infinite;
+}
+
+
+.mini-heart-one {
+
+    left: 15%;
+    top: 30%;
+}
+
+
+.mini-heart-two {
+
+    right: 10%;
+    top: 22%;
+
+    animation-delay: 1s;
+}
+
+
+.mini-heart-three {
+
+    right: 15%;
+    bottom: 20%;
+
+    animation-delay: 2s;
+}
+
+
+@keyframes miniHeartFloat {
+
+    0%,
+    100% {
+        transform:
+            translateY(0)
+            rotate(-10deg);
+    }
+
+    50% {
+        transform:
+            translateY(-18px)
+            rotate(10deg);
+    }
+}
+
+
+/* =====================================================
+   GALLERY
+===================================================== */
+
+.gallery-section {
+
+    width: min(
+        var(--max-width),
+        100%
+    );
+
+    margin: auto;
+
+    padding:
+        90px 24px
+        100px;
+}
+
+
+.section-heading {
+
+    text-align: center;
+
+    max-width: 700px;
+
+    margin:
+        0 auto
+        35px;
+}
+
+
+.section-kicker {
+
+    color: var(--pink-600);
+
+    font-size: 12px;
+
+    font-weight: 900;
+
+    letter-spacing: 3px;
+}
+
+
+.section-heading h2 {
+
+    margin-top: 10px;
+
+    font-size:
+        clamp(35px, 5vw, 54px);
+
+    line-height: 1.1;
+
+    color: var(--rose-dark);
+}
+
+
+.section-heading p {
+
+    margin-top: 12px;
+
+    color: var(--text-light);
+
+    line-height: 1.7;
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.gallery-tools {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-bottom: 35px;
+}
+
+
+.search-wrapper {
+
+    width: min(
+        520px,
+        100%
+    );
+
+    position: relative;
+}
+
+
+.search-icon {
+
+    position: absolute;
+
+    left: 17px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    opacity: .65;
+}
+
+
+.search-wrapper input {
+
+    width: 100%;
+
+    padding:
+        15px
+        18px
+        15px
+        47px;
+
+    border-radius: 999px;
+
+    border:
+        1px solid
+        rgba(230,60,110,.15);
+
+    outline: none;
+
+    color: var(--text-dark);
+
+    background:
+        rgba(255,255,255,.68);
+
+    box-shadow:
+        0 15px 40px
+        rgba(180,40,90,.07);
+
+    backdrop-filter:
+        blur(12px);
+
+    transition:
+        .25s ease;
+}
+
+
+.search-wrapper input:focus {
+
+    border-color:
+        rgba(237,57,114,.4);
+
+    box-shadow:
+        0 15px 40px
+        rgba(180,40,90,.13);
+}
+
+
+/* =====================================================
+   PHOTO GRID
+===================================================== */
+
+.photo-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 24px;
+}
+
+
+.photo-card {
+
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius:
+        var(--radius-lg);
+
+    background:
+        rgba(255,255,255,.65);
+
+    border:
+        1px solid
+        rgba(255,255,255,.75);
+
+    box-shadow:
+        var(--shadow-soft);
+
+    backdrop-filter:
+        blur(12px);
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+
+.photo-card:hover {
+
+    transform:
+        translateY(-8px);
+
+    box-shadow:
+        var(--shadow-pink);
+}
+
+
+.photo-card a {
+
+    display: block;
+}
+
+
+.photo-card-image {
+
+    width: 100%;
+
+    aspect-ratio: 4 / 3;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition:
+        transform .5s ease;
+}
+
+
+.photo-card:hover
+.photo-card-image {
+
+    transform:
+        scale(1.06);
+}
+
+
+.photo-card-overlay {
+
+    position: absolute;
+
+    inset: 0;
+
+    display: flex;
+
+    align-items: flex-end;
+
+    padding: 20px;
+
+    background:
+        linear-gradient(
+            transparent 35%,
+            rgba(40,5,18,.68)
+        );
+
+    opacity: 0;
+
+    transition:
+        opacity .3s ease;
+}
+
+
+.photo-card:hover
+.photo-card-overlay {
+
+    opacity: 1;
+}
+
+
+.photo-card-title {
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: 800;
+}
+
+
+/* =====================================================
+   GALLERY STATES
+===================================================== */
+
+.gallery-state {
+
+    text-align: center;
+
+    padding:
+        70px 20px;
+
+    color: var(--text-light);
+}
+
+
+.loading-heart {
+
+    font-size: 55px;
+
+    color: var(--pink-500);
+
+    animation:
+        heartBeat 1.3s infinite;
+}
+
+
+.loading-state p {
+
+    margin-top: 15px;
+}
+
+
+.state-icon {
+
+    font-size: 48px;
+}
+
+
+.gallery-state h3 {
+
+    margin-top: 15px;
+
+    color: var(--rose-dark);
+
+    font-size: 25px;
+}
+
+
+.gallery-state p {
+
+    margin-top: 8px;
+}
+
+
+.retry-button {
+
+    margin-top: 20px;
+
+    border: 0;
+
+    padding:
+        12px 20px;
+
+    border-radius: 999px;
+
+    color: white;
+
+    font-weight: 800;
+
+    background:
+        var(--pink-600);
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.main-footer {
+
+    text-align: center;
+
+    padding:
+        60px 20px;
+
+    background:
+        rgba(255,255,255,.48);
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.7);
+
+    backdrop-filter:
+        blur(15px);
+}
+
+
+.footer-heart {
+
+    color: var(--pink-500);
+
+    font-size: 35px;
+
+    animation:
+        heartBeat 1.7s infinite;
+}
+
+
+.footer-title {
+
+    margin-top: 8px;
+
+    color: var(--rose-dark);
+
+    font-size: 20px;
+
+    font-weight: 900;
+
+    letter-spacing: 2px;
+}
+
+
+.main-footer p {
+
+    margin-top: 8px;
+
+    color: var(--text-light);
+}
+
+
+.footer-line {
+
+    width: 70px;
+
+    height: 2px;
+
+    margin: 20px auto;
+
+    background:
+        var(--pink-300);
+}
+
+
+.main-footer small {
+
+    color:
+        rgba(80,30,50,.55);
+}
+
+
+/* =====================================================
+   BIRTHDAY OVERLAY
+===================================================== */
+
+.birthday-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    padding: 25px;
+
+    overflow: hidden;
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    background:
+        radial-gradient(
+            circle at 50% 40%,
+            rgba(255,120,170,.32),
+            transparent 35%
+        ),
+        linear-gradient(
+            135deg,
+            #4c0825,
+            #9e1f55,
+            #ff4f91,
+            #7e1745
+        );
+
+    transition:
+        opacity .5s ease,
+        visibility .5s ease;
+}
+
+
+.birthday-overlay.active {
+
+    opacity: 1;
+
+    visibility: visible;
+
+    pointer-events: auto;
+}
+
+
+/* =====================================================
+   BIRTHDAY GLOWS
+===================================================== */
+
+.birthday-glow {
+
+    position: absolute;
+
+    border-radius: 50%;
+
+    filter: blur(80px);
+
+    pointer-events: none;
+
+    opacity: .45;
+
+    animation:
+        birthdayGlowFloat
+        7s ease-in-out infinite;
+}
+
+
+.glow-one {
+
+    width: 380px;
+    height: 380px;
+
+    background: #ff73ad;
+
+    left: -100px;
+    top: -100px;
+}
+
+
+.glow-two {
+
+    width: 420px;
+    height: 420px;
+
+    background: #ffb6d1;
+
+    right: -140px;
+    bottom: -100px;
+
+    animation-delay: 2s;
+}
+
+
+.glow-three {
+
+    width: 260px;
+    height: 260px;
+
+    background: #ff3e80;
+
+    left: 45%;
+    top: 35%;
+
+    animation-delay: 4s;
+}
+
+
+@keyframes birthdayGlowFloat {
+
+    0%,
+    100% {
+        transform:
+            translate(0,0)
+            scale(1);
+    }
+
+    50% {
+        transform:
+            translate(30px,-30px)
+            scale(1.15);
+    }
+}
+
+
+/* =====================================================
+   BIRTHDAY CONTENT
+===================================================== */
+
+.birthday-content {
+
+    position: relative;
+
+    z-index: 20;
+
+    width: min(
+        900px,
+        100%
+    );
+
+    text-align: center;
+
+    color: white;
+}
+
+
+.birthday-small-title {
+
+    font-size:
+        clamp(11px, 2vw, 15px);
+
+    font-weight: 800;
+
+    letter-spacing: 3px;
+
+    color:
+        rgba(255,255,255,.9);
+
+    animation:
+        birthdayFadeUp
+        1s ease both;
+}
+
+
+.birthday-message-box {
+
+    display: none;
+}
+
+
+.birthday-message {
+
+    margin-top: 18px;
+
+    font-size:
+        clamp(24px, 5vw, 48px);
+
+    font-weight: 900;
+
+    letter-spacing: 4px;
+
+    text-shadow:
+        0 0 20px
+        rgba(255,255,255,.55);
+}
+
+
+.birthday-name {
+
+    margin-top: 5px;
+
+    font-size:
+        clamp(65px, 14vw, 150px);
+
+    line-height: .9;
+
+    font-weight: 1000;
+
+    letter-spacing: 4px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffffff,
+            #ffd1e5,
+            #ff6ca4,
+            #ffffff
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+
+    text-shadow:
+        0 0 35px
+        rgba(255,255,255,.3);
+
+    animation:
+        birthdayName
+        2.5s
+        ease-in-out
+        infinite alternate;
+}
+
+
+@keyframes birthdayName {
+
+    from {
+        transform:
+            scale(1)
+            translateY(0);
+    }
+
+    to {
+        transform:
+            scale(1.035)
+            translateY(-5px);
+    }
+}
+
+
+.birthday-subtitle {
+
+    max-width: 600px;
+
+    margin:
+        25px auto 0;
+
+    font-size:
+        clamp(14px, 2vw, 20px);
+
+    line-height: 1.7;
+
+    color:
+        rgba(255,255,255,.92);
+}
+
+
+.birthday-hearts-line {
+
+    margin-top: 25px;
+
+    font-size: 25px;
+
+    color: white;
+
+    letter-spacing: 8px;
+
+    animation:
+        heartLinePulse
+        2s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes heartLinePulse {
+
+    0%,
+    100% {
+        opacity: .7;
+        transform: scale(1);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.08);
+    }
+}
+
+
+/* =====================================================
+   BIRTHDAY BUTTON
+===================================================== */
+
+.birthday-close {
+
+    margin-top: 30px;
+
+    padding:
+        14px 24px;
+
+    border: 1px solid
+        rgba(255,255,255,.35);
+
+    border-radius: 999px;
+
+    color: white;
+
+    background:
+        rgba(255,255,255,.14);
+
+    box-shadow:
+        0 15px 35px
+        rgba(0,0,0,.18);
+
+    backdrop-filter:
+        blur(12px);
+
+    font-weight: 800;
+
+    transition:
+        .25s ease;
+}
+
+
+.birthday-close:hover {
+
+    transform:
+        translateY(-4px);
+
+    background:
+        rgba(255,255,255,.25);
+
+    box-shadow:
+        0 20px 45px
+        rgba(0,0,0,.25);
+}
+
+
+/* =====================================================
+   COUNTDOWN
+===================================================== */
+
+.birthday-countdown-box {
+
+    display: none;
+
+    width:
+        min(760px, 92vw);
+
+    margin: auto;
+
+    text-align: center;
+
+    animation:
+        countdownAppear
+        1s ease forwards;
+}
+
+
+.birthday-countdown-title {
+
+    margin-top: 12px;
+
+    font-size:
+        clamp(18px, 3vw, 28px);
+
+    font-weight: 700;
+
+    letter-spacing: 5px;
+
+    color: white;
+}
+
+
+.birthday-countdown-name {
+
+    margin-top: 8px;
+
+    font-size:
+        clamp(42px, 8vw, 82px);
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    letter-spacing: 3px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff,
+            #ffd1e5,
+            #ff6fa5,
+            #fff
+        );
+
+    -webkit-background-clip: text;
+    background-clip: text;
+
+    color: transparent;
+
+    text-shadow:
+        0 0 20px
+        rgba(255,105,160,.55),
+        0 0 50px
+        rgba(255,105,160,.35);
+
+    animation:
+        countdownNameGlow
+        2s
+        ease-in-out
+        infinite alternate;
+}
+
+
+.birthday-countdown {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 14px;
+
+    margin:
+        35px auto 20px;
+
+    max-width: 650px;
+}
+
+
+.count-box {
+
+    min-height: 125px;
+
+    padding:
+        20px 10px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    align-items: center;
+
+    border-radius: 22px;
+
+    background:
+        rgba(255,255,255,.13);
+
+    border:
+        1px solid
+        rgba(255,255,255,.28);
+
+    backdrop-filter:
+        blur(15px);
+
+    -webkit-backdrop-filter:
+        blur(15px);
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,.18),
+        inset 0 0 30px
+        rgba(255,255,255,.08);
+
+    animation:
+        countBoxFloat
+        3s
+        ease-in-out
+        infinite;
+}
+
+
+.count-box:nth-child(2) {
+    animation-delay: .15s;
+}
+
+
+.count-box:nth-child(3) {
+    animation-delay: .3s;
+}
+
+
+.count-box:nth-child(4) {
+    animation-delay: .45s;
+}
+
+
+.count-box span {
+
+    font-size:
+        clamp(34px, 6vw, 58px);
+
+    line-height: 1;
+
+    font-weight: 900;
+
+    color: white;
+
+    text-shadow:
+        0 0 15px
+        rgba(255,255,255,.65),
+        0 0 35px
+        rgba(255,105,160,.55);
+}
+
+
+.count-box small {
+
+    margin-top: 12px;
+
+    font-size: 11px;
+
+    letter-spacing: 3px;
+
+    font-weight: 700;
+
+    color:
+        rgba(255,255,255,.85);
+}
+
+
+.countdown-love-text {
+
+    margin-top: 12px;
+
+    color:
+        rgba(255,255,255,.9);
+
+    font-size: 17px;
+
+    letter-spacing: 1px;
+}
+
+
+@keyframes countdownAppear {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(35px)
+            scale(.95);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+@keyframes countdownNameGlow {
+
+    from {
+        transform: scale(1);
+        filter: brightness(1);
+    }
+
+    to {
+        transform: scale(1.035);
+        filter: brightness(1.2);
+    }
+}
+
+
+@keyframes countBoxFloat {
+
+    0%,
+    100% {
+        transform:
+            translateY(0);
+    }
+
+    50% {
+        transform:
+            translateY(-7px);
+    }
+}
+
+
+/* =====================================================
+   BIRTHDAY BALLOONS
+===================================================== */
+
+.birthday-balloons {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    overflow: hidden;
+
+    z-index: 4;
+}
+
+
+.birthday-balloon {
+
+    position: absolute;
+
+    bottom: -150px;
+
+    width: 48px;
+    height: 62px;
+
+    border-radius:
+        50% 50%
+        45% 45%;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.65),
+            rgba(255,70,140,.9)
+        );
+
+    box-shadow:
+        inset -8px -10px 15px
+        rgba(120,0,50,.12),
+        0 10px 25px
+        rgba(0,0,0,.15);
+
+    animation:
+        balloonRise
+        linear infinite;
+}
+
+
+.birthday-balloon::after {
+
+    content: "";
+
+    position: absolute;
+
+    width: 1px;
+
+    height: 100px;
+
+    left: 50%;
+
+    top: 100%;
+
+    background:
+        rgba(255,255,255,.6);
+}
+
+
+.birthday-balloon::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: -5px;
+
+    transform:
+        translateX(-50%);
+
+    width: 9px;
+    height: 9px;
+
+    background:
+        #ff8ab0;
+
+    clip-path:
+        polygon(
+            0 0,
+            100% 0,
+            50% 100%
+        );
+}
+
+
+@keyframes balloonRise {
+
+    from {
+        transform:
+            translateY(0)
+            rotate(-8deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: .9;
+    }
+
+    50% {
+        transform:
+            translateY(-55vh)
+            rotate(8deg);
+    }
+
+    to {
+        transform:
+            translateY(-125vh)
+            rotate(-8deg);
+        opacity: 0;
+    }
+}
+
+
+/* =====================================================
+   CONFETTI
+===================================================== */
+
+.birthday-confetti {
+
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: 5;
+}
+
+
+.birthday-confetti-piece {
+
+    position: absolute;
+
+    top: -20px;
+
+    width: 9px;
+    height: 15px;
+
+    background:
+        rgba(255,255,255,.8);
+
+    animation:
+        confettiFall
+        linear infinite;
+}
+
+
+.birthday-confetti-piece:nth-child(3n) {
+    border-radius: 50%;
+}
+
+
+.birthday-confetti-piece:nth-child(4n) {
+    transform: rotate(45deg);
+}
+
+
+@keyframes confettiFall {
+
+    from {
+
+        transform:
+            translateY(-30px)
+            rotate(0deg);
+
+        opacity: 1;
+    }
+
+    to {
+
+        transform:
+            translateY(110vh)
+            translateX(120px)
+            rotate(720deg);
+
+        opacity: 0;
+    }
+}
+
+
+/* =====================================================
+   FLOATING HEARTS
+===================================================== */
+
+.birthday-hearts {
+
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: 6;
+}
+
+
+.birthday-hearts span {
+
+    position: absolute;
+
+    bottom: -50px;
+
+    color:
+        rgba(255,255,255,.7);
+
+    font-size:
+        20px;
+
+    text-shadow:
+        0 0 12px
+        rgba(255,100,160,.8);
+
+    animation:
+        birthdayHeartRise
+        linear infinite;
+}
+
+
+@keyframes birthdayHeartRise {
+
+    from {
+
+        transform:
+            translateY(0)
+            scale(.7)
+            rotate(-10deg);
+
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    to {
+
+        transform:
+            translateY(-110vh)
+            scale(1.4)
+            rotate(20deg);
+
+        opacity: 0;
+    }
+}
+
+
+/* =====================================================
+   BIRTHDAY PETALS
+===================================================== */
+
+.birthday-petals {
+
+    position: absolute;
+
+    inset: 0;
+
+    overflow: hidden;
+
+    pointer-events: none;
+
+    z-index: 7;
+}
+
+
+.birthday-petals span {
+
+    position: absolute;
+
+    top: -50px;
+
+    font-size:
+        20px;
+
+    animation:
+        birthdayPetalFall
+        linear infinite;
+}
+
+
+@keyframes birthdayPetalFall {
+
+    from {
+
+        transform:
+            translateY(-50px)
+            rotate(0deg);
+
+        opacity: 0;
+    }
+
+    10% {
+        opacity: .8;
+    }
+
+    to {
+
+        transform:
+            translateY(110vh)
+            translateX(140px)
+            rotate(500deg);
+
+        opacity: 0;
+    }
+}
+
+
+/* =====================================================
+   SPARKLES
+===================================================== */
+
+.birthday-sparkles {
+
+    position: absolute;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: 8;
+}
+
+
+.birthday-sparkles span {
+
+    position: absolute;
+
+    color:
+        rgba(255,255,255,.9);
+
+    font-size:
+        12px;
+
+    animation:
+        sparklePulse
+        2s
+        ease-in-out
+        infinite;
+}
+
+
+@keyframes sparklePulse {
+
+    0%,
+    100% {
+        opacity: 0;
+        transform:
+            scale(.5)
+            rotate(0deg);
+    }
+
+    50% {
+        opacity: 1;
+        transform:
+            scale(1.5)
+            rotate(180deg);
+    }
+}
+
+
+/* =====================================================
+   BIRTHDAY ANIMATION
+===================================================== */
+
+@keyframes birthdayFadeUp {
+
+    from {
+        opacity: 0;
+        transform:
+            translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform:
+            translateY(0);
+    }
+}
+
+
+/* =====================================================
+   RESPONSIVE TABLET
+===================================================== */
+
+@media (max-width: 900px) {
+
+    .hero-section {
+
+        grid-template-columns:
+            1fr;
+
+        text-align: center;
+
+        padding-top: 60px;
+    }
+
+
+    .hero-description {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    .hero-visual {
+
+        min-height: 400px;
+    }
+
+
+    .photo-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+
+/* =====================================================
+   RESPONSIVE MOBILE
+===================================================== */
+
+@media (max-width: 600px) {
+
+    .main-header {
+        padding:
+            12px 14px;
+    }
+
+
+    .header-inner {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+
+    .logo {
+        font-size: 17px;
+    }
+
+
+    .main-nav {
+        gap: 3px;
+    }
+
+
+    .nav-link {
+        padding:
+            7px 10px;
+
+        font-size: 12px;
+    }
+
+
+    .hero-section {
+
+        min-height: auto;
+
+        padding:
+            55px 18px
+            30px;
+    }
+
+
+    .hero-title {
+
+        font-size:
+            clamp(42px, 13vw, 60px);
+
+        letter-spacing: -2px;
+    }
+
+
+    .hero-description {
+        font-size: 14px;
+    }
+
+
+    .hero-visual {
+
+        min-height: 340px;
+    }
+
+
+    .heart-scene {
+
+        transform:
+            scale(.78);
+    }
+
+
+    .orbit-two {
+        width: 290px;
+    }
+
+
+    .orbit-three {
+        width: 330px;
+    }
+
+
+    .gallery-section {
+
+        padding:
+            65px 16px
+            70px;
+    }
+
+
+    .photo-grid {
+
+        grid-template-columns:
+            1fr;
+
+        gap: 18px;
+    }
+
+
+    .section-heading h2 {
+        font-size: 35px;
+    }
+
+
+    .birthday-overlay {
+
+        padding:
+            18px;
+    }
+
+
+    .birthday-message {
+
+        letter-spacing: 2px;
+
+        font-size:
+            25px;
+    }
+
+
+    .birthday-name {
+
+        font-size:
+            62px;
+
+        letter-spacing: 2px;
+    }
+
+
+    .birthday-subtitle {
+
+        font-size: 14px;
+    }
+
+
+    .birthday-countdown {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+        gap: 10px;
+
+        margin-top: 25px;
+    }
+
+
+    .count-box {
+
+        min-height: 105px;
+
+        border-radius: 18px;
+
+        padding:
+            15px 8px;
+    }
+
+
+    .count-box span {
+
+        font-size: 40px;
+    }
+
+
+    .count-box small {
+
+        font-size: 9px;
+
+        letter-spacing: 2px;
+    }
+
+
+    .birthday-countdown-title {
+
+        letter-spacing: 3px;
+
+        font-size: 17px;
+    }
+
+
+    .birthday-countdown-name {
+
+        font-size: 50px;
+    }
+
+
+    .countdown-love-text {
+
+        font-size: 14px;
+    }
+
+
+    .birthday-balloon {
+
+        width: 35px;
+        height: 48px;
+    }
+}
+
+
+/* =====================================================
+   VERY SMALL MOBILE
+===================================================== */
+
+@media (max-width: 380px) {
+
+    .hero-title {
+        font-size: 39px;
+    }
+
+
+    .birthday-name {
+        font-size: 53px;
+    }
+
+
+    .count-box {
+        min-height: 95px;
+    }
+
+
+    .count-box span {
+        font-size: 34px;
+    }
+}
+
+
+/* =====================================================
+   REDUCED MOTION
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation-duration: .01ms !important;
+
+        animation-iteration-count: 1 !important;
+
+        scroll-behavior: auto !important;
+
+    }
+}
+/* =========================================================
+   MOBILE RESPONSIVE - LATA & RAKIB
+========================================================= */
+
+@media (max-width: 768px) {
+
+    /* ===============================
+       GLOBAL
+    =============================== */
+
+    html {
+        font-size: 15px;
+    }
+
+    body {
+        overflow-x: hidden;
+    }
+
+
+    /* ===============================
+       HEADER
+    =============================== */
+
+    .site-header {
+        padding: 12px 15px;
+    }
+
+    .header-inner {
+        padding: 0;
+    }
+
+    .logo {
+        font-size: 18px;
+        white-space: nowrap;
+    }
+
+    .nav {
+        gap: 8px;
+    }
+
+    .nav a {
+        padding: 8px 10px;
+        font-size: 13px;
+    }
+
+
+    /* ===============================
+       HERO
+    =============================== */
+
+    .hero {
+        min-height: 650px;
+        padding: 80px 18px 60px;
+    }
+
+    .hero-content {
+        width: 100%;
+    }
+
+    .hero h1 {
+        font-size: clamp(34px, 11vw, 52px);
+        line-height: 1.05;
+    }
+
+    .hero p {
+        font-size: 15px;
+        line-height: 1.7;
+        padding: 0 8px;
+    }
+
+
+    /* ===============================
+       3D HEART
+    =============================== */
+
+    .heart-wrapper {
+        transform: scale(0.72);
+        margin-top: -15px;
+        margin-bottom: -20px;
+    }
+
+
+    /* ===============================
+       GALLERY
+    =============================== */
+
+    .gallery-section {
+        padding: 55px 14px;
+    }
+
+    .section-title {
+        font-size: 28px;
+    }
+
+    .section-subtitle {
+        font-size: 14px;
+        padding: 0 10px;
+    }
+
+
+    .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+
+    .photo-card {
+        border-radius: 14px;
+    }
+
+
+    .photo-card img {
+        aspect-ratio: 1 / 1;
+    }
+
+
+    .photo-card-content {
+        padding: 10px;
+    }
+
+
+    .photo-card-title {
+        font-size: 14px;
+        line-height: 1.35;
+    }
+
+
+    .photo-card-description {
+        font-size: 12px;
+    }
+
+
+    /* ===============================
+       SEARCH
+    =============================== */
+
+    .search-box {
+        width: 100%;
+        margin-bottom: 25px;
+    }
+
+    .search-box input {
+        width: 100%;
+        height: 46px;
+        font-size: 14px;
+        padding: 0 15px;
+    }
+
+
+    /* ===============================
+       BIRTHDAY OVERLAY
+    =============================== */
+
+    #birthdayOverlay {
+        padding: 12px;
+    }
+
+
+    .birthday-overlay-content {
+        width: 100%;
+        max-width: 430px;
+        max-height: 94vh;
+        overflow-y: auto;
+        border-radius: 24px;
+        padding: 25px 16px;
+    }
+
+
+    /* ===============================
+       COUNTDOWN
+    =============================== */
+
+    #birthdayCountdownBox {
+        width: 100%;
+        padding: 0;
+    }
+
+
+    #countdownName {
+        font-size: 29px;
+        margin-bottom: 12px;
+    }
+
+
+    .birthday-countdown {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        width: 100%;
+    }
+
+
+    .countdown-item {
+        min-width: 0;
+        padding: 15px 8px;
+        border-radius: 16px;
+    }
+
+
+    .countdown-item strong,
+    .countdown-number {
+        font-size: 28px;
+    }
+
+
+    .countdown-item span,
+    .countdown-label {
+        font-size: 10px;
+        letter-spacing: 1px;
+    }
+
+
+    /* ===============================
+       BIRTHDAY MESSAGE
+    =============================== */
+
+    #birthdayMessageBox {
+        width: 100%;
+        padding: 5px;
+    }
+
+
+    #birthdayName {
+        font-size: clamp(
+            42px,
+            14vw,
+            68px
+        );
+
+        line-height: 1;
+        word-break: break-word;
+    }
+
+
+    #birthdaySubtitle {
+        font-size: 14px;
+        line-height: 1.7;
+        padding: 0 8px;
+    }
+
+
+    /* ===============================
+       CLOSE BUTTON
+    =============================== */
+
+    #birthdayClose,
+    #countdownClose {
+        min-height: 44px;
+        min-width: 44px;
+        font-size: 14px;
+        padding: 10px 18px;
+    }
+
+
+    /* ===============================
+       BALLOONS
+    =============================== */
+
+    .birthday-balloon {
+        transform: scale(0.7);
+    }
+
+
+    /* ===============================
+       FOOTER
+    =============================== */
+
+    .site-footer {
+        padding: 30px 15px;
+        text-align: center;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    /* ===============================
+       HEADER
+    =============================== */
+
+    .site-header {
+        padding: 10px 12px;
+    }
+
+
+    .logo {
+        font-size: 16px;
+    }
+
+
+    .nav {
+        gap: 4px;
+    }
+
+
+    .nav a {
+        padding: 7px 8px;
+        font-size: 11px;
+    }
+
+
+    /* ===============================
+       HERO
+    =============================== */
+
+    .hero {
+        min-height: 600px;
+        padding-top: 65px;
+    }
+
+
+    .hero h1 {
+        font-size: 36px;
+    }
+
+
+    .hero p {
+        font-size: 14px;
+    }
+
+
+    /* ===============================
+       HEART
+    =============================== */
+
+    .heart-wrapper {
+        transform: scale(0.58);
+        margin-top: -35px;
+        margin-bottom: -45px;
+    }
+
+
+    /* ===============================
+       GALLERY
+    =============================== */
+
+    .gallery-section {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+
+    .gallery-grid {
+        gap: 8px;
+    }
+
+
+    .photo-card-content {
+        padding: 8px;
+    }
+
+
+    .photo-card-title {
+        font-size: 12px;
+    }
+
+
+    /* ===============================
+       BIRTHDAY
+    =============================== */
+
+    #birthdayOverlay {
+        padding: 8px;
+    }
+
+
+    .birthday-overlay-content {
+        padding: 22px 12px;
+        border-radius: 20px;
+    }
+
+
+    #countdownName {
+        font-size: 25px;
+    }
+
+
+    .birthday-countdown {
+        gap: 7px;
+    }
+
+
+    .countdown-item {
+        padding: 13px 5px;
+        border-radius: 13px;
+    }
+
+
+    .countdown-item strong,
+    .countdown-number {
+        font-size: 25px;
+    }
+
+
+    #birthdayName {
+        font-size: 45px;
+    }
+
+
+    #birthdaySubtitle {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL PHONE
+========================================================= */
+
+@media (max-width: 360px) {
+
+    .logo {
+        font-size: 14px;
+    }
+
+
+    .nav a {
+        padding: 6px;
+        font-size: 10px;
+    }
+
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+
+    .gallery-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 6px;
+    }
+
+
+    #countdownName {
+        font-size: 22px;
+    }
+
+
+    .countdown-item {
+        padding: 11px 4px;
+    }
+
+
+    .countdown-item strong,
+    .countdown-number {
+        font-size: 22px;
+    }
+
+
+    #birthdayName {
+        font-size: 39px;
+    }
+
+}
+
+
+/* =========================================================
+   TOUCH DEVICES
+========================================================= */
+
+@media (hover: none) and (pointer: coarse) {
+
+    .photo-card:hover {
+        transform: none;
+    }
+
+
+    .photo-card:active {
+        transform: scale(0.98);
+    }
+
+
+    .nav a:hover {
+        transform: none;
+    }
+
+}
+
+
+/* =========================================================
+   SAFE AREA - MODERN PHONES
+========================================================= */
+
+@supports (
+    padding: env(safe-area-inset-bottom)
+) {
+
+    .birthday-overlay-content {
+        padding-bottom:
+            calc(
+                22px +
+                env(safe-area-inset-bottom)
+            );
+    }
+
+
+    .site-footer {
+        padding-bottom:
+            calc(
+                30px +
+                env(safe-area-inset-bottom)
+            );
+    }
+
+}
+/* =========================================================
+   LATA & RAKIB
+   INDEX GALLERY IMAGE FIX
+   ========================================================= */
+
+/* Gallery container */
+#gallery {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+    align-items: start;
+}
+
+
+/* Photo card */
+#gallery .photo-card {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    position: relative;
+}
+
+
+/* Card link */
+#gallery .photo-card > a {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+}
+
+
+/* Image wrapper */
+#gallery .photo-image,
+#gallery .photo-card .photo-image,
+#gallery .photo-card .image-wrapper {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+}
+
+
+/* Actual image */
+#gallery img {
+    display: block !important;
+
+    width: 100% !important;
+    height: 300px !important;
+
+    max-width: 100% !important;
+    min-width: 0 !important;
+
+    object-fit: cover !important;
+    object-position: center !important;
+
+    opacity: 1 !important;
+    visibility: visible !important;
+
+    transition:
+        transform 0.45s ease;
+}
+
+
+/* Hover */
+#gallery .photo-card:hover img {
+    transform: scale(1.05);
+}
+
+
+/* Prevent image from becoming tiny */
+#gallery img[src] {
+    min-height: 300px;
+}
+
+
+/* Card content */
+#gallery .photo-card .photo-content,
+#gallery .photo-card .card-content {
+    width: 100%;
+    padding: 15px;
+}
+
+
+#gallery .photo-card h3,
+#gallery .photo-card .photo-title {
+    margin: 0;
+    overflow: hidden;
+    color: #351722;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 1.35;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* Description */
+#gallery .photo-card p {
+    margin-top: 7px;
+
+    color: #8a6c76;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+    #gallery {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+        gap: 18px;
+    }
+
+    #gallery .photo-image,
+    #gallery .photo-card .photo-image,
+    #gallery .photo-card .image-wrapper {
+        height: 270px;
+    }
+
+    #gallery img {
+        height: 270px !important;
+    }
+
+    #gallery img[src] {
+        min-height: 270px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+    #gallery {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 14px;
+    }
+
+    #gallery .photo-image,
+    #gallery .photo-card .photo-image,
+    #gallery .photo-card .image-wrapper {
+        height: 230px;
+    }
+
+    #gallery img {
+        height: 230px !important;
+    }
+
+    #gallery img[src] {
+        min-height: 230px;
+    }
+
+    #gallery .photo-card .photo-content,
+    #gallery .photo-card .card-content {
+        padding: 12px;
+    }
+
+    #gallery .photo-card h3,
+    #gallery .photo-card .photo-title {
+        font-size: 14px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 430px) {
+
+    #gallery {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 10px;
+    }
+
+    #gallery .photo-image,
+    #gallery .photo-card .photo-image,
+    #gallery .photo-card .image-wrapper {
+        height: 190px;
+    }
+
+    #gallery img {
+        height: 190px !important;
+    }
+
+    #gallery img[src] {
+        min-height: 190px;
+    }
+
+    #gallery .photo-card .photo-content,
+    #gallery .photo-card .card-content {
+        padding: 10px;
+    }
+
+}
+
+
+/* =========================================================
+   IMAGE LOADING / BROKEN IMAGE SAFETY
+   ========================================================= */
+
+#gallery img {
+    background:
+        linear-gradient(
+            135deg,
+            #fff0f5,
+            #ffe1eb
+        );
+}
+
+
+/* =========================================================
+   FEATURED BADGE
+   ========================================================= */
+
+#gallery .featured,
+#gallery .featured-badge {
+    position: absolute;
+
+    top: 12px;
+    left: 12px;
+
+    z-index: 5;
+
+    padding: 6px 10px;
+
+    border-radius: 999px;
+
+    background: rgba(214, 51, 108, 0.94);
+
+    color: #fff;
+
+    font-size: 10px;
+    font-weight: 800;
+}
