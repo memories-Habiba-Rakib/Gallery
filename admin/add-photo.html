@@ -1,0 +1,2433 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Add Photo | LATA & RAKIB</title>
+
+    <link
+        rel="stylesheet"
+        href="../assets/css/admin.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           ADD PHOTO PAGE
+        ===================================================== */
+
+        .add-photo-page {
+            min-height: calc(100vh - 72px);
+            padding: 40px 20px 70px;
+        }
+
+
+        .add-photo-container {
+            width: 100%;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+
+        /* =====================================================
+           PAGE HEADER
+        ===================================================== */
+
+        .add-photo-heading {
+            margin-bottom: 28px;
+        }
+
+
+        .add-photo-heading .page-kicker {
+            display: inline-block;
+            margin-bottom: 7px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--primary);
+        }
+
+
+        .add-photo-heading h1 {
+            font-size: 36px;
+            line-height: 1.2;
+            margin-bottom: 8px;
+            color: #28151d;
+        }
+
+
+        .add-photo-heading p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           LAYOUT
+        ===================================================== */
+
+        .add-photo-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.4fr) minmax(300px, 0.8fr);
+            gap: 22px;
+            align-items: start;
+        }
+
+
+        /* =====================================================
+           CARD
+        ===================================================== */
+
+        .add-photo-card {
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            box-shadow: var(--shadow);
+            padding: 28px;
+        }
+
+
+        .add-photo-card h2 {
+            font-size: 20px;
+            margin-bottom: 5px;
+        }
+
+
+        .card-description {
+            color: var(--muted);
+            font-size: 13px;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+
+
+        /* =====================================================
+           FORM
+        ===================================================== */
+
+        .add-form-group {
+            margin-bottom: 19px;
+        }
+
+
+        .add-form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #4a3039;
+        }
+
+
+        .add-form-group label .optional {
+            font-weight: 400;
+            color: #a18b93;
+        }
+
+
+        .add-form-group input,
+        .add-form-group textarea,
+        .add-form-group select {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            outline: none;
+            background: #fffafd;
+            color: var(--text);
+            transition: 0.2s ease;
+        }
+
+
+        .add-form-group input,
+        .add-form-group select {
+            height: 48px;
+            padding: 0 14px;
+        }
+
+
+        .add-form-group textarea {
+            min-height: 110px;
+            padding: 13px 14px;
+            resize: vertical;
+            line-height: 1.6;
+        }
+
+
+        .add-form-group input:focus,
+        .add-form-group textarea:focus,
+        .add-form-group select:focus {
+            border-color: rgba(233, 30, 99, 0.5);
+            background: #fff;
+            box-shadow:
+                0 0 0 4px rgba(233, 30, 99, 0.08);
+        }
+
+
+        .add-form-group input::placeholder,
+        .add-form-group textarea::placeholder {
+            color: #b39da5;
+        }
+
+
+        /* =====================================================
+           DRIVE URL
+        ===================================================== */
+
+        .drive-input-wrapper {
+            position: relative;
+        }
+
+
+        .drive-input-wrapper input {
+            padding-right: 48px;
+        }
+
+
+        .drive-status-icon {
+            position: absolute;
+            right: 13px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            pointer-events: none;
+        }
+
+
+        .drive-help {
+            margin-top: 7px;
+            color: var(--muted);
+            font-size: 11px;
+            line-height: 1.5;
+        }
+
+
+        .drive-help strong {
+            color: var(--primary);
+        }
+
+
+        /* =====================================================
+           TWO COLUMN FORM
+        ===================================================== */
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 15px;
+        }
+
+
+        /* =====================================================
+           CHECKBOX
+        ===================================================== */
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-height: 48px;
+            padding: 0 14px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: #fffafd;
+        }
+
+
+        .checkbox-row input {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+
+        .checkbox-row label {
+            margin: 0;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+
+        /* =====================================================
+           BUTTONS
+        ===================================================== */
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 28px;
+        }
+
+
+        .form-actions .admin-btn {
+            flex: 1;
+        }
+
+
+        .cancel-btn {
+            min-height: 50px;
+            padding: 0 20px;
+            border: 1px solid var(--border);
+            border-radius: 13px;
+            background: #fff;
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+
+        .cancel-btn:hover {
+            background: #fff4f7;
+        }
+
+
+        /* =====================================================
+           MESSAGE
+        ===================================================== */
+
+        .form-message {
+            min-height: 22px;
+            margin-top: 17px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+
+        .form-message.error {
+            color: var(--danger);
+        }
+
+
+        .form-message.success {
+            color: var(--success);
+        }
+
+
+        .form-message.info {
+            color: var(--primary);
+        }
+
+
+        /* =====================================================
+           PREVIEW CARD
+        ===================================================== */
+
+        .preview-card {
+            position: sticky;
+            top: 95px;
+        }
+
+
+        .preview-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+
+        .preview-title h2 {
+            margin: 0;
+        }
+
+
+        .preview-status {
+            padding: 5px 9px;
+            border-radius: 20px;
+            background: rgba(233, 30, 99, 0.08);
+            color: var(--primary);
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+
+        .image-preview-box {
+            width: 100%;
+            aspect-ratio: 4 / 3;
+            overflow: hidden;
+            border-radius: 16px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff0f5,
+                    #f9e1e9
+                );
+            border: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        .image-preview-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: none;
+        }
+
+
+        .preview-placeholder {
+            text-align: center;
+            color: #b898a3;
+            padding: 20px;
+        }
+
+
+        .preview-placeholder .preview-icon {
+            font-size: 45px;
+            margin-bottom: 8px;
+        }
+
+
+        .preview-placeholder p {
+            font-size: 12px;
+            line-height: 1.5;
+        }
+
+
+        .preview-info {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 14px;
+            background: #fff6f9;
+            border: 1px solid var(--border);
+        }
+
+
+        .preview-info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 7px 0;
+            border-bottom: 1px solid rgba(233, 30, 99, 0.08);
+            font-size: 12px;
+        }
+
+
+        .preview-info-row:last-child {
+            border-bottom: 0;
+        }
+
+
+        .preview-info-row span:first-child {
+            color: var(--muted);
+        }
+
+
+        .preview-info-row span:last-child {
+            text-align: right;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+
+        /* =====================================================
+           LOADING
+        ===================================================== */
+
+        .button-loading {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+
+        .loading-spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: addPhotoSpin 0.7s linear infinite;
+        }
+
+
+        @keyframes addPhotoSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .add-photo-layout {
+                grid-template-columns: 1fr;
+            }
+
+
+            .preview-card {
+                position: static;
+            }
+        }
+
+
+        @media (max-width: 700px) {
+
+            .add-photo-page {
+                padding: 28px 12px 50px;
+            }
+
+
+            .add-photo-heading h1 {
+                font-size: 30px;
+            }
+
+
+            .add-photo-card {
+                padding: 20px 16px;
+                border-radius: 18px;
+            }
+
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+
+            .cancel-btn {
+                width: 100%;
+            }
+        }
+
+
+        @media (max-width: 420px) {
+
+            .add-photo-heading h1 {
+                font-size: 26px;
+            }
+
+
+            .add-photo-heading p {
+                font-size: 12px;
+            }
+
+
+            .add-photo-card {
+                padding: 17px 13px;
+            }
+
+
+            .add-form-group input,
+            .add-form-group select {
+                height: 46px;
+            }
+
+
+            .add-form-group textarea {
+                min-height: 100px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="admin-header">
+
+        <div class="admin-header-inner">
+
+            <a
+                href="dashboard.html"
+                class="admin-logo"
+            >
+                ♥ LATA & RAKIB
+            </a>
+
+
+            <div class="admin-user-area">
+
+                <span id="adminEmail">
+                    Admin
+                </span>
+
+
+                <button
+                    type="button"
+                    id="logoutButton"
+                    class="logout-btn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="add-photo-page">
+
+        <div class="add-photo-container">
+
+
+            <!-- PAGE HEADING -->
+
+            <div class="add-photo-heading">
+
+                <span class="page-kicker">
+                    GALLERY MANAGEMENT
+                </span>
+
+                <h1>
+                    Add New Photo
+                </h1>
+
+                <p>
+                    Add a Google Drive image to your memories gallery.
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 MAIN LAYOUT
+            ================================================== -->
+
+            <div class="add-photo-layout">
+
+
+                <!-- =================================================
+                     FORM CARD
+                ================================================== -->
+
+                <div class="add-photo-card">
+
+                    <h2>
+                        Photo Information
+                    </h2>
+
+                    <p class="card-description">
+                        Enter the photo details below. The image itself
+                        stays on Google Drive.
+                    </p>
+
+
+                    <form id="addPhotoForm">
+
+
+                        <!-- =========================================
+                             GOOGLE DRIVE URL
+                        ========================================== -->
+
+                        <div class="add-form-group">
+
+                            <label for="driveUrl">
+                                Google Drive Image URL
+                                <span class="optional">
+                                    *
+                                </span>
+                            </label>
+
+
+                            <div class="drive-input-wrapper">
+
+                                <input
+                                    type="url"
+                                    id="driveUrl"
+                                    placeholder="https://drive.google.com/file/d/..."
+                                    required
+                                    autocomplete="off"
+                                >
+
+
+                                <span
+                                    id="driveStatusIcon"
+                                    class="drive-status-icon"
+                                >
+                                    🔗
+                                </span>
+
+                            </div>
+
+
+                            <div class="drive-help">
+
+                                Google Drive-এ image-এর
+                                <strong>Anyone with the link → Viewer</strong>
+                                permission দিন।
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =========================================
+                             TITLE
+                        ========================================== -->
+
+                        <div class="add-form-group">
+
+                            <label for="title">
+                                Photo Title
+                                <span class="optional">
+                                    *
+                                </span>
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="title"
+                                placeholder="Example: Our Beautiful Memory"
+                                maxlength="150"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- =========================================
+                             DESCRIPTION
+                        ========================================== -->
+
+                        <div class="add-form-group">
+
+                            <label for="description">
+                                Description
+                                <span class="optional">
+                                    (optional)
+                                </span>
+                            </label>
+
+
+                            <textarea
+                                id="description"
+                                placeholder="Write something about this memory..."
+                                maxlength="1000"
+                            ></textarea>
+
+                        </div>
+
+
+
+                        <!-- =========================================
+                             ALT TEXT
+                        ========================================== -->
+
+                        <div class="add-form-group">
+
+                            <label for="altText">
+                                Alt Text
+                                <span class="optional">
+                                    (optional)
+                                </span>
+                            </label>
+
+
+                            <input
+                                type="text"
+                                id="altText"
+                                placeholder="Example: LATA and RAKIB together"
+                                maxlength="250"
+                            >
+
+                        </div>
+
+
+
+                        <!-- =========================================
+                             CATEGORY + SORT ORDER
+                        ========================================== -->
+
+                        <div class="form-row">
+
+
+                            <!-- CATEGORY -->
+
+                            <div class="add-form-group">
+
+                                <label for="category">
+                                    Category
+                                    <span class="optional">
+                                        (optional)
+                                    </span>
+                                </label>
+
+
+                                <select id="category">
+
+                                    <option value="">
+                                        King with Queen
+                                        
+                                    </option>
+                                    <option value="">
+                                        Queen
+                                        
+                                    </option>
+                                                                        <option value="">
+                                        Little Fairy
+                                        
+                                    </option>
+                                                                        <option value="">
+                                        Picchi Bou
+                                        
+                                    </option>
+                                </select>
+
+                            </div>
+
+
+
+                            <!-- SORT ORDER -->
+
+                            <div class="add-form-group">
+
+                                <label for="sortOrder">
+                                    Sort Order
+                                </label>
+
+
+                                <input
+                                    type="number"
+                                    id="sortOrder"
+                                    value="0"
+                                    min="0"
+                                    step="1"
+                                >
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =========================================
+                             STATUS + FEATURED
+                        ========================================== -->
+
+                        <div class="form-row">
+
+
+                            <!-- STATUS -->
+
+                            <div class="add-form-group">
+
+                                <label for="status">
+                                    Status
+                                </label>
+
+
+                                <select id="status">
+
+                                    <option value="active">
+                                        Active
+                                    </option>
+
+                                    <option value="draft">
+                                        Draft
+                                    </option>
+
+                                    <option value="archived">
+                                        Archived
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+
+                            <!-- FEATURED -->
+
+                            <div class="add-form-group">
+
+                                <label>
+                                    Featured
+                                </label>
+
+
+                                <div class="checkbox-row">
+
+                                    <input
+                                        type="checkbox"
+                                        id="isFeatured"
+                                    >
+
+
+                                    <label for="isFeatured">
+                                        Show as featured photo
+                                    </label>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =========================================
+                             ACTIONS
+                        ========================================== -->
+
+                        <div class="form-actions">
+
+
+                            <button
+                                type="button"
+                                id="cancelButton"
+                                class="cancel-btn"
+                            >
+                                Cancel
+                            </button>
+
+
+                            <button
+                                type="submit"
+                                id="saveButton"
+                                class="admin-btn"
+                            >
+                                Save Photo
+                            </button>
+
+                        </div>
+
+
+                        <!-- MESSAGE -->
+
+                        <div
+                            id="formMessage"
+                            class="form-message"
+                        ></div>
+
+
+                    </form>
+
+                </div>
+
+
+
+                <!-- =================================================
+                     PREVIEW CARD
+                ================================================== -->
+
+                <aside class="add-photo-card preview-card">
+
+
+                    <div class="preview-title">
+
+                        <h2>
+                            Preview
+                        </h2>
+
+
+                        <span
+                            id="previewStatus"
+                            class="preview-status"
+                        >
+                            Waiting
+                        </span>
+
+                    </div>
+
+
+                    <!-- IMAGE -->
+
+                    <div class="image-preview-box">
+
+                        <img
+                            id="imagePreview"
+                            src=""
+                            alt="Preview"
+                        >
+
+
+                        <div
+                            id="previewPlaceholder"
+                            class="preview-placeholder"
+                        >
+
+                            <div class="preview-icon">
+                                🖼️
+                            </div>
+
+                            <p>
+                                Enter a valid Google Drive URL
+                                to preview the image.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- INFO -->
+
+                    <div class="preview-info">
+
+
+                        <div class="preview-info-row">
+
+                            <span>
+                                Title
+                            </span>
+
+                            <span id="previewTitle">
+                                —
+                            </span>
+
+                        </div>
+
+
+                        <div class="preview-info-row">
+
+                            <span>
+                                File ID
+                            </span>
+
+                            <span id="previewFileId">
+                                —
+                            </span>
+
+                        </div>
+
+
+                        <div class="preview-info-row">
+
+                            <span>
+                                Status
+                            </span>
+
+                            <span id="previewStatusText">
+                                Active
+                            </span>
+
+                        </div>
+
+
+                        <div class="preview-info-row">
+
+                            <span>
+                                Featured
+                            </span>
+
+                            <span id="previewFeatured">
+                                No
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </aside>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         SUPABASE
+    ====================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="../assets/js/supabase.js"></script>
+
+
+
+    <script>
+
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
+
+        const addPhotoForm =
+            document.getElementById("addPhotoForm");
+
+
+        const driveUrlInput =
+            document.getElementById("driveUrl");
+
+
+        const driveStatusIcon =
+            document.getElementById("driveStatusIcon");
+
+
+        const titleInput =
+            document.getElementById("title");
+
+
+        const descriptionInput =
+            document.getElementById("description");
+
+
+        const altTextInput =
+            document.getElementById("altText");
+
+
+        const categoryInput =
+            document.getElementById("category");
+
+
+        const statusInput =
+            document.getElementById("status");
+
+
+        const sortOrderInput =
+            document.getElementById("sortOrder");
+
+
+        const isFeaturedInput =
+            document.getElementById("isFeatured");
+
+
+        const saveButton =
+            document.getElementById("saveButton");
+
+
+        const cancelButton =
+            document.getElementById("cancelButton");
+
+
+        const logoutButton =
+            document.getElementById("logoutButton");
+
+
+        const adminEmail =
+            document.getElementById("adminEmail");
+
+
+        const formMessage =
+            document.getElementById("formMessage");
+
+
+        const imagePreview =
+            document.getElementById("imagePreview");
+
+
+        const previewPlaceholder =
+            document.getElementById(
+                "previewPlaceholder"
+            );
+
+
+        const previewTitle =
+            document.getElementById(
+                "previewTitle"
+            );
+
+
+        const previewFileId =
+            document.getElementById(
+                "previewFileId"
+            );
+
+
+        const previewStatus =
+            document.getElementById(
+                "previewStatus"
+            );
+
+
+        const previewStatusText =
+            document.getElementById(
+                "previewStatusText"
+            );
+
+
+        const previewFeatured =
+            document.getElementById(
+                "previewFeatured"
+            );
+
+
+
+        /* =====================================================
+           GLOBAL
+        ===================================================== */
+
+        let currentUser = null;
+
+        let currentDriveFileId = "";
+
+
+
+        /* =====================================================
+           ESCAPE HTML
+        ===================================================== */
+
+        function escapeHtml(value) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+                return "";
+            }
+
+
+            return String(value)
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+        }
+
+
+
+        /* =====================================================
+           SHOW MESSAGE
+        ===================================================== */
+
+        function showMessage(
+            message,
+            type = "info"
+        ) {
+
+            formMessage.textContent =
+                message;
+
+
+            formMessage.className =
+                "form-message " + type;
+        }
+
+
+
+        /* =====================================================
+           GET GOOGLE DRIVE FILE ID
+        ===================================================== */
+
+        function extractDriveFileId(url) {
+
+            if (!url) {
+                return null;
+            }
+
+
+            const cleanUrl =
+                url.trim();
+
+
+            /*
+             * Format:
+             *
+             * https://drive.google.com/file/d/FILE_ID/view
+             */
+
+            let match =
+                cleanUrl.match(
+                    /\/file\/d\/([a-zA-Z0-9_-]+)/
+                );
+
+
+            if (match && match[1]) {
+
+                return match[1];
+            }
+
+
+            /*
+             * Format:
+             *
+             * https://drive.google.com/open?id=FILE_ID
+             *
+             * https://drive.google.com/uc?id=FILE_ID
+             */
+
+            match =
+                cleanUrl.match(
+                    /[?&]id=([a-zA-Z0-9_-]+)/
+                );
+
+
+            if (match && match[1]) {
+
+                return match[1];
+            }
+
+
+            /*
+             * Format:
+             *
+             * https://drive.google.com/thumbnail?id=FILE_ID
+             */
+
+            match =
+                cleanUrl.match(
+                    /drive\.google\.com\/thumbnail\?id=([a-zA-Z0-9_-]+)/
+                );
+
+
+            if (match && match[1]) {
+
+                return match[1];
+            }
+
+
+            return null;
+        }
+
+
+
+        /* =====================================================
+           CREATE DRIVE IMAGE URLS
+        ===================================================== */
+
+        function createDriveUrls(
+            fileId
+        ) {
+
+            return {
+
+                thumbnailUrl:
+                    `https://drive.google.com/thumbnail?id=${encodeURIComponent(fileId)}&sz=w1600`,
+
+                previewUrl:
+                    `https://drive.google.com/uc?export=view&id=${encodeURIComponent(fileId)}`
+
+            };
+        }
+
+
+
+        /* =====================================================
+           SLUGIFY
+        ===================================================== */
+
+        function createSlug(text) {
+
+            return text
+                .toString()
+                .toLowerCase()
+                .trim()
+                .replace(
+                    /[^\w\s-]/g,
+                    ""
+                )
+                .replace(
+                    /[\s_-]+/g,
+                    "-"
+                )
+                .replace(
+                    /^-+|-+$/g,
+                    ""
+                );
+        }
+
+
+
+        /* =====================================================
+           CREATE UNIQUE SLUG
+        ===================================================== */
+
+        async function createUniqueSlug(
+            title
+        ) {
+
+            let baseSlug =
+                createSlug(title);
+
+
+            /*
+             * If title doesn't produce
+             * an English slug
+             */
+
+            if (!baseSlug) {
+
+                baseSlug =
+                    "memory-" +
+                    Date.now();
+            }
+
+
+            let slug =
+                baseSlug;
+
+
+            let counter = 2;
+
+
+            /*
+             * Check existing slug
+             */
+
+            while (true) {
+
+                const {
+                    data,
+                    error
+                } =
+                await supabaseClient
+                    .from("photos")
+                    .select("id")
+                    .eq(
+                        "slug",
+                        slug
+                    )
+                    .limit(1);
+
+
+                if (error) {
+
+                    /*
+                     * Don't block saving because
+                     * slug check failed.
+                     *
+                     * Use timestamp fallback.
+                     */
+
+                    return (
+                        baseSlug +
+                        "-" +
+                        Date.now()
+                    );
+                }
+
+
+                if (
+                    !data ||
+                    data.length === 0
+                ) {
+
+                    return slug;
+                }
+
+
+                slug =
+                    `${baseSlug}-${counter}`;
+
+                counter++;
+            }
+        }
+
+
+
+        /* =====================================================
+           CHECK ADMIN
+        ===================================================== */
+
+        async function checkAdmin() {
+
+            try {
+
+                const {
+                    data: userData,
+                    error: userError
+                } =
+                await supabaseClient.auth
+                    .getUser();
+
+
+                if (
+                    userError ||
+                    !userData.user
+                ) {
+
+                    window.location.href =
+                        "login.html";
+
+                    return false;
+                }
+
+
+                currentUser =
+                    userData.user;
+
+
+                /*
+                 * Get profile role
+                 */
+
+                const {
+                    data: profile,
+                    error: profileError
+                } =
+                await supabaseClient
+                    .from("profiles")
+                    .select("role")
+                    .eq(
+                        "id",
+                        currentUser.id
+                    )
+                    .single();
+
+
+                if (
+                    profileError ||
+                    !profile ||
+                    profile.role !== "admin"
+                ) {
+
+                    await supabaseClient.auth
+                        .signOut();
+
+
+                    window.location.href =
+                        "login.html";
+
+                    return false;
+                }
+
+
+                /*
+                 * Show email
+                 */
+
+                if (adminEmail) {
+
+                    adminEmail.textContent =
+                        currentUser.email ||
+                        "Admin";
+                }
+
+
+                return true;
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Admin check error:",
+                    error
+                );
+
+
+                window.location.href =
+                    "login.html";
+
+                return false;
+            }
+        }
+
+
+
+        /* =====================================================
+           LOAD CATEGORIES
+        ===================================================== */
+
+        async function loadCategories() {
+
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                await supabaseClient
+                    .from("categories")
+                    .select(
+                        "id, name"
+                    )
+                    .order(
+                        "name",
+                        {
+                            ascending: true
+                        }
+                    );
+
+
+                /*
+                 * Category loading error should
+                 * NOT prevent photo adding.
+                 */
+
+                if (error) {
+
+                    console.warn(
+                        "Category loading failed:",
+                        error
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    !data ||
+                    data.length === 0
+                ) {
+
+                    return;
+                }
+
+
+                data.forEach(
+                    function(category) {
+
+                        const option =
+                            document.createElement(
+                                "option"
+                            );
+
+
+                        option.value =
+                            category.id;
+
+
+                        option.textContent =
+                            category.name;
+
+
+                        categoryInput.appendChild(
+                            option
+                        );
+                    }
+                );
+
+            }
+
+            catch (error) {
+
+                console.warn(
+                    "Could not load categories:",
+                    error
+                );
+            }
+        }
+
+
+
+        /* =====================================================
+           UPDATE DRIVE PREVIEW
+        ===================================================== */
+
+        function updateDrivePreview() {
+
+            const url =
+                driveUrlInput.value.trim();
+
+
+            const fileId =
+                extractDriveFileId(url);
+
+
+            /*
+             * Invalid / empty
+             */
+
+            if (!fileId) {
+
+                currentDriveFileId = "";
+
+
+                driveStatusIcon.textContent =
+                    url
+                    ? "❌"
+                    : "🔗";
+
+
+                previewStatus.textContent =
+                    url
+                    ? "Invalid URL"
+                    : "Waiting";
+
+
+                previewFileId.textContent =
+                    "—";
+
+
+                imagePreview.style.display =
+                    "none";
+
+
+                previewPlaceholder.style.display =
+                    "block";
+
+
+                return;
+            }
+
+
+            /*
+             * Valid
+             */
+
+            currentDriveFileId =
+                fileId;
+
+
+            driveStatusIcon.textContent =
+                "✅";
+
+
+            previewStatus.textContent =
+                "Ready";
+
+
+            previewFileId.textContent =
+                fileId;
+
+
+            const driveUrls =
+                createDriveUrls(
+                    fileId
+                );
+
+
+            /*
+             * Load preview
+             */
+
+            imagePreview.src =
+                driveUrls.thumbnailUrl;
+
+
+            imagePreview.style.display =
+                "block";
+
+
+            previewPlaceholder.style.display =
+                "none";
+
+
+            /*
+             * Image loading failed
+             */
+
+            imagePreview.onerror =
+                function() {
+
+                    imagePreview.style.display =
+                        "none";
+
+
+                    previewPlaceholder.style.display =
+                        "block";
+
+
+                    previewPlaceholder.innerHTML = `
+
+                        <div class="preview-icon">
+                            ⚠️
+                        </div>
+
+                        <p>
+                            Image preview could not be loaded.
+                            Make sure Google Drive sharing is
+                            set to "Anyone with the link".
+                        </p>
+
+                    `;
+                };
+
+
+            /*
+             * Image loaded successfully
+             */
+
+            imagePreview.onload =
+                function() {
+
+                    previewStatus.textContent =
+                        "Ready";
+
+                };
+        }
+
+
+
+        /* =====================================================
+           UPDATE FORM PREVIEW
+        ===================================================== */
+
+        function updateFormPreview() {
+
+            const title =
+                titleInput.value.trim();
+
+
+            previewTitle.textContent =
+                title || "—";
+
+
+            previewStatusText.textContent =
+                statusInput.value;
+
+
+            previewFeatured.textContent =
+                isFeaturedInput.checked
+                    ? "Yes"
+                    : "No";
+        }
+
+
+
+        /* =====================================================
+           DRIVE URL INPUT
+        ===================================================== */
+
+        driveUrlInput.addEventListener(
+            "input",
+            updateDrivePreview
+        );
+
+
+        driveUrlInput.addEventListener(
+            "paste",
+            function() {
+
+                setTimeout(
+                    updateDrivePreview,
+                    50
+                );
+
+            }
+        );
+
+
+
+        /* =====================================================
+           FORM PREVIEW EVENTS
+        ===================================================== */
+
+        titleInput.addEventListener(
+            "input",
+            updateFormPreview
+        );
+
+
+        statusInput.addEventListener(
+            "change",
+            updateFormPreview
+        );
+
+
+        isFeaturedInput.addEventListener(
+            "change",
+            updateFormPreview
+        );
+
+
+
+        /* =====================================================
+           RESET PREVIEW
+        ===================================================== */
+
+        function resetPreview() {
+
+            currentDriveFileId = "";
+
+
+            driveStatusIcon.textContent =
+                "🔗";
+
+
+            previewStatus.textContent =
+                "Waiting";
+
+
+            previewFileId.textContent =
+                "—";
+
+
+            previewTitle.textContent =
+                "—";
+
+
+            previewStatusText.textContent =
+                "Active";
+
+
+            previewFeatured.textContent =
+                "No";
+
+
+            imagePreview.src = "";
+
+
+            imagePreview.style.display =
+                "none";
+
+
+            previewPlaceholder.style.display =
+                "block";
+
+
+            previewPlaceholder.innerHTML = `
+
+                <div class="preview-icon">
+                    🖼️
+                </div>
+
+                <p>
+                    Enter a valid Google Drive URL
+                    to preview the image.
+                </p>
+
+            `;
+        }
+
+
+
+        /* =====================================================
+           SAVE PHOTO
+        ===================================================== */
+
+        addPhotoForm.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                /*
+                 * Prevent double submit
+                 */
+
+                if (
+                    saveButton.disabled
+                ) {
+                    return;
+                }
+
+
+                const driveUrl =
+                    driveUrlInput.value.trim();
+
+
+                const title =
+                    titleInput.value.trim();
+
+
+                const description =
+                    descriptionInput.value.trim();
+
+
+                const altText =
+                    altTextInput.value.trim();
+
+
+                const categoryId =
+                    categoryInput.value ||
+                    null;
+
+
+                const status =
+                    statusInput.value;
+
+
+                const isFeatured =
+                    isFeaturedInput.checked;
+
+
+                const sortOrder =
+                    Number(
+                        sortOrderInput.value
+                    ) || 0;
+
+
+                /*
+                 * =========================================
+                 * VALIDATE DRIVE URL
+                 * =========================================
+                 */
+
+                const fileId =
+                    extractDriveFileId(
+                        driveUrl
+                    );
+
+
+                if (!fileId) {
+
+                    showMessage(
+                        "Please enter a valid Google Drive file URL.",
+                        "error"
+                    );
+
+
+                    driveUrlInput.focus();
+
+                    return;
+                }
+
+
+                /*
+                 * =========================================
+                 * VALIDATE TITLE
+                 * =========================================
+                 */
+
+                if (!title) {
+
+                    showMessage(
+                        "Please enter a photo title.",
+                        "error"
+                    );
+
+
+                    titleInput.focus();
+
+                    return;
+                }
+
+
+                /*
+                 * =========================================
+                 * VALIDATE STATUS
+                 * =========================================
+                 */
+
+                const allowedStatuses = [
+                    "active",
+                    "draft",
+                    "archived"
+                ];
+
+
+                if (
+                    !allowedStatuses.includes(
+                        status
+                    )
+                ) {
+
+                    showMessage(
+                        "Invalid photo status.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                /*
+                 * =========================================
+                 * BUTTON LOADING
+                 * =========================================
+                 */
+
+                saveButton.disabled =
+                    true;
+
+
+                cancelButton.disabled =
+                    true;
+
+
+                saveButton.innerHTML = `
+
+                    <span class="button-loading">
+
+                        <span
+                            class="loading-spinner"
+                        ></span>
+
+                        Saving...
+
+                    </span>
+
+                `;
+
+
+                showMessage(
+                    "Saving photo...",
+                    "info"
+                );
+
+
+                try {
+
+                    /*
+                     * =====================================
+                     * GET CURRENT USER
+                     * =====================================
+                     */
+
+                    const {
+                        data: userData,
+                        error: userError
+                    } =
+                    await supabaseClient.auth
+                        .getUser();
+
+
+                    if (
+                        userError ||
+                        !userData.user
+                    ) {
+
+                        throw new Error(
+                            "Your login session has expired."
+                        );
+                    }
+
+
+                    const user =
+                        userData.user;
+
+
+                    /*
+                     * =====================================
+                     * CREATE SLUG
+                     * =====================================
+                     */
+
+                    const slug =
+                        await createUniqueSlug(
+                            title
+                        );
+
+
+                    /*
+                     * =====================================
+                     * DRIVE URLS
+                     * =====================================
+                     */
+
+                    const driveUrls =
+                        createDriveUrls(
+                            fileId
+                        );
+
+
+                    /*
+                     * =====================================
+                     * PHOTO DATA
+                     * =====================================
+                     */
+
+                    const photoData = {
+
+                        title: title,
+
+                        slug: slug,
+
+                        description:
+                            description || null,
+
+                        category_id:
+                            categoryId,
+
+                        drive_file_id:
+                            fileId,
+
+                        drive_file_name:
+                            null,
+
+                        drive_folder_id:
+                            null,
+
+                        drive_folder_name:
+                            null,
+
+                        drive_url:
+                            driveUrl,
+
+                        thumbnail_url:
+                            driveUrls.thumbnailUrl,
+
+                        preview_url:
+                            driveUrls.previewUrl,
+
+                        download_url:
+                            driveUrl,
+
+                        mime_type:
+                            "image/*",
+
+                        file_size:
+                            null,
+
+                        width:
+                            null,
+
+                        height:
+                            null,
+
+                        alt_text:
+                            altText ||
+                            title,
+
+                        status:
+                            status,
+
+                        is_featured:
+                            isFeatured,
+
+                        sort_order:
+                            sortOrder,
+
+                        uploaded_by:
+                            user.id
+
+                    };
+
+
+                    /*
+                     * =====================================
+                     * INSERT INTO SUPABASE
+                     * =====================================
+                     */
+
+                    const {
+                        data,
+                        error
+                    } =
+                    await supabaseClient
+                        .from("photos")
+                        .insert(
+                            photoData
+                        )
+                        .select()
+                        .single();
+
+
+                    if (error) {
+
+                        console.error(
+                            "Supabase insert error:",
+                            error
+                        );
+
+
+                        throw new Error(
+                            error.message ||
+                            "Could not save photo."
+                        );
+                    }
+
+
+                    /*
+                     * =====================================
+                     * SUCCESS
+                     * =====================================
+                     */
+
+                    showMessage(
+                        "Photo saved successfully! ❤️",
+                        "success"
+                    );
+
+
+                    /*
+                     * Reset form
+                     */
+
+                    addPhotoForm.reset();
+
+
+                    /*
+                     * Restore defaults
+                     */
+
+                    statusInput.value =
+                        "active";
+
+
+                    sortOrderInput.value =
+                        "0";
+
+
+                    isFeaturedInput.checked =
+                        false;
+
+
+                    /*
+                     * Reset preview
+                     */
+
+                    resetPreview();
+
+
+                    /*
+                     * Restore button
+                     */
+
+                    saveButton.disabled =
+                        false;
+
+
+                    cancelButton.disabled =
+                        false;
+
+
+                    saveButton.textContent =
+                        "Save Photo";
+
+
+                    /*
+                     * Redirect after save
+                     */
+
+                    setTimeout(
+                        function() {
+
+                            window.location.href =
+                                "photos.html";
+
+                        },
+                        1200
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Save photo error:",
+                        error
+                    );
+
+
+                    showMessage(
+                        error.message ||
+                        "Could not save photo. Please try again.",
+                        "error"
+                    );
+
+
+                    saveButton.disabled =
+                        false;
+
+
+                    cancelButton.disabled =
+                        false;
+
+
+                    saveButton.textContent =
+                        "Save Photo";
+                }
+
+            }
+        );
+
+
+
+        /* =====================================================
+           CANCEL
+        ===================================================== */
+
+        cancelButton.addEventListener(
+            "click",
+            function() {
+
+                window.location.href =
+                    "dashboard.html";
+
+            }
+        );
+
+
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        logoutButton.addEventListener(
+            "click",
+            async function() {
+
+                logoutButton.disabled =
+                    true;
+
+
+                logoutButton.textContent =
+                    "Logging out...";
+
+
+                await supabaseClient.auth
+                    .signOut();
+
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+
+
+        /* =====================================================
+           INITIALIZE
+        ===================================================== */
+
+        async function initializeAddPhoto() {
+
+            const isAdmin =
+                await checkAdmin();
+
+
+            if (!isAdmin) {
+                return;
+            }
+
+
+            /*
+             * Load categories
+             */
+
+            await loadCategories();
+
+
+            /*
+             * Initial preview
+             */
+
+            updateFormPreview();
+
+        }
+
+
+        initializeAddPhoto();
+
+    </script>
+
+
+</body>
+
+</html>

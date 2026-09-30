@@ -1,0 +1,2281 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>E-Diary Management | LATA & RAKIB</title>
+
+    <link rel="stylesheet" href="../assets/css/admin.css">
+
+    <style>
+        /* =========================================================
+           E-DIARY ADMIN PAGE
+        ========================================================= */
+
+        :root {
+            --diary-pink: #e83e73;
+            --diary-pink-dark: #c9275c;
+            --diary-light: #fff4f8;
+            --diary-border: #f0d5df;
+            --diary-text: #351722;
+            --diary-muted: #866b75;
+        }
+
+        body {
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(233, 30, 99, 0.07),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 20%,
+                    rgba(244, 143, 177, 0.08),
+                    transparent 28%
+                ),
+                linear-gradient(
+                    135deg,
+                    #fff9fb,
+                    #fff3f7
+                );
+        }
+
+        .diary-page {
+            width: min(1080px, calc(100% - 30px));
+            margin: 0 auto;
+            padding: 35px 0 60px;
+        }
+
+        .diary-page-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .diary-page-title h1 {
+            margin: 0;
+            color: #29121b;
+            font-size: 30px;
+            font-weight: 850;
+        }
+
+        .diary-page-title p {
+            margin: 5px 0 0;
+            color: var(--diary-muted);
+            font-size: 13px;
+        }
+
+        .diary-header-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .diary-top-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 38px;
+            padding: 0 15px;
+            border-radius: 9px;
+            border: 1px solid var(--diary-border);
+            background: white;
+            color: #522b38;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: 750;
+            cursor: pointer;
+            transition: .2s ease;
+        }
+
+        .diary-top-btn:hover {
+            transform: translateY(-1px);
+            background: #fff4f7;
+        }
+
+        .diary-top-btn.primary {
+            border: none;
+            color: white;
+            background: linear-gradient(
+                135deg,
+                #ec407a,
+                #d81b60
+            );
+            box-shadow:
+                0 8px 20px
+                rgba(216, 27, 96, .18);
+        }
+
+        /* =========================================================
+           CARD
+        ========================================================= */
+
+        .diary-card {
+            background: rgba(255,255,255,.94);
+            border: 1px solid var(--diary-border);
+            border-radius: 20px;
+            box-shadow:
+                0 18px 50px
+                rgba(104, 34, 55, .08);
+            overflow: hidden;
+        }
+
+        .diary-card-header {
+            padding: 20px 22px;
+            border-bottom: 1px solid #f3e0e6;
+            background: linear-gradient(
+                135deg,
+                #fff,
+                #fff8fa
+            );
+        }
+
+        .diary-card-header h2 {
+            margin: 0;
+            color: #321722;
+            font-size: 19px;
+        }
+
+        .diary-card-header p {
+            margin: 5px 0 0;
+            color: #987d87;
+            font-size: 11px;
+        }
+
+        .diary-card-body {
+            padding: 22px;
+        }
+
+        /* =========================================================
+           FORM
+        ========================================================= */
+
+        .diary-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .diary-form-group {
+            margin-bottom: 17px;
+        }
+
+        .diary-form-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .diary-form-group label {
+            display: block;
+            margin-bottom: 7px;
+            color: #5d3442;
+            font-size: 11px;
+            font-weight: 750;
+        }
+
+        .diary-form-group input,
+        .diary-form-group textarea,
+        .diary-form-group select {
+            width: 100%;
+            box-sizing: border-box;
+            padding: 11px 12px;
+            border: 1px solid #ead0d9;
+            border-radius: 10px;
+            outline: none;
+            background: #fff;
+            color: #3b202a;
+            font-size: 13px;
+            transition: .2s ease;
+        }
+
+        .diary-form-group textarea {
+            min-height: 220px;
+            resize: vertical;
+            line-height: 1.7;
+        }
+
+        .diary-form-group input:focus,
+        .diary-form-group textarea:focus,
+        .diary-form-group select:focus {
+            border-color: #e83e73;
+            box-shadow:
+                0 0 0 3px
+                rgba(232, 62, 115, .09);
+        }
+
+        .diary-form-help {
+            margin-top: 6px;
+            color: #a18791;
+            font-size: 10px;
+            line-height: 1.5;
+        }
+
+        /* =========================================================
+           IMAGE PREVIEW
+        ========================================================= */
+
+        .drive-preview {
+            display: none;
+            margin-top: 12px;
+            padding: 10px;
+            border: 1px solid #f0d5df;
+            border-radius: 12px;
+            background: #fff8fa;
+        }
+
+        .drive-preview.show {
+            display: block;
+        }
+
+        .drive-preview-label {
+            margin-bottom: 8px;
+            color: #86606d;
+            font-size: 10px;
+            font-weight: 750;
+        }
+
+        .drive-preview-image-wrap {
+            width: 100%;
+            max-height: 280px;
+            overflow: hidden;
+            border-radius: 9px;
+            background: #f9e8ee;
+        }
+
+        .drive-preview img {
+            display: block;
+            width: 100%;
+            max-height: 280px;
+            object-fit: contain;
+        }
+
+        .drive-preview-error {
+            display: none;
+            padding: 15px;
+            color: #a52d48;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        /* =========================================================
+           CHECKBOX
+        ========================================================= */
+
+        .diary-check-row {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            min-height: 42px;
+            padding: 10px 12px;
+            border: 1px solid #f0d5df;
+            border-radius: 10px;
+            background: #fff9fb;
+        }
+
+        .diary-check-row input {
+            width: 17px;
+            height: 17px;
+            accent-color: #e83e73;
+        }
+
+        .diary-check-row label {
+            margin: 0;
+            cursor: pointer;
+        }
+
+        /* =========================================================
+           FORM ACTIONS
+        ========================================================= */
+
+        .diary-form-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 9px;
+            margin-top: 5px;
+            padding-top: 20px;
+            border-top: 1px solid #f4e3e8;
+        }
+
+        .diary-btn {
+            min-height: 42px;
+            padding: 0 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 800;
+            transition: .2s ease;
+        }
+
+        .diary-btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .diary-btn.primary {
+            color: white;
+            background: linear-gradient(
+                135deg,
+                #ec407a,
+                #d81b60
+            );
+            box-shadow:
+                0 8px 20px
+                rgba(216,27,96,.16);
+        }
+
+        .diary-btn.secondary {
+            border: 1px solid #e9cbd5;
+            background: white;
+            color: #65414d;
+        }
+
+        .diary-btn.danger {
+            color: white;
+            background: #d93654;
+        }
+
+        /* =========================================================
+           ENTRIES
+        ========================================================= */
+
+        .entries-section {
+            margin-top: 25px;
+        }
+
+        .entries-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 13px;
+        }
+
+        .entries-header h2 {
+            margin: 0;
+            color: #351722;
+            font-size: 18px;
+        }
+
+        .entry-count {
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #fff0f5;
+            color: #d33667;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+        .entry-list {
+            display: grid;
+            gap: 12px;
+        }
+
+        .entry-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 18px;
+            padding: 16px;
+            border: 1px solid #efd9e1;
+            border-radius: 14px;
+            background: rgba(255,255,255,.92);
+            transition: .2s ease;
+        }
+
+        .entry-item:hover {
+            transform: translateY(-1px);
+            box-shadow:
+                0 10px 25px
+                rgba(100, 30, 50, .06);
+        }
+
+        .entry-main {
+            min-width: 0;
+        }
+
+        .entry-title {
+            margin: 0 0 6px;
+            color: #351722;
+            font-size: 14px;
+            font-weight: 800;
+        }
+
+        .entry-meta {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            flex-wrap: wrap;
+            color: #94737f;
+            font-size: 10px;
+        }
+
+        .entry-status {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 8px;
+            border-radius: 999px;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .entry-status.active {
+            background: #eaf8ef;
+            color: #21864a;
+        }
+
+        .entry-status.draft {
+            background: #fff5df;
+            color: #a66b00;
+        }
+
+        .entry-status.hidden {
+            background: #f2eef0;
+            color: #77646c;
+        }
+
+        .featured-badge {
+            padding: 4px 8px;
+            border-radius: 999px;
+            background: #fff0f5;
+            color: #d83368;
+            font-size: 9px;
+            font-weight: 800;
+        }
+
+        .entry-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .entry-action {
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ead1da;
+            border-radius: 9px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: .2s ease;
+        }
+
+        .entry-action:hover {
+            transform: translateY(-1px);
+        }
+
+        .entry-action.edit:hover {
+            background: #fff0f5;
+        }
+
+        .entry-action.view:hover {
+            background: #f0f7ff;
+        }
+
+        .entry-action.delete:hover {
+            background: #fff0f0;
+            border-color: #edb9c1;
+        }
+
+        .empty-entry {
+            padding: 45px 20px;
+            border: 1px dashed #e7cbd4;
+            border-radius: 15px;
+            color: #987b86;
+            background: rgba(255,255,255,.6);
+            text-align: center;
+        }
+
+        .empty-entry-icon {
+            margin-bottom: 8px;
+            font-size: 34px;
+        }
+
+        /* =========================================================
+           LOADING
+        ========================================================= */
+
+        .diary-loading {
+            padding: 30px;
+            color: #8f737e;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .diary-spinner {
+            width: 25px;
+            height: 25px;
+            margin: 0 auto 10px;
+            border: 3px solid #f4dce5;
+            border-top-color: #e83e73;
+            border-radius: 50%;
+            animation: diarySpin .7s linear infinite;
+        }
+
+        @keyframes diarySpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* =========================================================
+           TOAST
+        ========================================================= */
+
+        #diaryToast {
+            position: fixed;
+            right: 20px;
+            bottom: 20px;
+            z-index: 9999;
+            max-width: 350px;
+            padding: 13px 16px;
+            border-radius: 11px;
+            color: white;
+            background: #3b202a;
+            box-shadow: 0 15px 35px rgba(0,0,0,.18);
+            font-size: 12px;
+            font-weight: 700;
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(15px);
+            transition: .25s ease;
+        }
+
+        #diaryToast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #diaryToast.success {
+            background: #27864d;
+        }
+
+        #diaryToast.error {
+            background: #c73550;
+        }
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 700px) {
+
+            .diary-page {
+                width: min(100% - 20px, 1080px);
+                padding-top: 22px;
+            }
+
+            .diary-page-header {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .diary-page-title h1 {
+                font-size: 26px;
+            }
+
+            .diary-header-actions {
+                width: 100%;
+            }
+
+            .diary-top-btn {
+                flex: 1;
+            }
+
+            .diary-form-grid {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .diary-form-group.full {
+                grid-column: auto;
+            }
+
+            .diary-card-body {
+                padding: 16px;
+            }
+
+            .diary-form-actions {
+                flex-direction: column;
+            }
+
+            .diary-btn {
+                width: 100%;
+            }
+
+            .entry-item {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .entry-actions {
+                width: 100%;
+            }
+
+            .entry-action {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================================================
+         HEADER
+    ========================================================== -->
+
+    <header class="admin-header">
+        <div class="admin-header-inner">
+
+            <a href="dashboard.html" class="admin-logo">
+                ♥ LATA & RAKIB
+            </a>
+
+            <div class="admin-user-area">
+
+                <span id="adminEmail"></span>
+
+                <a
+                    href="../diary.html"
+                    class="diary-top-btn"
+                >
+                    View Diary
+                </a>
+
+                <a
+                    href="dashboard.html"
+                    class="diary-top-btn"
+                >
+                    Dashboard
+                </a>
+
+                <button
+                    type="button"
+                    class="logout-btn"
+                    id="logoutBtn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+    </header>
+
+
+    <!-- =========================================================
+         MAIN
+    ========================================================== -->
+
+    <main class="diary-page">
+
+        <div class="diary-page-header">
+
+            <div class="diary-page-title">
+
+                <h1>E-Diary Management</h1>
+
+                <p>
+                    Write and manage your private diary memories.
+                </p>
+
+            </div>
+
+            <div class="diary-header-actions">
+
+                <button
+                    type="button"
+                    class="diary-top-btn primary"
+                    id="newDiaryBtn"
+                >
+                    + New Diary
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- =====================================================
+             FORM CARD
+        ====================================================== -->
+
+        <section class="diary-card">
+
+            <div class="diary-card-header">
+
+                <h2 id="formTitle">
+                    New Diary
+                </h2>
+
+                <p>
+                    Add a memory, story, feeling or special moment.
+                </p>
+
+            </div>
+
+
+            <div class="diary-card-body">
+
+                <form id="diaryForm">
+
+                    <input
+                        type="hidden"
+                        id="diaryId"
+                    >
+
+
+                    <div class="diary-form-grid">
+
+                        <!-- TITLE -->
+
+                        <div class="diary-form-group full">
+
+                            <label for="diaryTitle">
+                                Diary Title
+                            </label>
+
+                            <input
+                                type="text"
+                                id="diaryTitle"
+                                placeholder="Write diary title..."
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- DATE -->
+
+                        <div class="diary-form-group">
+
+                            <label for="diaryDate">
+                                Diary Date
+                            </label>
+
+                            <input
+                                type="date"
+                                id="diaryDate"
+                                required
+                            >
+
+                        </div>
+
+
+                        <!-- STATUS -->
+
+                        <div class="diary-form-group">
+
+                            <label for="diaryStatus">
+                                Status
+                            </label>
+
+                            <select id="diaryStatus">
+
+                                <option value="active">
+                                    Active — Visible
+                                </option>
+
+                                <option value="draft">
+                                    Draft — Not Visible
+                                </option>
+
+                                <option value="hidden">
+                                    Hidden — Not Visible
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- IMAGE -->
+
+                        <div class="diary-form-group full">
+
+                            <label for="imageUrl">
+                                Image URL (Optional)
+                            </label>
+
+                            <input
+                                type="url"
+                                id="imageUrl"
+                                placeholder="Paste Google Drive Share Link here..."
+                                autocomplete="off"
+                            >
+
+                            <div class="diary-form-help">
+
+                                Google Drive example:
+                                https://drive.google.com/file/d/FILE_ID/view
+
+                                <br>
+
+                                The system will automatically convert the
+                                Drive Share Link into an image URL.
+
+                            </div>
+
+
+                            <div
+                                class="drive-preview"
+                                id="drivePreview"
+                            >
+
+                                <div class="drive-preview-label">
+                                    Image Preview
+                                </div>
+
+                                <div class="drive-preview-image-wrap">
+
+                                    <img
+                                        id="drivePreviewImage"
+                                        src=""
+                                        alt="Diary image preview"
+                                    >
+
+                                </div>
+
+                                <div
+                                    class="drive-preview-error"
+                                    id="drivePreviewError"
+                                >
+                                    Image could not be loaded.
+                                    Make sure the Google Drive file is
+                                    shared as "Anyone with the link → Viewer".
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <!-- CONTENT -->
+
+                        <div class="diary-form-group full">
+
+                            <label for="diaryContent">
+                                Diary Content
+                            </label>
+
+                            <textarea
+                                id="diaryContent"
+                                placeholder="Write your memory..."
+                                required
+                            ></textarea>
+
+                        </div>
+
+
+                        <!-- FEATURED -->
+
+                        <div class="diary-form-group full">
+
+                            <div class="diary-check-row">
+
+                                <input
+                                    type="checkbox"
+                                    id="isFeatured"
+                                >
+
+                                <label for="isFeatured">
+                                    Mark this diary as Featured
+                                </label>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="diary-form-actions">
+
+                        <button
+                            type="button"
+                            class="diary-btn secondary"
+                            id="cancelBtn"
+                        >
+                            Clear
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="diary-btn primary"
+                            id="saveBtn"
+                        >
+                            Save Diary
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             ENTRY LIST
+        ====================================================== -->
+
+        <section class="entries-section">
+
+            <div class="entries-header">
+
+                <h2>
+                    All Diary Entries
+                </h2>
+
+                <span
+                    class="entry-count"
+                    id="entryCount"
+                >
+                    0 entries
+                </span>
+
+            </div>
+
+
+            <div id="entryList">
+
+                <div class="diary-loading">
+
+                    <div class="diary-spinner"></div>
+
+                    Loading diary entries...
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- TOAST -->
+
+    <div id="diaryToast"></div>
+
+
+    <!-- =========================================================
+         SUPABASE
+    ========================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="../assets/js/supabase.js"></script>
+
+
+    <!-- =========================================================
+         JAVASCRIPT
+    ========================================================== -->
+
+    <script>
+
+        let currentUser = null;
+
+        let diaryEntries = [];
+
+        let toastTimer = null;
+
+
+        /* =========================================================
+           ELEMENTS
+        ========================================================== */
+
+        const form =
+            document.getElementById("diaryForm");
+
+        const diaryId =
+            document.getElementById("diaryId");
+
+        const diaryTitle =
+            document.getElementById("diaryTitle");
+
+        const diaryDate =
+            document.getElementById("diaryDate");
+
+        const diaryStatus =
+            document.getElementById("diaryStatus");
+
+        const imageUrl =
+            document.getElementById("imageUrl");
+
+        const diaryContent =
+            document.getElementById("diaryContent");
+
+        const isFeatured =
+            document.getElementById("isFeatured");
+
+        const entryList =
+            document.getElementById("entryList");
+
+        const entryCount =
+            document.getElementById("entryCount");
+
+        const formTitle =
+            document.getElementById("formTitle");
+
+        const saveBtn =
+            document.getElementById("saveBtn");
+
+        const drivePreview =
+            document.getElementById("drivePreview");
+
+        const drivePreviewImage =
+            document.getElementById("drivePreviewImage");
+
+        const drivePreviewError =
+            document.getElementById("drivePreviewError");
+
+
+        /* =========================================================
+           INIT
+        ========================================================== */
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            initAdminDiary
+        );
+
+
+        async function initAdminDiary() {
+
+            try {
+
+                const {
+                    data: {
+                        user
+                    },
+                    error: authError
+                } =
+                    await supabaseClient.auth.getUser();
+
+
+                if (authError || !user) {
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+                }
+
+
+                currentUser = user;
+
+
+                /* Check admin role */
+
+                const {
+                    data: profile,
+                    error: profileError
+                } =
+                    await supabaseClient
+                        .from("profiles")
+                        .select("role")
+                        .eq("id", user.id)
+                        .single();
+
+
+                if (
+                    profileError ||
+                    !profile ||
+                    profile.role !== "admin"
+                ) {
+
+                    alert(
+                        "You do not have permission to access E-Diary management."
+                    );
+
+                    await supabaseClient.auth.signOut();
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+                }
+
+
+                /* Email */
+
+                document.getElementById(
+                    "adminEmail"
+                ).textContent =
+                    user.email || "";
+
+
+                /* Default date */
+
+                resetForm();
+
+
+                /* Load entries */
+
+                await loadDiaryEntries();
+
+
+            } catch (error) {
+
+                console.error(
+                    "Diary Admin Init Error:",
+                    error
+                );
+
+                alert(
+                    "Unable to load E-Diary management."
+                );
+            }
+        }
+
+
+        /* =========================================================
+           GOOGLE DRIVE URL CONVERTER
+        ========================================================== */
+
+        function convertDriveImageUrl(url) {
+
+            if (!url) {
+                return "";
+            }
+
+
+            url = url.trim();
+
+
+            if (!url) {
+                return "";
+            }
+
+
+            /*
+             * Already thumbnail URL
+             */
+
+            if (
+                url.includes(
+                    "drive.google.com/thumbnail"
+                )
+            ) {
+
+                return url;
+            }
+
+
+            /*
+             * Already uc?export=view
+             */
+
+            if (
+                url.includes(
+                    "drive.google.com/uc?"
+                )
+            ) {
+
+                return url;
+            }
+
+
+            let fileId = "";
+
+
+            /*
+             * Standard:
+             *
+             * /file/d/FILE_ID/view
+             */
+
+            const fileMatch =
+                url.match(
+                    /\/file\/d\/([a-zA-Z0-9_-]+)/
+                );
+
+
+            if (fileMatch) {
+
+                fileId =
+                    fileMatch[1];
+
+            }
+
+
+            /*
+             * ?id=FILE_ID
+             */
+
+            if (!fileId) {
+
+                const idMatch =
+                    url.match(
+                        /[?&]id=([a-zA-Z0-9_-]+)/
+                    );
+
+
+                if (idMatch) {
+
+                    fileId =
+                        idMatch[1];
+
+                }
+
+            }
+
+
+            /*
+             * Google Drive File ID found
+             */
+
+            if (fileId) {
+
+                return (
+                    "https://drive.google.com/thumbnail" +
+                    "?id=" +
+                    encodeURIComponent(fileId) +
+                    "&sz=w1600"
+                );
+
+            }
+
+
+            /*
+             * Normal image URL
+             */
+
+            return url;
+        }
+
+
+        /* =========================================================
+           IMAGE PREVIEW
+        ========================================================== */
+
+        function updateImagePreview() {
+
+            const rawUrl =
+                imageUrl.value.trim();
+
+
+            if (!rawUrl) {
+
+                drivePreview.classList.remove(
+                    "show"
+                );
+
+                drivePreviewImage.src = "";
+
+                drivePreviewError.style.display =
+                    "none";
+
+                return;
+            }
+
+
+            const finalUrl =
+                convertDriveImageUrl(
+                    rawUrl
+                );
+
+
+            if (!finalUrl) {
+
+                drivePreview.classList.remove(
+                    "show"
+                );
+
+                return;
+            }
+
+
+            drivePreview.classList.add(
+                "show"
+            );
+
+            drivePreviewError.style.display =
+                "none";
+
+
+            drivePreviewImage.onload =
+                function () {
+
+                    drivePreviewError.style.display =
+                        "none";
+                };
+
+
+            drivePreviewImage.onerror =
+                function () {
+
+                    drivePreviewError.style.display =
+                        "block";
+                };
+
+
+            drivePreviewImage.src =
+                finalUrl;
+        }
+
+
+        imageUrl.addEventListener(
+            "input",
+            debounce(
+                updateImagePreview,
+                450
+            )
+        );
+
+
+        function debounce(
+            callback,
+            delay
+        ) {
+
+            let timer;
+
+            return function (...args) {
+
+                clearTimeout(timer);
+
+                timer =
+                    setTimeout(
+                        () =>
+                            callback.apply(
+                                this,
+                                args
+                            ),
+                        delay
+                    );
+            };
+        }
+
+
+        /* =========================================================
+           LOAD DIARY
+        ========================================================== */
+
+        async function loadDiaryEntries() {
+
+            entryList.innerHTML = `
+                <div class="diary-loading">
+                    <div class="diary-spinner"></div>
+                    Loading diary entries...
+                </div>
+            `;
+
+
+            const {
+                data,
+                error
+            } =
+                await supabaseClient
+                    .from("diary_entries")
+                    .select(`
+                        id,
+                        title,
+                        content,
+                        diary_date,
+                        image_url,
+                        is_featured,
+                        status,
+                        created_by,
+                        created_at,
+                        updated_at
+                    `)
+                    .order(
+                        "diary_date",
+                        {
+                            ascending: false
+                        }
+                    )
+                    .order(
+                        "created_at",
+                        {
+                            ascending: false
+                        }
+                    );
+
+
+            if (error) {
+
+                console.error(
+                    "Load Diary Error:",
+                    error
+                );
+
+                entryList.innerHTML = `
+                    <div class="empty-entry">
+                        <div class="empty-entry-icon">
+                            ⚠️
+                        </div>
+                        Failed to load diary entries.
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            diaryEntries =
+                data || [];
+
+
+            renderDiaryEntries();
+        }
+
+
+        /* =========================================================
+           RENDER ENTRY LIST
+        ========================================================== */
+
+        function renderDiaryEntries() {
+
+            entryCount.textContent =
+                `${diaryEntries.length} ${
+                    diaryEntries.length === 1
+                        ? "entry"
+                        : "entries"
+                }`;
+
+
+            if (
+                diaryEntries.length === 0
+            ) {
+
+                entryList.innerHTML = `
+                    <div class="empty-entry">
+                        <div class="empty-entry-icon">
+                            📖
+                        </div>
+
+                        <strong>
+                            No diary entries yet
+                        </strong>
+
+                        <br>
+
+                        <span>
+                            Click "+ New Diary" to create your first memory.
+                        </span>
+                    </div>
+                `;
+
+                return;
+            }
+
+
+            entryList.innerHTML =
+                diaryEntries
+                    .map(
+                        entry =>
+                            createEntryHTML(
+                                entry
+                            )
+                    )
+                    .join("");
+        }
+
+
+        function createEntryHTML(
+            entry
+        ) {
+
+            const title =
+                escapeHtml(
+                    entry.title ||
+                    "Untitled"
+                );
+
+
+            const date =
+                formatDate(
+                    entry.diary_date
+                );
+
+
+            const status =
+                entry.status ||
+                "active";
+
+
+            return `
+                <div class="entry-item">
+
+                    <div class="entry-main">
+
+                        <h3 class="entry-title">
+                            ${title}
+                        </h3>
+
+                        <div class="entry-meta">
+
+                            <span>
+                                ${date}
+                            </span>
+
+                            <span>•</span>
+
+                            <span class="entry-status ${escapeHtml(status)}">
+                                ${escapeHtml(
+                                    statusLabel(status)
+                                )}
+                            </span>
+
+                            ${
+                                entry.is_featured
+                                    ? `
+                                        <span class="featured-badge">
+                                            ♥ FEATURED
+                                        </span>
+                                    `
+                                    : ""
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="entry-actions">
+
+                        <button
+                            type="button"
+                            class="entry-action view"
+                            title="View"
+                            onclick="viewDiary('${entry.id}')"
+                        >
+                            👁
+                        </button>
+
+                        <button
+                            type="button"
+                            class="entry-action edit"
+                            title="Edit"
+                            onclick="editDiary('${entry.id}')"
+                        >
+                            ✏️
+                        </button>
+
+                        <button
+                            type="button"
+                            class="entry-action delete"
+                            title="Delete"
+                            onclick="deleteDiary('${entry.id}')"
+                        >
+                            🗑
+                        </button>
+
+                    </div>
+
+                </div>
+            `;
+        }
+
+
+        /* =========================================================
+           STATUS LABEL
+        ========================================================== */
+
+        function statusLabel(
+            status
+        ) {
+
+            if (status === "active") {
+                return "Active";
+            }
+
+            if (status === "draft") {
+                return "Draft";
+            }
+
+            if (status === "hidden") {
+                return "Hidden";
+            }
+
+            return status;
+        }
+
+
+        /* =========================================================
+           NEW DIARY
+        ========================================================== */
+
+        document
+            .getElementById("newDiaryBtn")
+            .addEventListener(
+                "click",
+                () => {
+
+                    resetForm();
+
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+
+                    setTimeout(
+                        () =>
+                            diaryTitle.focus(),
+                        250
+                    );
+                }
+            );
+
+
+        /* =========================================================
+           RESET FORM
+        ========================================================== */
+
+        function resetForm() {
+
+            form.reset();
+
+
+            diaryId.value =
+                "";
+
+
+            formTitle.textContent =
+                "New Diary";
+
+
+            saveBtn.textContent =
+                "Save Diary";
+
+
+            diaryStatus.value =
+                "active";
+
+
+            isFeatured.checked =
+                false;
+
+
+            /*
+             * Today's date
+             */
+
+            const today =
+                new Date();
+
+
+            const year =
+                today.getFullYear();
+
+
+            const month =
+                String(
+                    today.getMonth() + 1
+                ).padStart(
+                    2,
+                    "0"
+                );
+
+
+            const day =
+                String(
+                    today.getDate()
+                ).padStart(
+                    2,
+                    "0"
+                );
+
+
+            diaryDate.value =
+                `${year}-${month}-${day}`;
+
+
+            drivePreview.classList.remove(
+                "show"
+            );
+
+            drivePreviewImage.src =
+                "";
+
+            drivePreviewError.style.display =
+                "none";
+        }
+
+
+        document
+            .getElementById("cancelBtn")
+            .addEventListener(
+                "click",
+                resetForm
+            );
+
+
+        /* =========================================================
+           SAVE / UPDATE
+        ========================================================== */
+
+        form.addEventListener(
+            "submit",
+            async function (event) {
+
+                event.preventDefault();
+
+
+                if (!currentUser) {
+
+                    showToast(
+                        "Admin session expired.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                const title =
+                    diaryTitle.value.trim();
+
+
+                const content =
+                    diaryContent.value.trim();
+
+
+                const date =
+                    diaryDate.value;
+
+
+                const status =
+                    diaryStatus.value;
+
+
+                const rawImageUrl =
+                    imageUrl.value.trim();
+
+
+                if (!title) {
+
+                    showToast(
+                        "Please enter a diary title.",
+                        "error"
+                    );
+
+                    diaryTitle.focus();
+
+                    return;
+                }
+
+
+                if (!date) {
+
+                    showToast(
+                        "Please select diary date.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                if (!content) {
+
+                    showToast(
+                        "Please write diary content.",
+                        "error"
+                    );
+
+                    diaryContent.focus();
+
+                    return;
+                }
+
+
+                /*
+                 * Convert Google Drive link
+                 */
+
+                const finalImageUrl =
+                    convertDriveImageUrl(
+                        rawImageUrl
+                    );
+
+
+                saveBtn.disabled =
+                    true;
+
+                saveBtn.textContent =
+                    diaryId.value
+                        ? "Updating..."
+                        : "Saving...";
+
+
+                try {
+
+                    /*
+                     * UPDATE
+                     */
+
+                    if (diaryId.value) {
+
+                        const {
+                            error
+                        } =
+                            await supabaseClient
+                                .from(
+                                    "diary_entries"
+                                )
+                                .update({
+                                    title:
+                                        title,
+
+                                    content:
+                                        content,
+
+                                    diary_date:
+                                        date,
+
+                                    image_url:
+                                        finalImageUrl ||
+                                        null,
+
+                                    is_featured:
+                                        isFeatured.checked,
+
+                                    status:
+                                        status
+                                })
+                                .eq(
+                                    "id",
+                                    diaryId.value
+                                );
+
+
+                        if (error) {
+                            throw error;
+                        }
+
+
+                        showToast(
+                            "Diary updated successfully.",
+                            "success"
+                        );
+
+                    }
+
+                    /*
+                     * INSERT
+                     */
+
+                    else {
+
+                        const {
+                            error
+                        } =
+                            await supabaseClient
+                                .from(
+                                    "diary_entries"
+                                )
+                                .insert({
+                                    title:
+                                        title,
+
+                                    content:
+                                        content,
+
+                                    diary_date:
+                                        date,
+
+                                    image_url:
+                                        finalImageUrl ||
+                                        null,
+
+                                    is_featured:
+                                        isFeatured.checked,
+
+                                    status:
+                                        status,
+
+                                    created_by:
+                                        currentUser.id
+                                });
+
+
+                        if (error) {
+                            throw error;
+                        }
+
+
+                        showToast(
+                            "Diary created successfully.",
+                            "success"
+                        );
+                    }
+
+
+                    resetForm();
+
+                    await loadDiaryEntries();
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Save Diary Error:",
+                        error
+                    );
+
+                    showToast(
+                        error.message ||
+                        "Failed to save diary.",
+                        "error"
+                    );
+
+
+                } finally {
+
+                    saveBtn.disabled =
+                        false;
+
+                    saveBtn.textContent =
+                        diaryId.value
+                            ? "Update Diary"
+                            : "Save Diary";
+                }
+
+            }
+        );
+
+
+        /* =========================================================
+           EDIT
+        ========================================================== */
+
+        window.editDiary =
+            function (id) {
+
+                const entry =
+                    diaryEntries.find(
+                        item =>
+                            item.id === id
+                    );
+
+
+                if (!entry) {
+
+                    showToast(
+                        "Diary entry not found.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                diaryId.value =
+                    entry.id;
+
+
+                diaryTitle.value =
+                    entry.title || "";
+
+
+                diaryDate.value =
+                    entry.diary_date || "";
+
+
+                diaryStatus.value =
+                    entry.status || "active";
+
+
+                imageUrl.value =
+                    entry.image_url || "";
+
+
+                diaryContent.value =
+                    entry.content || "";
+
+
+                isFeatured.checked =
+                    Boolean(
+                        entry.is_featured
+                    );
+
+
+                formTitle.textContent =
+                    "Edit Diary";
+
+
+                saveBtn.textContent =
+                    "Update Diary";
+
+
+                updateImagePreview();
+
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+            };
+
+
+        /* =========================================================
+           VIEW
+        ========================================================== */
+
+        window.viewDiary =
+            function (id) {
+
+                const entry =
+                    diaryEntries.find(
+                        item =>
+                            item.id === id
+                    );
+
+
+                if (!entry) {
+                    return;
+                }
+
+
+                /*
+                 * Open public diary.
+                 *
+                 * User can unlock it with
+                 * their diary password.
+                 */
+
+                window.open(
+                    "../diary.html",
+                    "_blank"
+                );
+            };
+
+
+        /* =========================================================
+           DELETE
+        ========================================================== */
+
+        window.deleteDiary =
+            async function (id) {
+
+                const entry =
+                    diaryEntries.find(
+                        item =>
+                            item.id === id
+                    );
+
+
+                if (!entry) {
+                    return;
+                }
+
+
+                const confirmed =
+                    confirm(
+                        `Delete "${entry.title}"?\n\nThis action cannot be undone.`
+                    );
+
+
+                if (!confirmed) {
+                    return;
+                }
+
+
+                try {
+
+                    const {
+                        error
+                    } =
+                        await supabaseClient
+                            .from(
+                                "diary_entries"
+                            )
+                            .delete()
+                            .eq(
+                                "id",
+                                id
+                            );
+
+
+                    if (error) {
+                        throw error;
+                    }
+
+
+                    showToast(
+                        "Diary deleted successfully.",
+                        "success"
+                    );
+
+
+                    await loadDiaryEntries();
+
+
+                } catch (error) {
+
+                    console.error(
+                        "Delete Diary Error:",
+                        error
+                    );
+
+                    showToast(
+                        error.message ||
+                        "Failed to delete diary.",
+                        "error"
+                    );
+                }
+
+            };
+
+
+        /* =========================================================
+           LOGOUT
+        ========================================================== */
+
+        document
+            .getElementById("logoutBtn")
+            .addEventListener(
+                "click",
+                async function () {
+
+                    const confirmed =
+                        confirm(
+                            "Are you sure you want to logout?"
+                        );
+
+
+                    if (!confirmed) {
+                        return;
+                    }
+
+
+                    await supabaseClient.auth.signOut();
+
+
+                    window.location.href =
+                        "login.html";
+                }
+            );
+
+
+        /* =========================================================
+           TOAST
+        ========================================================== */
+
+        function showToast(
+            message,
+            type = ""
+        ) {
+
+            const toast =
+                document.getElementById(
+                    "diaryToast"
+                );
+
+
+            toast.textContent =
+                message;
+
+
+            toast.className =
+                `show ${type}`;
+
+
+            clearTimeout(
+                toastTimer
+            );
+
+
+            toastTimer =
+                setTimeout(
+                    () => {
+
+                        toast.className =
+                            "";
+
+                    },
+                    3000
+                );
+        }
+
+
+        /* =========================================================
+           DATE FORMAT
+        ========================================================== */
+
+        function formatDate(
+            dateString
+        ) {
+
+            if (!dateString) {
+                return "-";
+            }
+
+
+            const date =
+                new Date(
+                    dateString +
+                    "T00:00:00"
+                );
+
+
+            return date.toLocaleDateString(
+                "en-US",
+                {
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric"
+                }
+            );
+        }
+
+
+        /* =========================================================
+           HTML ESCAPE
+        ========================================================== */
+
+        function escapeHtml(
+            value
+        ) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+                return "";
+            }
+
+
+            return String(value)
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+        }
+
+    </script>
+
+</body>
+
+</html>

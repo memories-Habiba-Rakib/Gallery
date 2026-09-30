@@ -1,0 +1,2883 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Manage Photos | LATA & RAKIB</title>
+
+    <link
+        rel="stylesheet"
+        href="../assets/css/admin.css"
+    >
+
+    <style>
+
+        /* =====================================================
+           PHOTOS PAGE
+        ===================================================== */
+
+        .photos-page {
+            min-height: calc(100vh - 72px);
+            padding: 40px 20px 70px;
+        }
+
+
+        .photos-container {
+            width: 100%;
+            max-width: 1250px;
+            margin: 0 auto;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .photos-heading {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+
+        .photos-heading-left .page-kicker {
+            display: inline-block;
+            margin-bottom: 7px;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            color: var(--primary);
+        }
+
+
+        .photos-heading h1 {
+            font-size: 36px;
+            line-height: 1.2;
+            margin-bottom: 8px;
+            color: #28151d;
+        }
+
+
+        .photos-heading p {
+            color: var(--muted);
+            font-size: 14px;
+        }
+
+
+        .add-photo-top-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            min-height: 46px;
+            padding: 0 18px;
+            border-radius: 12px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #ec407a,
+                    #d81b60
+                );
+            color: white;
+            font-size: 13px;
+            font-weight: 700;
+            box-shadow:
+                0 10px 25px
+                rgba(216, 27, 96, 0.22);
+            transition: 0.2s ease;
+        }
+
+
+        .add-photo-top-btn:hover {
+            transform: translateY(-2px);
+        }
+
+
+        /* =====================================================
+           TOOLBAR
+        ===================================================== */
+
+        .photos-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 18px;
+            margin-bottom: 20px;
+            background: rgba(255, 255, 255, 0.88);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            box-shadow: var(--shadow);
+        }
+
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 500px;
+        }
+
+
+        .search-box input {
+            width: 100%;
+            height: 45px;
+            padding: 0 15px 0 43px;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            outline: none;
+            background: #fffafd;
+            color: var(--text);
+        }
+
+
+        .search-box input:focus {
+            border-color:
+                rgba(233, 30, 99, 0.5);
+            box-shadow:
+                0 0 0 4px
+                rgba(233, 30, 99, 0.08);
+        }
+
+
+        .search-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #a88b96;
+            pointer-events: none;
+        }
+
+
+        .filter-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+
+        .filter-box select {
+            height: 45px;
+            padding: 0 35px 0 12px;
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            outline: none;
+            background: #fffafd;
+            color: var(--text);
+        }
+
+
+        .photo-count {
+            white-space: nowrap;
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           TABLE CARD
+        ===================================================== */
+
+        .photos-table-card {
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.90);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+
+        .table-scroll {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+
+        .photos-table {
+            width: 100%;
+            min-width: 900px;
+            border-collapse: collapse;
+        }
+
+
+        .photos-table th {
+            padding: 15px 14px;
+            text-align: left;
+            background: #fff4f7;
+            color: #755762;
+            border-bottom:
+                1px solid var(--border);
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            white-space: nowrap;
+        }
+
+
+        .photos-table td {
+            padding: 13px 14px;
+            border-bottom:
+                1px solid rgba(233, 30, 99, 0.08);
+            vertical-align: middle;
+            font-size: 13px;
+        }
+
+
+        .photos-table tbody tr {
+            transition: 0.18s ease;
+        }
+
+
+        .photos-table tbody tr:hover {
+            background: #fff9fb;
+        }
+
+
+        .photos-table tbody tr:last-child td {
+            border-bottom: 0;
+        }
+
+
+        /* =====================================================
+           PHOTO THUMBNAIL
+        ===================================================== */
+
+        .photo-thumb {
+            width: 64px;
+            height: 52px;
+            overflow: hidden;
+            border-radius: 9px;
+            background: #f9e7ed;
+        }
+
+
+        .photo-thumb img {
+            width: 100%;
+            height: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+
+        .photo-thumb-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #c59eaa;
+            font-size: 20px;
+        }
+
+
+        /* =====================================================
+           PHOTO TITLE
+        ===================================================== */
+
+        .photo-title-cell {
+            max-width: 260px;
+        }
+
+
+        .photo-title {
+            display: block;
+            max-width: 260px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            font-weight: 700;
+            color: #321c25;
+        }
+
+
+        .photo-slug {
+            display: block;
+            max-width: 260px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-top: 3px;
+            color: #a18b93;
+            font-size: 10px;
+        }
+
+
+        /* =====================================================
+           FEATURED
+        ===================================================== */
+
+        .featured-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 5px 8px;
+            border-radius: 20px;
+            background: rgba(255, 193, 7, 0.12);
+            color: #9a7200;
+            font-size: 10px;
+            font-weight: 800;
+        }
+
+
+        .not-featured {
+            color: #aaa;
+            font-size: 12px;
+        }
+
+
+        /* =====================================================
+           ACTIONS
+        ===================================================== */
+
+        .action-buttons {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+
+        .table-action-btn {
+            width: 34px;
+            height: 34px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.18s ease;
+        }
+
+
+        .table-action-btn:hover {
+            transform: translateY(-1px);
+        }
+
+
+        .edit-btn:hover {
+            background: #fff1f6;
+            border-color: rgba(233, 30, 99, 0.25);
+        }
+
+
+        .view-btn:hover {
+            background: #f2f8ff;
+            border-color: rgba(33, 150, 243, 0.25);
+        }
+
+
+        .delete-btn:hover {
+            background: #fff1f1;
+            border-color: rgba(220, 53, 69, 0.25);
+        }
+
+
+        /* =====================================================
+           EMPTY / LOADING
+        ===================================================== */
+
+        .table-state {
+            padding: 70px 20px;
+            text-align: center;
+            color: var(--muted);
+        }
+
+
+        .table-state-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+
+        .table-state h3 {
+            margin-bottom: 7px;
+            color: var(--text);
+            font-size: 18px;
+        }
+
+
+        .table-state p {
+            font-size: 13px;
+        }
+
+
+        .loading-spinner-large {
+            width: 32px;
+            height: 32px;
+            margin: 0 auto 15px;
+            border: 3px solid rgba(233, 30, 99, 0.15);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: photosSpin 0.7s linear infinite;
+        }
+
+
+        @keyframes photosSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+
+        /* =====================================================
+           MODAL
+        ===================================================== */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            background:
+                rgba(45, 15, 27, 0.52);
+            backdrop-filter: blur(6px);
+        }
+
+
+        .modal-overlay.show {
+            display: flex;
+        }
+
+
+        .modal {
+            width: 100%;
+            max-width: 620px;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 27px;
+            background: white;
+            border-radius: 22px;
+            box-shadow:
+                0 30px 90px
+                rgba(0, 0, 0, 0.22);
+        }
+
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+
+        .modal-header h2 {
+            font-size: 22px;
+        }
+
+
+        .modal-close {
+            width: 35px;
+            height: 35px;
+            border: 0;
+            border-radius: 10px;
+            background: #fff0f4;
+            color: #8d5c6c;
+            cursor: pointer;
+            font-size: 19px;
+        }
+
+
+        .modal-close:hover {
+            background: #ffe2eb;
+        }
+
+
+        .edit-form-group {
+            margin-bottom: 17px;
+        }
+
+
+        .edit-form-group label {
+            display: block;
+            margin-bottom: 7px;
+            font-size: 12px;
+            font-weight: 700;
+            color: #513640;
+        }
+
+
+        .edit-form-group input,
+        .edit-form-group textarea,
+        .edit-form-group select {
+            width: 100%;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            outline: none;
+            background: #fffafd;
+            color: var(--text);
+        }
+
+
+        .edit-form-group input,
+        .edit-form-group select {
+            height: 44px;
+            padding: 0 12px;
+        }
+
+
+        .edit-form-group textarea {
+            min-height: 90px;
+            padding: 11px 12px;
+            resize: vertical;
+        }
+
+
+        .edit-form-group input:focus,
+        .edit-form-group textarea:focus,
+        .edit-form-group select:focus {
+            border-color:
+                rgba(233, 30, 99, 0.5);
+            box-shadow:
+                0 0 0 4px
+                rgba(233, 30, 99, 0.08);
+        }
+
+
+        .edit-form-row {
+            display: grid;
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+
+        .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 23px;
+        }
+
+
+        .modal-actions .admin-btn {
+            flex: 1;
+        }
+
+
+        .modal-cancel {
+            min-height: 48px;
+            padding: 0 18px;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            background: white;
+            color: var(--text);
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+
+        .modal-message {
+            min-height: 20px;
+            margin-top: 12px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+
+        .modal-message.error {
+            color: var(--danger);
+        }
+
+
+        .modal-message.success {
+            color: var(--success);
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+            position: fixed;
+            right: 22px;
+            bottom: 22px;
+            z-index: 2000;
+            max-width: 350px;
+            padding: 14px 17px;
+            border-radius: 12px;
+            background: #2e1b23;
+            color: white;
+            box-shadow:
+                0 15px 40px
+                rgba(0, 0, 0, 0.2);
+            font-size: 13px;
+            font-weight: 600;
+            opacity: 0;
+            transform: translateY(15px);
+            pointer-events: none;
+            transition: 0.25s ease;
+        }
+
+
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        .toast.success {
+            background: #237b4b;
+        }
+
+
+        .toast.error {
+            background: #b92d3d;
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 700px) {
+
+            .photos-page {
+                padding:
+                    28px 12px 50px;
+            }
+
+
+            .photos-heading {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+
+            .photos-heading h1 {
+                font-size: 30px;
+            }
+
+
+            .add-photo-top-btn {
+                width: 100%;
+            }
+
+
+            .photos-toolbar {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 13px;
+            }
+
+
+            .search-box {
+                max-width: none;
+            }
+
+
+            .filter-box {
+                justify-content: space-between;
+            }
+
+
+            .filter-box select {
+                flex: 1;
+            }
+
+
+            .photo-count {
+                text-align: right;
+            }
+
+
+            .modal {
+                padding: 20px 16px;
+                border-radius: 18px;
+            }
+
+
+            .edit-form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+
+            .modal-actions {
+                flex-direction: column;
+            }
+
+
+            .modal-cancel {
+                width: 100%;
+            }
+
+
+            .toast {
+                right: 12px;
+                left: 12px;
+                bottom: 12px;
+                max-width: none;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header class="admin-header">
+
+        <div class="admin-header-inner">
+
+            <a
+                href="dashboard.html"
+                class="admin-logo"
+            >
+                ♥ LATA & RAKIB
+            </a>
+
+
+            <div class="admin-user-area">
+
+                <span id="adminEmail">
+                    Admin
+                </span>
+
+
+                <button
+                    type="button"
+                    id="logoutButton"
+                    class="logout-btn"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="photos-page">
+
+        <div class="photos-container">
+
+
+            <!-- PAGE HEADING -->
+
+            <div class="photos-heading">
+
+                <div class="photos-heading-left">
+
+                    <span class="page-kicker">
+                        GALLERY MANAGEMENT
+                    </span>
+
+                    <h1>
+                        Manage Photos
+                    </h1>
+
+                    <p>
+                        View, edit and manage your memories.
+                    </p>
+
+                </div>
+
+
+                <a
+                    href="add-photo.html"
+                    class="add-photo-top-btn"
+                >
+                    ＋ Add New Photo
+                </a>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 TOOLBAR
+            ================================================== -->
+
+            <div class="photos-toolbar">
+
+
+                <div class="search-box">
+
+                    <span class="search-icon">
+                        🔍
+                    </span>
+
+                    <input
+                        type="search"
+                        id="searchInput"
+                        placeholder="Search photos by title..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <div class="filter-box">
+
+                    <select id="statusFilter">
+
+                        <option value="all">
+                            All Status
+                        </option>
+
+                        <option value="active">
+                            Active
+                        </option>
+
+                        <option value="draft">
+                            Draft
+                        </option>
+
+                        <option value="archived">
+                            Archived
+                        </option>
+
+                    </select>
+
+
+                    <span
+                        class="photo-count"
+                        id="photoCount"
+                    >
+                        0 photos
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 TABLE
+            ================================================== -->
+
+            <div class="photos-table-card">
+
+                <div
+                    id="tableState"
+                    class="table-state"
+                >
+
+                    <div class="loading-spinner-large"></div>
+
+                    <p>
+                        Loading photos...
+                    </p>
+
+                </div>
+
+
+                <div
+                    id="tableWrapper"
+                    class="table-scroll"
+                    style="display:none;"
+                >
+
+                    <table class="photos-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Photo
+                                </th>
+
+                                <th>
+                                    Title
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Featured
+                                </th>
+
+                                <th>
+                                    Order
+                                </th>
+
+                                <th>
+                                    Date
+                                </th>
+
+                                <th>
+                                    Actions
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="photosTableBody">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =====================================================
+         EDIT MODAL
+    ====================================================== -->
+
+    <div
+        id="editModal"
+        class="modal-overlay"
+    >
+
+        <div class="modal">
+
+
+            <div class="modal-header">
+
+                <h2>
+                    Edit Photo
+                </h2>
+
+
+                <button
+                    type="button"
+                    id="closeModalButton"
+                    class="modal-close"
+                >
+                    ×
+                </button>
+
+            </div>
+
+
+            <form id="editPhotoForm">
+
+
+                <input
+                    type="hidden"
+                    id="editPhotoId"
+                >
+
+
+                <!-- TITLE -->
+
+                <div class="edit-form-group">
+
+                    <label for="editTitle">
+                        Photo Title
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editTitle"
+                        maxlength="150"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="edit-form-group">
+
+                    <label for="editDescription">
+                        Description
+                    </label>
+
+                    <textarea
+                        id="editDescription"
+                        maxlength="1000"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- ALT -->
+
+                <div class="edit-form-group">
+
+                    <label for="editAltText">
+                        Alt Text
+                    </label>
+
+                    <input
+                        type="text"
+                        id="editAltText"
+                        maxlength="250"
+                    >
+
+                </div>
+
+
+                <!-- DRIVE URL -->
+
+                <div class="edit-form-group">
+
+                    <label for="editDriveUrl">
+                        Google Drive URL
+                    </label>
+
+                    <input
+                        type="url"
+                        id="editDriveUrl"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- ROW -->
+
+                <div class="edit-form-row">
+
+
+                    <div class="edit-form-group">
+
+                        <label for="editStatus">
+                            Status
+                        </label>
+
+                        <select id="editStatus">
+
+                            <option value="active">
+                                Active
+                            </option>
+
+                            <option value="draft">
+                                Draft
+                            </option>
+
+                            <option value="archived">
+                                Archived
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="edit-form-group">
+
+                        <label for="editSortOrder">
+                            Sort Order
+                        </label>
+
+                        <input
+                            type="number"
+                            id="editSortOrder"
+                            min="0"
+                            step="1"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <!-- FEATURED -->
+
+                <div class="edit-form-group">
+
+                    <label>
+                        Featured
+                    </label>
+
+                    <div class="checkbox-row">
+
+                        <input
+                            type="checkbox"
+                            id="editFeatured"
+                        >
+
+                        <label for="editFeatured">
+                            Show as featured photo
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        id="modalCancelButton"
+                        class="modal-cancel"
+                    >
+                        Cancel
+                    </button>
+
+
+                    <button
+                        type="submit"
+                        id="updateButton"
+                        class="admin-btn"
+                    >
+                        Update Photo
+                    </button>
+
+                </div>
+
+
+                <div
+                    id="modalMessage"
+                    class="modal-message"
+                ></div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================================================
+         TOAST
+    ====================================================== -->
+
+    <div
+        id="toast"
+        class="toast"
+    ></div>
+
+
+
+    <!-- =====================================================
+         SUPABASE
+    ====================================================== -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <script src="../assets/js/supabase.js"></script>
+
+
+
+    <script>
+
+        /* =====================================================
+           ELEMENTS
+        ===================================================== */
+
+        const adminEmail =
+            document.getElementById(
+                "adminEmail"
+            );
+
+
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
+
+
+        const searchInput =
+            document.getElementById(
+                "searchInput"
+            );
+
+
+        const statusFilter =
+            document.getElementById(
+                "statusFilter"
+            );
+
+
+        const photoCount =
+            document.getElementById(
+                "photoCount"
+            );
+
+
+        const tableState =
+            document.getElementById(
+                "tableState"
+            );
+
+
+        const tableWrapper =
+            document.getElementById(
+                "tableWrapper"
+            );
+
+
+        const photosTableBody =
+            document.getElementById(
+                "photosTableBody"
+            );
+
+
+        /* Modal */
+
+        const editModal =
+            document.getElementById(
+                "editModal"
+            );
+
+
+        const closeModalButton =
+            document.getElementById(
+                "closeModalButton"
+            );
+
+
+        const modalCancelButton =
+            document.getElementById(
+                "modalCancelButton"
+            );
+
+
+        const editPhotoForm =
+            document.getElementById(
+                "editPhotoForm"
+            );
+
+
+        const editPhotoId =
+            document.getElementById(
+                "editPhotoId"
+            );
+
+
+        const editTitle =
+            document.getElementById(
+                "editTitle"
+            );
+
+
+        const editDescription =
+            document.getElementById(
+                "editDescription"
+            );
+
+
+        const editAltText =
+            document.getElementById(
+                "editAltText"
+            );
+
+
+        const editDriveUrl =
+            document.getElementById(
+                "editDriveUrl"
+            );
+
+
+        const editStatus =
+            document.getElementById(
+                "editStatus"
+            );
+
+
+        const editSortOrder =
+            document.getElementById(
+                "editSortOrder"
+            );
+
+
+        const editFeatured =
+            document.getElementById(
+                "editFeatured"
+            );
+
+
+        const updateButton =
+            document.getElementById(
+                "updateButton"
+            );
+
+
+        const modalMessage =
+            document.getElementById(
+                "modalMessage"
+            );
+
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+
+        /* =====================================================
+           VARIABLES
+        ===================================================== */
+
+        let currentUser = null;
+
+        let allPhotos = [];
+
+        let filteredPhotos = [];
+
+        let toastTimer = null;
+
+
+
+        /* =====================================================
+           ESCAPE HTML
+        ===================================================== */
+
+        function escapeHtml(value) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+                return "";
+            }
+
+
+            return String(value)
+                .replace(
+                    /&/g,
+                    "&amp;"
+                )
+                .replace(
+                    /</g,
+                    "&lt;"
+                )
+                .replace(
+                    />/g,
+                    "&gt;"
+                )
+                .replace(
+                    /"/g,
+                    "&quot;"
+                )
+                .replace(
+                    /'/g,
+                    "&#039;"
+                );
+        }
+
+
+
+        /* =====================================================
+           EXTRACT DRIVE ID
+        ===================================================== */
+
+        function extractDriveFileId(url) {
+
+            if (!url) {
+                return null;
+            }
+
+
+            const cleanUrl =
+                url.trim();
+
+
+            let match =
+                cleanUrl.match(
+                    /\/file\/d\/([a-zA-Z0-9_-]+)/
+                );
+
+
+            if (
+                match &&
+                match[1]
+            ) {
+
+                return match[1];
+            }
+
+
+            match =
+                cleanUrl.match(
+                    /[?&]id=([a-zA-Z0-9_-]+)/
+                );
+
+
+            if (
+                match &&
+                match[1]
+            ) {
+
+                return match[1];
+            }
+
+
+            return null;
+        }
+
+
+
+        /* =====================================================
+           DRIVE THUMBNAIL
+        ===================================================== */
+
+        function getThumbnailUrl(photo) {
+
+            if (
+                photo.thumbnail_url
+            ) {
+
+                return photo.thumbnail_url;
+            }
+
+
+            if (
+                photo.preview_url
+            ) {
+
+                return photo.preview_url;
+            }
+
+
+            if (
+                photo.drive_file_id
+            ) {
+
+                return (
+                    "https://drive.google.com/thumbnail?id=" +
+                    encodeURIComponent(
+                        photo.drive_file_id
+                    ) +
+                    "&sz=w600"
+                );
+            }
+
+
+            return "";
+        }
+
+
+
+        /* =====================================================
+           FORMAT DATE
+        ===================================================== */
+
+        function formatDate(dateValue) {
+
+            if (!dateValue) {
+                return "—";
+            }
+
+
+            const date =
+                new Date(
+                    dateValue
+                );
+
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+
+                return "—";
+            }
+
+
+            return date.toLocaleDateString(
+                "en-US",
+                {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric"
+                }
+            );
+        }
+
+
+
+        /* =====================================================
+           SHOW TOAST
+        ===================================================== */
+
+        function showToast(
+            message,
+            type = ""
+        ) {
+
+            clearTimeout(
+                toastTimer
+            );
+
+
+            toast.textContent =
+                message;
+
+
+            toast.className =
+                "toast show " +
+                type;
+
+
+            toastTimer =
+                setTimeout(
+                    function() {
+
+                        toast.className =
+                            "toast";
+
+                    },
+                    3000
+                );
+        }
+
+
+
+        /* =====================================================
+           CHECK ADMIN
+        ===================================================== */
+
+        async function checkAdmin() {
+
+            try {
+
+                const {
+                    data: userData,
+                    error: userError
+                } =
+                await supabaseClient.auth
+                    .getUser();
+
+
+                if (
+                    userError ||
+                    !userData.user
+                ) {
+
+                    window.location.href =
+                        "login.html";
+
+                    return false;
+                }
+
+
+                currentUser =
+                    userData.user;
+
+
+                const {
+                    data: profile,
+                    error: profileError
+                } =
+                await supabaseClient
+                    .from("profiles")
+                    .select("role")
+                    .eq(
+                        "id",
+                        currentUser.id
+                    )
+                    .single();
+
+
+                if (
+                    profileError ||
+                    !profile ||
+                    profile.role !== "admin"
+                ) {
+
+                    await supabaseClient.auth
+                        .signOut();
+
+
+                    window.location.href =
+                        "login.html";
+
+                    return false;
+                }
+
+
+                adminEmail.textContent =
+                    currentUser.email ||
+                    "Admin";
+
+
+                return true;
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Admin check error:",
+                    error
+                );
+
+
+                window.location.href =
+                    "login.html";
+
+                return false;
+            }
+        }
+
+
+
+        /* =====================================================
+           LOAD PHOTOS
+        ===================================================== */
+
+        async function loadPhotos() {
+
+            showLoading();
+
+
+            try {
+
+                const {
+                    data,
+                    error
+                } =
+                await supabaseClient
+                    .from("photos")
+                    .select(`
+                        id,
+                        title,
+                        slug,
+                        description,
+                        drive_file_id,
+                        drive_url,
+                        thumbnail_url,
+                        preview_url,
+                        alt_text,
+                        status,
+                        is_featured,
+                        sort_order,
+                        created_at,
+                        updated_at,
+                        category_id
+                    `)
+                    .order(
+                        "sort_order",
+                        {
+                            ascending: true
+                        }
+                    )
+                    .order(
+                        "created_at",
+                        {
+                            ascending: false
+                        }
+                    );
+
+
+                if (error) {
+
+                    console.error(
+                        "Load photos error:",
+                        error
+                    );
+
+
+                    throw new Error(
+                        error.message
+                    );
+                }
+
+
+                allPhotos =
+                    data || [];
+
+
+                applyFilters();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    error
+                );
+
+
+                showError(
+                    error.message ||
+                    "Could not load photos."
+                );
+            }
+        }
+
+
+
+        /* =====================================================
+           LOADING STATE
+        ===================================================== */
+
+        function showLoading() {
+
+            tableWrapper.style.display =
+                "none";
+
+
+            tableState.style.display =
+                "block";
+
+
+            tableState.innerHTML = `
+
+                <div
+                    class="loading-spinner-large"
+                ></div>
+
+                <p>
+                    Loading photos...
+                </p>
+
+            `;
+        }
+
+
+
+        /* =====================================================
+           ERROR STATE
+        ===================================================== */
+
+        function showError(message) {
+
+            tableWrapper.style.display =
+                "none";
+
+
+            tableState.style.display =
+                "block";
+
+
+            tableState.innerHTML = `
+
+                <div class="table-state-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    Something went wrong
+                </h3>
+
+                <p>
+                    ${escapeHtml(message)}
+                </p>
+
+            `;
+        }
+
+
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        function showEmpty(message) {
+
+            tableWrapper.style.display =
+                "none";
+
+
+            tableState.style.display =
+                "block";
+
+
+            tableState.innerHTML = `
+
+                <div class="table-state-icon">
+                    🖼️
+                </div>
+
+                <h3>
+                    No Photos Found
+                </h3>
+
+                <p>
+                    ${escapeHtml(message)}
+                </p>
+
+            `;
+        }
+
+
+
+        /* =====================================================
+           APPLY FILTERS
+        ===================================================== */
+
+        function applyFilters() {
+
+            const search =
+                searchInput.value
+                    .trim()
+                    .toLowerCase();
+
+
+            const status =
+                statusFilter.value;
+
+
+            filteredPhotos =
+                allPhotos.filter(
+                    function(photo) {
+
+                        const title =
+                            (
+                                photo.title ||
+                                ""
+                            ).toLowerCase();
+
+
+                        const description =
+                            (
+                                photo.description ||
+                                ""
+                            ).toLowerCase();
+
+
+                        const slug =
+                            (
+                                photo.slug ||
+                                ""
+                            ).toLowerCase();
+
+
+                        const matchesSearch =
+                            !search ||
+                            title.includes(search) ||
+                            description.includes(search) ||
+                            slug.includes(search);
+
+
+                        const matchesStatus =
+                            status === "all" ||
+                            photo.status === status;
+
+
+                        return (
+                            matchesSearch &&
+                            matchesStatus
+                        );
+
+                    }
+                );
+
+
+            renderPhotos();
+        }
+
+
+
+        /* =====================================================
+           RENDER PHOTOS
+        ===================================================== */
+
+        function renderPhotos() {
+
+            photoCount.textContent =
+                `${filteredPhotos.length} ${
+                    filteredPhotos.length === 1
+                        ? "photo"
+                        : "photos"
+                }`;
+
+
+            if (
+                filteredPhotos.length === 0
+            ) {
+
+                showEmpty(
+                    allPhotos.length === 0
+                        ? "No photos have been added yet."
+                        : "No photos match your search or filter."
+                );
+
+
+                return;
+            }
+
+
+            tableState.style.display =
+                "none";
+
+
+            tableWrapper.style.display =
+                "block";
+
+
+            photosTableBody.innerHTML =
+                filteredPhotos
+                    .map(
+                        function(photo) {
+
+                            return createPhotoRow(
+                                photo
+                            );
+
+                        }
+                    )
+                    .join("");
+        }
+
+
+
+        /* =====================================================
+           CREATE TABLE ROW
+        ===================================================== */
+
+        function createPhotoRow(photo) {
+
+            const thumbnail =
+                getThumbnailUrl(
+                    photo
+                );
+
+
+            const statusClass =
+                photo.status === "active"
+                    ? "active"
+                    : photo.status === "draft"
+                        ? "draft"
+                        : "archived";
+
+
+            const featuredHtml =
+                photo.is_featured
+
+                    ? `
+                        <span
+                            class="featured-badge"
+                        >
+                            ⭐ Featured
+                        </span>
+                      `
+
+                    : `
+                        <span
+                            class="not-featured"
+                        >
+                            —
+                        </span>
+                      `;
+
+
+            const imageHtml =
+                thumbnail
+
+                    ? `
+                        <img
+                            src="${escapeHtml(thumbnail)}"
+                            alt="${escapeHtml(photo.alt_text || photo.title || "Photo")}"
+                            loading="lazy"
+                            onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=&quot;photo-thumb-placeholder&quot;>🖼️</div>';"
+                        >
+                      `
+
+                    : `
+                        <div
+                            class="photo-thumb-placeholder"
+                        >
+                            🖼️
+                        </div>
+                      `;
+
+
+            return `
+
+                <tr>
+
+                    <!-- PHOTO -->
+
+                    <td>
+
+                        <div class="photo-thumb">
+                            ${imageHtml}
+                        </div>
+
+                    </td>
+
+
+                    <!-- TITLE -->
+
+                    <td>
+
+                        <div
+                            class="photo-title-cell"
+                        >
+
+                            <span
+                                class="photo-title"
+                                title="${escapeHtml(photo.title || "")}"
+                            >
+                                ${escapeHtml(
+                                    photo.title ||
+                                    "Untitled"
+                                )}
+                            </span>
+
+
+                            <span
+                                class="photo-slug"
+                                title="${escapeHtml(photo.slug || "")}"
+                            >
+                                ${escapeHtml(
+                                    photo.slug ||
+                                    ""
+                                )}
+                            </span>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- STATUS -->
+
+                    <td>
+
+                        <span
+                            class="status-badge ${statusClass}"
+                        >
+                            ${escapeHtml(
+                                photo.status ||
+                                "unknown"
+                            )}
+                        </span>
+
+                    </td>
+
+
+                    <!-- FEATURED -->
+
+                    <td>
+
+                        ${featuredHtml}
+
+                    </td>
+
+
+                    <!-- ORDER -->
+
+                    <td>
+
+                        ${Number(
+                            photo.sort_order || 0
+                        )}
+
+                    </td>
+
+
+                    <!-- DATE -->
+
+                    <td>
+
+                        ${formatDate(
+                            photo.created_at
+                        )}
+
+                    </td>
+
+
+                    <!-- ACTIONS -->
+
+                    <td>
+
+                        <div
+                            class="action-buttons"
+                        >
+
+                            <button
+                                type="button"
+                                class="table-action-btn view-btn"
+                                title="View Photo"
+                                onclick="viewPhoto('${escapeHtml(photo.id)}')"
+                            >
+                                👁️
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="table-action-btn edit-btn"
+                                title="Edit Photo"
+                                onclick="openEditModal('${escapeHtml(photo.id)}')"
+                            >
+                                ✏️
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="table-action-btn delete-btn"
+                                title="Delete Photo"
+                                onclick="deletePhoto('${escapeHtml(photo.id)}')"
+                            >
+                                🗑️
+                            </button>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+            `;
+        }
+
+
+
+        /* =====================================================
+           VIEW PHOTO
+        ===================================================== */
+
+        window.viewPhoto =
+            function(photoId) {
+
+                const photo =
+                    allPhotos.find(
+                        function(item) {
+
+                            return item.id === photoId;
+
+                        }
+                    );
+
+
+                if (!photo) {
+                    return;
+                }
+
+
+                /*
+                 * Public photo page
+                 */
+
+                window.open(
+                    "../photo.html?id=" +
+                    encodeURIComponent(
+                        photo.id
+                    ),
+                    "_blank"
+                );
+            };
+
+
+
+        /* =====================================================
+           OPEN EDIT MODAL
+        ===================================================== */
+
+        window.openEditModal =
+            function(photoId) {
+
+                const photo =
+                    allPhotos.find(
+                        function(item) {
+
+                            return item.id === photoId;
+
+                        }
+                    );
+
+
+                if (!photo) {
+
+                    showToast(
+                        "Photo not found.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                editPhotoId.value =
+                    photo.id;
+
+
+                editTitle.value =
+                    photo.title ||
+                    "";
+
+
+                editDescription.value =
+                    photo.description ||
+                    "";
+
+
+                editAltText.value =
+                    photo.alt_text ||
+                    "";
+
+
+                editDriveUrl.value =
+                    photo.drive_url ||
+                    "";
+
+
+                editStatus.value =
+                    photo.status ||
+                    "active";
+
+
+                editSortOrder.value =
+                    Number(
+                        photo.sort_order || 0
+                    );
+
+
+                editFeatured.checked =
+                    Boolean(
+                        photo.is_featured
+                    );
+
+
+                modalMessage.textContent =
+                    "";
+
+
+                modalMessage.className =
+                    "modal-message";
+
+
+                editModal.classList.add(
+                    "show"
+                );
+
+
+                document.body.style.overflow =
+                    "hidden";
+            };
+
+
+
+        /* =====================================================
+           CLOSE EDIT MODAL
+        ===================================================== */
+
+        function closeEditModal() {
+
+            editModal.classList.remove(
+                "show"
+            );
+
+
+            document.body.style.overflow =
+                "";
+        }
+
+
+        closeModalButton.addEventListener(
+            "click",
+            closeEditModal
+        );
+
+
+        modalCancelButton.addEventListener(
+            "click",
+            closeEditModal
+        );
+
+
+        editModal.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target ===
+                    editModal
+                ) {
+
+                    closeEditModal();
+                }
+
+            }
+        );
+
+
+        document.addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Escape" &&
+                    editModal.classList.contains(
+                        "show"
+                    )
+                ) {
+
+                    closeEditModal();
+                }
+
+            }
+        );
+
+
+
+        /* =====================================================
+           CREATE SLUG
+        ===================================================== */
+
+        function createSlug(text) {
+
+            return text
+                .toString()
+                .toLowerCase()
+                .trim()
+                .replace(
+                    /[^\w\s-]/g,
+                    ""
+                )
+                .replace(
+                    /[\s_-]+/g,
+                    "-"
+                )
+                .replace(
+                    /^-+|-+$/g,
+                    ""
+                );
+        }
+
+
+
+        /* =====================================================
+           UNIQUE SLUG
+        ===================================================== */
+
+        async function createUniqueSlug(
+            title,
+            currentId
+        ) {
+
+            let baseSlug =
+                createSlug(title);
+
+
+            if (!baseSlug) {
+
+                baseSlug =
+                    "memory-" +
+                    Date.now();
+            }
+
+
+            let slug =
+                baseSlug;
+
+
+            let counter = 2;
+
+
+            while (true) {
+
+                let query =
+                    supabaseClient
+                        .from("photos")
+                        .select("id")
+                        .eq(
+                            "slug",
+                            slug
+                        );
+
+
+                if (currentId) {
+
+                    query =
+                        query.neq(
+                            "id",
+                            currentId
+                        );
+                }
+
+
+                const {
+                    data,
+                    error
+                } =
+                await query.limit(1);
+
+
+                if (error) {
+
+                    return (
+                        baseSlug +
+                        "-" +
+                        Date.now()
+                    );
+                }
+
+
+                if (
+                    !data ||
+                    data.length === 0
+                ) {
+
+                    return slug;
+                }
+
+
+                slug =
+                    `${baseSlug}-${counter}`;
+
+                counter++;
+            }
+        }
+
+
+
+        /* =====================================================
+           UPDATE PHOTO
+        ===================================================== */
+
+        editPhotoForm.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                if (
+                    updateButton.disabled
+                ) {
+                    return;
+                }
+
+
+                const id =
+                    editPhotoId.value;
+
+
+                const title =
+                    editTitle.value.trim();
+
+
+                const description =
+                    editDescription.value.trim();
+
+
+                const altText =
+                    editAltText.value.trim();
+
+
+                const driveUrl =
+                    editDriveUrl.value.trim();
+
+
+                const status =
+                    editStatus.value;
+
+
+                const sortOrder =
+                    Number(
+                        editSortOrder.value
+                    ) || 0;
+
+
+                const isFeatured =
+                    editFeatured.checked;
+
+
+                if (!id) {
+
+                    return;
+                }
+
+
+                if (!title) {
+
+                    modalMessage.textContent =
+                        "Please enter a title.";
+
+                    modalMessage.className =
+                        "modal-message error";
+
+                    return;
+                }
+
+
+                const fileId =
+                    extractDriveFileId(
+                        driveUrl
+                    );
+
+
+                if (!fileId) {
+
+                    modalMessage.textContent =
+                        "Please enter a valid Google Drive URL.";
+
+                    modalMessage.className =
+                        "modal-message error";
+
+                    return;
+                }
+
+
+                updateButton.disabled =
+                    true;
+
+
+                updateButton.textContent =
+                    "Updating...";
+
+
+                modalMessage.textContent =
+                    "";
+
+
+                try {
+
+                    const slug =
+                        await createUniqueSlug(
+                            title,
+                            id
+                        );
+
+
+                    const thumbnailUrl =
+                        `https://drive.google.com/thumbnail?id=${encodeURIComponent(fileId)}&sz=w1600`;
+
+
+                    const previewUrl =
+                        `https://drive.google.com/uc?export=view&id=${encodeURIComponent(fileId)}`;
+
+
+                    const updateData = {
+
+                        title: title,
+
+                        slug: slug,
+
+                        description:
+                            description ||
+                            null,
+
+                        drive_file_id:
+                            fileId,
+
+                        drive_url:
+                            driveUrl,
+
+                        thumbnail_url:
+                            thumbnailUrl,
+
+                        preview_url:
+                            previewUrl,
+
+                        download_url:
+                            driveUrl,
+
+                        alt_text:
+                            altText ||
+                            title,
+
+                        status:
+                            status,
+
+                        is_featured:
+                            isFeatured,
+
+                        sort_order:
+                            sortOrder
+
+                    };
+
+
+                    const {
+                        error
+                    } =
+                    await supabaseClient
+                        .from("photos")
+                        .update(
+                            updateData
+                        )
+                        .eq(
+                            "id",
+                            id
+                        );
+
+
+                    if (error) {
+
+                        console.error(
+                            "Update error:",
+                            error
+                        );
+
+
+                        throw new Error(
+                            error.message
+                        );
+                    }
+
+
+                    modalMessage.textContent =
+                        "Photo updated successfully.";
+
+                    modalMessage.className =
+                        "modal-message success";
+
+
+                    /*
+                     * Reload photos
+                     */
+
+                    await loadPhotos();
+
+
+                    setTimeout(
+                        closeEditModal,
+                        700
+                    );
+
+
+                    showToast(
+                        "Photo updated successfully.",
+                        "success"
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        error
+                    );
+
+
+                    modalMessage.textContent =
+                        error.message ||
+                        "Could not update photo.";
+
+                    modalMessage.className =
+                        "modal-message error";
+
+                }
+
+                finally {
+
+                    updateButton.disabled =
+                        false;
+
+                    updateButton.textContent =
+                        "Update Photo";
+                }
+
+            }
+        );
+
+
+
+        /* =====================================================
+           DELETE PHOTO
+        ===================================================== */
+
+        window.deletePhoto =
+            async function(photoId) {
+
+                const photo =
+                    allPhotos.find(
+                        function(item) {
+
+                            return item.id === photoId;
+
+                        }
+                    );
+
+
+                if (!photo) {
+
+                    showToast(
+                        "Photo not found.",
+                        "error"
+                    );
+
+                    return;
+                }
+
+
+                const confirmed =
+                    window.confirm(
+                        `Delete "${photo.title || "this photo"}"?\n\nThis will permanently remove the photo record from the gallery.`
+                    );
+
+
+                if (!confirmed) {
+                    return;
+                }
+
+
+                try {
+
+                    const {
+                        error
+                    } =
+                    await supabaseClient
+                        .from("photos")
+                        .delete()
+                        .eq(
+                            "id",
+                            photoId
+                        );
+
+
+                    if (error) {
+
+                        console.error(
+                            "Delete error:",
+                            error
+                        );
+
+
+                        throw new Error(
+                            error.message
+                        );
+                    }
+
+
+                    /*
+                     * Remove from local array
+                     */
+
+                    allPhotos =
+                        allPhotos.filter(
+                            function(item) {
+
+                                return (
+                                    item.id !==
+                                    photoId
+                                );
+
+                            }
+                        );
+
+
+                    applyFilters();
+
+
+                    showToast(
+                        "Photo deleted successfully.",
+                        "success"
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        error
+                    );
+
+
+                    showToast(
+                        error.message ||
+                        "Could not delete photo.",
+                        "error"
+                    );
+                }
+            };
+
+
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
+
+        searchInput.addEventListener(
+            "input",
+            applyFilters
+        );
+
+
+        statusFilter.addEventListener(
+            "change",
+            applyFilters
+        );
+
+
+
+        /* =====================================================
+           LOGOUT
+        ===================================================== */
+
+        logoutButton.addEventListener(
+            "click",
+            async function() {
+
+                logoutButton.disabled =
+                    true;
+
+
+                logoutButton.textContent =
+                    "Logging out...";
+
+
+                await supabaseClient.auth
+                    .signOut();
+
+
+                window.location.href =
+                    "login.html";
+
+            }
+        );
+
+
+
+        /* =====================================================
+           INITIALIZE
+        ===================================================== */
+
+        async function initializePhotosPage() {
+
+            const isAdmin =
+                await checkAdmin();
+
+
+            if (!isAdmin) {
+                return;
+            }
+
+
+            await loadPhotos();
+
+        }
+
+
+        initializePhotosPage();
+
+    </script>
+
+
+</body>
+
+</html>
