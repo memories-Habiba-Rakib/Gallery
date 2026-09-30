@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Login | LATA & RAKIB</title>
+
+    <link
+        rel="stylesheet"
+        href="../assets/css/admin.css"
+    >
+</head>
+
+<body>
+
+    <div class="admin-login-page">
+
+        <div class="login-card">
+
+            <div class="login-logo">
+                ♥
+            </div>
+
+            <h1>Memories</h1>
+
+            <p class="login-subtitle">
+                Login to edit your memories
+                            </p>
+<p class="login-subtitle">
+                
+                Admin Panel
+            </p>
+
+            <form id="loginForm">
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Admin email"
+                        required
+                        autocomplete="email"
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Password"
+                        required
+                        autocomplete="current-password"
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="admin-btn"
+                    id="loginButton"
+                >
+                    Login
+                </button>
+
+            </form>
+
+
+            <div
+                id="loginMessage"
+                class="login-message"
+            ></div>
+
+
+            <a
+                href="../index.html"
+                class="back-home"
+            >
+                ← Back to Memories
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- Supabase -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <!-- Your Supabase configuration -->
+    <script src="../assets/js/supabase.js"></script>
+
+
+    <script>
+
+        /* =========================================
+           ELEMENTS
+        ========================================= */
+
+        const loginForm =
+            document.getElementById("loginForm");
+
+        const emailInput =
+            document.getElementById("email");
+
+        const passwordInput =
+            document.getElementById("password");
+
+        const loginButton =
+            document.getElementById("loginButton");
+
+        const loginMessage =
+            document.getElementById("loginMessage");
+
+
+        /* =========================================
+           SHOW MESSAGE
+        ========================================= */
+
+        function showMessage(
+            message,
+            type = "error"
+        ) {
+
+            loginMessage.textContent =
+                message;
+
+            loginMessage.className =
+                "login-message " + type;
+        }
+
+
+        /* =========================================
+           LOGIN
+        ========================================= */
+
+        loginForm.addEventListener(
+            "submit",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const email =
+                    emailInput.value.trim();
+
+                const password =
+                    passwordInput.value;
+
+
+                if (!email || !password) {
+
+                    showMessage(
+                        "Please enter email and password."
+                    );
+
+                    return;
+                }
+
+
+                /*
+                 * Loading state
+                 */
+
+                loginButton.disabled =
+                    true;
+
+                loginButton.textContent =
+                    "Logging in...";
+
+
+                showMessage(
+                    "",
+                    ""
+                );
+
+
+                try {
+
+                    /*
+                     * Supabase Auth Login
+                     */
+
+                    const {
+                        data,
+                        error
+                    } =
+                    await supabaseClient.auth
+                        .signInWithPassword({
+
+                            email: email,
+
+                            password: password
+
+                        });
+
+
+                    if (error) {
+
+                        throw error;
+                    }
+
+
+                    /*
+                     * Make sure user exists
+                     */
+
+                    if (!data.user) {
+
+                        throw new Error(
+                            "Login failed."
+                        );
+                    }
+
+
+                    /*
+                     * Get profile
+                     */
+
+                    const {
+                        data: profile,
+                        error: profileError
+                    } =
+                    await supabaseClient
+                        .from("profiles")
+                        .select("role")
+                        .eq(
+                            "id",
+                            data.user.id
+                        )
+                        .single();
+
+
+                    if (profileError) {
+
+                        await supabaseClient.auth
+                            .signOut();
+
+                        throw new Error(
+                            "Admin profile not found."
+                        );
+                    }
+
+
+                    /*
+                     * Only ADMIN
+                     */
+
+                    if (
+                        profile.role !==
+                        "admin"
+                    ) {
+
+                        await supabaseClient.auth
+                            .signOut();
+
+                        throw new Error(
+                            "You do not have admin access."
+                        );
+                    }
+
+
+                    /*
+                     * Success
+                     */
+
+                    showMessage(
+                        "Login successful. Redirecting...",
+                        "success"
+                    );
+
+
+                    setTimeout(
+                        function() {
+
+                            window.location.href =
+                                "dashboard.html";
+
+                        },
+                        500
+                    );
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Login error:",
+                        error
+                    );
+
+
+                    showMessage(
+                        error.message ||
+                        "Login failed. Please try again."
+                    );
+
+
+                    loginButton.disabled =
+                        false;
+
+                    loginButton.textContent =
+                        "Login";
+                }
+
+            }
+        );
+
+
+        /* =========================================
+           IF ALREADY LOGGED IN
+        ========================================= */
+
+        async function checkExistingSession() {
+
+            try {
+
+                const {
+                    data
+                } =
+                await supabaseClient.auth
+                    .getUser();
+
+
+                if (!data.user) {
+                    return;
+                }
+
+
+                const {
+                    data: profile
+                } =
+                await supabaseClient
+                    .from("profiles")
+                    .select("role")
+                    .eq(
+                        "id",
+                        data.user.id
+                    )
+                    .single();
+
+
+                if (
+                    profile &&
+                    profile.role === "admin"
+                ) {
+
+                    window.location.href =
+                        "dashboard.html";
+                }
+
+            }
+
+            catch (error) {
+
+                console.log(
+                    "No active admin session."
+                );
+
+            }
+
+        }
+
+
+        checkExistingSession();
+
+    </script>
+
+</body>
+</html>
