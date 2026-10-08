@@ -154,8 +154,6 @@
 
             </div>
 
-
-
             <!-- =====================================
                  3D HEART
             ====================================== -->
@@ -200,7 +198,93 @@
 
         </section>
 
+<!-- =========================================
+     LATA & RAKIB
+     WEDDING / ANNIVERSARY COUNTDOWN
+     ========================================= -->
 
+<section class="love-countdown-section" id="loveCountdownSection">
+
+    <div class="love-countdown-card">
+
+        <div class="love-countdown-heart">💍</div>
+
+        <div class="love-countdown-label">
+            OUR LOVE STORY
+        </div>
+
+        <h2 id="loveCountdownTitle">
+            LATA <span>&</span> RAKIB
+        </h2>
+
+        <div class="love-countdown-event" id="loveCountdownEvent">
+            OUR WEDDING DAY
+        </div>
+
+        <p class="love-countdown-subtitle" id="loveCountdownSubtitle">
+            আমাদের বিশেষ দিনের আর বাকি...
+        </p>
+
+        <!-- COUNTDOWN -->
+
+        <div class="love-countdown" id="loveCountdown">
+
+            <div class="love-count-box">
+                <strong id="loveDays">00</strong>
+                <small>দিন</small>
+            </div>
+
+            <div class="love-count-box">
+                <strong id="loveHours">00</strong>
+                <small>ঘণ্টা</small>
+            </div>
+
+            <div class="love-count-box">
+                <strong id="loveMinutes">00</strong>
+                <small>মিনিট</small>
+            </div>
+
+            <div class="love-count-box">
+                <strong id="loveSeconds">00</strong>
+                <small>সেকেন্ড</small>
+            </div>
+
+        </div>
+
+        <div class="love-countdown-date" id="loveCountdownDate">
+            💕 ৩০ অক্টোবর ২০২৬ 💕
+        </div>
+
+        <!-- ANNIVERSARY MESSAGE -->
+
+        <div
+            id="anniversaryMessage"
+            class="anniversary-message"
+            style="display:none;"
+        >
+            <div class="anniversary-big">
+                💍 HAPPY ANNIVERSARY 💍
+            </div>
+
+            <div
+                id="anniversaryNumber"
+                class="anniversary-number"
+            >
+                1st ANNIVERSARY
+            </div>
+
+            <p>
+                LATA ❤️ RAKIB
+            </p>
+
+            <div class="anniversary-hearts">
+                ❤️ 💕 ❤️ 💕 ❤️
+            </div>
+        </div>
+
+    </div>
+
+</section>
 
         <!-- =========================================
              MEMORIES / GALLERY
@@ -785,6 +869,562 @@
         }
 
     </script>
+<script>
+/* =====================================================
+   LATA & RAKIB
+   AUTOMATIC WEDDING + ANNIVERSARY COUNTDOWN
 
+   Wedding:
+   30 October 2026
+
+   Every year:
+   30 October = Anniversary
+
+   2027 = 1st Anniversary
+   2028 = 2nd Anniversary
+   2029 = 3rd Anniversary
+   ===================================================== */
+
+(function () {
+
+    "use strict";
+
+
+    /* =========================================
+       ORIGINAL WEDDING DATE
+       ========================================= */
+
+    const WEDDING_YEAR = 2026;
+
+    const WEDDING_MONTH = 10;
+
+    const WEDDING_DAY = 30;
+
+
+    /* =========================================
+       ELEMENTS
+       ========================================= */
+
+    const section =
+        document.getElementById(
+            "loveCountdownSection"
+        );
+
+    const card =
+        document.querySelector(
+            ".love-countdown-card"
+        );
+
+    const eventTitle =
+        document.getElementById(
+            "loveCountdownEvent"
+        );
+
+    const subtitle =
+        document.getElementById(
+            "loveCountdownSubtitle"
+        );
+
+    const countdown =
+        document.getElementById(
+            "loveCountdown"
+        );
+
+    const dateText =
+        document.getElementById(
+            "loveCountdownDate"
+        );
+
+    const daysElement =
+        document.getElementById(
+            "loveDays"
+        );
+
+    const hoursElement =
+        document.getElementById(
+            "loveHours"
+        );
+
+    const minutesElement =
+        document.getElementById(
+            "loveMinutes"
+        );
+
+    const secondsElement =
+        document.getElementById(
+            "loveSeconds"
+        );
+
+    const anniversaryMessage =
+        document.getElementById(
+            "anniversaryMessage"
+        );
+
+    const anniversaryNumber =
+        document.getElementById(
+            "anniversaryNumber"
+        );
+
+
+    /* =========================================
+       SAFETY CHECK
+       ========================================= */
+
+    if (
+        !section ||
+        !card ||
+        !countdown ||
+        !daysElement ||
+        !hoursElement ||
+        !minutesElement ||
+        !secondsElement
+    ) {
+        return;
+    }
+
+
+    /* =========================================
+       ORDINAL NUMBER
+
+       1st
+       2nd
+       3rd
+       4th
+       5th...
+       ========================================= */
+
+    function getOrdinal(number) {
+
+        const lastTwo =
+            number % 100;
+
+        if (
+            lastTwo >= 11 &&
+            lastTwo <= 13
+        ) {
+            return number + "th";
+        }
+
+        switch (number % 10) {
+
+            case 1:
+                return number + "st";
+
+            case 2:
+                return number + "nd";
+
+            case 3:
+                return number + "rd";
+
+            default:
+                return number + "th";
+        }
+    }
+
+
+    /* =========================================
+       CREATE BANGLADESH TIME
+
+       We calculate against UTC+06:00
+       so user's computer timezone does
+       not break the countdown.
+       ========================================= */
+
+    function getBangladeshNow() {
+
+        const now = new Date();
+
+        const utc =
+            now.getTime() +
+            (
+                now.getTimezoneOffset()
+                * 60
+                * 1000
+            );
+
+        return new Date(
+            utc +
+            (
+                6
+                * 60
+                * 60
+                * 1000
+            )
+        );
+    }
+
+
+    /* =========================================
+       CREATE BANGLADESH DATE
+       ========================================= */
+
+    function createBangladeshDate(
+        year,
+        month,
+        day
+    ) {
+
+        return new Date(
+            `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(2, "0")}T00:00:00+06:00`
+        );
+    }
+
+
+    /* =========================================
+       BANGLA DATE
+       ========================================= */
+
+    function getBanglaDate(year) {
+
+        return `৩০ অক্টোবর ${year}`;
+    }
+
+
+    /* =========================================
+       SHOW COUNTDOWN
+       ========================================= */
+
+    function showCountdown(
+        targetDate,
+        anniversaryYear,
+        anniversaryCount
+    ) {
+
+        const now =
+            getBangladeshNow();
+
+        const distance =
+            targetDate.getTime()
+            -
+            now.getTime();
+
+
+        /* =====================================
+           EVENT INFORMATION
+           ===================================== */
+
+        if (anniversaryCount === 0) {
+
+            eventTitle.textContent =
+                "OUR WEDDING DAY";
+
+            subtitle.textContent =
+                "আমাদের বিয়ের আর বাকি...";
+
+            dateText.textContent =
+                "💕 ৩০ অক্টোবর ২০২৬ 💕";
+
+        } else {
+
+            eventTitle.textContent =
+                getOrdinal(anniversaryCount)
+                +
+                " ANNIVERSARY";
+
+            subtitle.textContent =
+                "আমাদের "
+                +
+                getOrdinal(anniversaryCount)
+                +
+                " বিবাহবার্ষিকীর আর বাকি...";
+
+            dateText.textContent =
+                "💕 ৩০ অক্টোবর "
+                +
+                anniversaryYear
+                +
+                " 💕";
+        }
+
+
+        /* =====================================
+           IF EVENT DAY
+           ===================================== */
+
+        if (distance <= 0) {
+
+            showAnniversaryDay(
+                anniversaryCount
+            );
+
+            return;
+        }
+
+
+        /* =====================================
+           CALCULATE
+           ===================================== */
+
+        const totalSeconds =
+            Math.floor(
+                distance / 1000
+            );
+
+        const days =
+            Math.floor(
+                totalSeconds /
+                (24 * 60 * 60)
+            );
+
+        const hours =
+            Math.floor(
+                (
+                    totalSeconds %
+                    (24 * 60 * 60)
+                ) /
+                (60 * 60)
+            );
+
+        const minutes =
+            Math.floor(
+                (
+                    totalSeconds %
+                    (60 * 60)
+                ) /
+                60
+            );
+
+        const seconds =
+            totalSeconds % 60;
+
+
+        /* =====================================
+           DISPLAY
+           ===================================== */
+
+        daysElement.textContent =
+            String(days).padStart(2, "0");
+
+        hoursElement.textContent =
+            String(hours).padStart(2, "0");
+
+        minutesElement.textContent =
+            String(minutes).padStart(2, "0");
+
+        secondsElement.textContent =
+            String(seconds).padStart(2, "0");
+
+
+        /* =====================================
+           SHOW NORMAL COUNTDOWN
+           ===================================== */
+
+        countdown.style.display =
+            "flex";
+
+        anniversaryMessage.style.display =
+            "none";
+
+        card.classList.remove(
+            "anniversary-today"
+        );
+    }
+
+
+    /* =========================================
+       ANNIVERSARY DAY
+       ========================================= */
+
+    function showAnniversaryDay(
+        anniversaryCount
+    ) {
+
+        countdown.style.display =
+            "none";
+
+        anniversaryMessage.style.display =
+            "block";
+
+        card.classList.add(
+            "anniversary-today"
+        );
+
+
+        /* Wedding day */
+
+        if (anniversaryCount === 0) {
+
+            eventTitle.textContent =
+                "OUR WEDDING DAY";
+
+            subtitle.textContent =
+                "আজ আমাদের জীবনের সবচেয়ে বিশেষ দিন ❤️";
+
+            anniversaryNumber.textContent =
+                "LATA ❤️ RAKIB";
+
+            dateText.textContent =
+                "💍 ৩০ অক্টোবর ২০২৬ 💍";
+
+            anniversaryMessage
+                .querySelector(".anniversary-big")
+                .textContent =
+                "💍 TODAY IS OUR WEDDING DAY 💍";
+
+            return;
+        }
+
+
+        /* Anniversary */
+
+        const ordinal =
+            getOrdinal(
+                anniversaryCount
+            );
+
+        eventTitle.textContent =
+            ordinal +
+            " ANNIVERSARY";
+
+        subtitle.textContent =
+            "আজ আমাদের ভালোবাসার আরেকটি সুন্দর বছর পূর্ণ হলো ❤️";
+
+        anniversaryNumber.textContent =
+            ordinal +
+            " ANNIVERSARY";
+
+        dateText.textContent =
+            "💍 ৩০ অক্টোবর 💍";
+
+        anniversaryMessage
+            .querySelector(".anniversary-big")
+            .textContent =
+            "💍 HAPPY ANNIVERSARY 💍";
+    }
+
+
+    /* =========================================
+       MAIN UPDATE
+       ========================================= */
+
+    function updateLoveCountdown() {
+
+        const now =
+            getBangladeshNow();
+
+        const currentYear =
+            now.getFullYear();
+
+
+        /* =====================================
+           FIRST WEDDING YEAR
+
+           2026:
+           Before Oct 30 = Wedding Countdown
+           On Oct 30 = Wedding Day
+
+           After Oct 30:
+           Move to 1st Anniversary
+           ===================================== */
+
+        let targetYear;
+
+        let anniversaryCount;
+
+
+        if (
+            currentYear === WEDDING_YEAR
+        ) {
+
+            targetYear =
+                WEDDING_YEAR;
+
+            anniversaryCount = 0;
+
+        } else if (
+            currentYear > WEDDING_YEAR
+        ) {
+
+            targetYear =
+                currentYear;
+
+            anniversaryCount =
+                currentYear -
+                WEDDING_YEAR;
+
+        } else {
+
+            /*
+             * This handles users opening
+             * the website before 2026.
+             */
+
+            targetYear =
+                WEDDING_YEAR;
+
+            anniversaryCount = 0;
+        }
+
+
+        /* =====================================
+           TARGET DATE
+           ===================================== */
+
+        let targetDate =
+            createBangladeshDate(
+                targetYear,
+                WEDDING_MONTH,
+                WEDDING_DAY
+            );
+
+
+        /* =====================================
+           IF THIS YEAR'S ANNIVERSARY HAS
+           ALREADY PASSED, MOVE TO NEXT YEAR
+           ===================================== */
+
+        if (
+            currentYear > WEDDING_YEAR &&
+            now.getTime() > targetDate.getTime()
+        ) {
+
+            targetYear =
+                currentYear + 1;
+
+            anniversaryCount =
+                targetYear -
+                WEDDING_YEAR;
+
+            targetDate =
+                createBangladeshDate(
+                    targetYear,
+                    WEDDING_MONTH,
+                    WEDDING_DAY
+                );
+        }
+
+
+        /* =====================================
+           UPDATE
+           ===================================== */
+
+        showCountdown(
+            targetDate,
+            targetYear,
+            anniversaryCount
+        );
+    }
+
+
+    /* =========================================
+       START
+       ========================================= */
+
+    updateLoveCountdown();
+
+
+    /*
+     * Every second.
+     *
+     * No page refresh required.
+     */
+
+    setInterval(
+        updateLoveCountdown,
+        1000
+    );
+
+})();
+</script>
 </body>
 </html>
