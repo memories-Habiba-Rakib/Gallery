@@ -4176,3 +4176,178 @@ button {
     font-size: 13px;
     color: #ffd1dc;
 }
+
+
+
+/* =====================================================
+   MOBILE STABILITY PATCH
+   Keeps the page and floating chat steady on phones.
+   Added after reviewing the existing stylesheet.
+===================================================== */
+
+/* Prevent tiny horizontal overflow from animated decorations */
+html {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+}
+
+body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: clip;
+    overscroll-behavior-x: none;
+}
+
+img, video, iframe, canvas, svg {
+    max-width: 100%;
+}
+
+.hero-section,
+.love-countdown-section,
+.gallery-section,
+.main-footer {
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* Give fixed chat its own stable viewport-sized box */
+.chat-toggle-btn {
+    position: fixed;
+    right: max(14px, env(safe-area-inset-right));
+    bottom: max(14px, env(safe-area-inset-bottom));
+    flex: 0 0 auto;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.chat-toggle-btn:hover,
+.chat-input-area button:hover {
+    transform: none;
+}
+
+.chat-window {
+    position: fixed;
+    right: max(12px, env(safe-area-inset-right));
+    bottom: calc(max(14px, env(safe-area-inset-bottom)) + 72px);
+    width: min(350px, calc(100vw - 24px));
+    max-width: calc(100vw - 24px);
+    height: min(480px, 68dvh);
+    max-height: calc(100dvh - 110px - env(safe-area-inset-top));
+    min-height: 260px;
+    min-width: 0;
+    overscroll-behavior: contain;
+    animation: none;
+    transform: translateZ(0);
+    contain: layout paint;
+}
+
+.chat-messages {
+    min-height: 0;
+    overscroll-behavior: contain;
+    overflow-wrap: anywhere;
+    -webkit-overflow-scrolling: touch;
+}
+
+.chat-header,
+.chat-input-area,
+.chat-name-container,
+.chat-lock-container {
+    flex-shrink: 0;
+}
+
+.chat-input-area input,
+.name-input-group input {
+    min-width: 0;
+    font-size: 16px; /* Prevents iOS Safari zoom-on-focus */
+}
+
+@media (max-width: 768px) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    /* The large 3D scene and moving glow layers can feel like page shake
+       on lower-powered mobile devices. Keep the design but calm the motion. */
+    .hero-section {
+        width: 100%;
+        min-height: auto;
+        grid-template-columns: minmax(0, 1fr);
+        overflow: clip;
+    }
+
+    .hero-content,
+    .hero-visual {
+        min-width: 0;
+    }
+
+    .hero-visual {
+        min-height: 320px;
+        overflow: clip;
+    }
+
+    .heart-scene {
+        width: min(300px, 80vw);
+        height: min(300px, 80vw);
+    }
+
+    .orbit-three {
+        width: min(430px, 96vw);
+    }
+
+    .orbit-two {
+        width: min(370px, 88vw);
+    }
+
+    .pink-orb {
+        filter: blur(45px);
+        animation: none;
+    }
+
+    .particle,
+    .floating-petal {
+        animation-duration: 1ms !important;
+        animation-iteration-count: 1 !important;
+        opacity: 0.12;
+    }
+
+    .heart-3d {
+        animation: heart3DFloat 8s ease-in-out infinite;
+    }
+
+    .orbit-one,
+    .orbit-two,
+    .orbit-three {
+        animation-duration: 30s;
+    }
+
+    .love-countdown-card,
+    .photo-card,
+    .hero-button {
+        transform: none;
+    }
+
+    .chat-window {
+        width: min(350px, calc(100vw - 24px));
+        height: min(480px, 68dvh);
+        max-height: calc(100dvh - 105px - env(safe-area-inset-top));
+    }
+}
+
+/* Respect the visitor's reduced-motion setting */
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto !important;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
