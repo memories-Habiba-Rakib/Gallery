@@ -210,7 +210,7 @@
         <div class="love-countdown-heart">💍</div>
 
         <div class="love-countdown-label">
-            OUR LOVE STORY 🗓️ 20 May 2019
+            OUR LOVE STORY
         </div>
 
         <h2 id="loveCountdownTitle">
@@ -685,8 +685,7 @@
     <script
         src="assets/js/birthday.js"
     ></script>
-
-
+<script src="assets/js/chat.js"></script>
 
     <!-- =========================================
          EXTRA PAGE SCRIPTS
@@ -1426,5 +1425,62 @@
 
 })();
 </script>
+<!-- =========================================
+     CUSTOM CHAT BOX
+========================================== -->
+
+<!-- Floating Chat Toggle Button -->
+<button id="chatToggleBtn" class="chat-toggle-btn" aria-label="Open Chat">
+    <span class="chat-icon">💬</span>
+    <span class="chat-unread-dot" id="chatUnreadDot" style="display:none;"></span>
+</button>
+
+<!-- Chat Window -->
+<div id="chatWindow" class="chat-window" style="display: none;">
+    <!-- Chat Header -->
+    <div class="chat-header">
+        <div class="chat-header-info">
+            <span class="chat-header-heart">💖</span>
+            <div>
+                <h4>LATA & RAKIB Chat</h4>
+                <small class="chat-status"><span class="status-dot"></span> Live Messenger</small>
+            </div>
+            
+        </div>
+        
+        <button id="chatCloseBtn" class="chat-close-btn">&times;</button>
+    </div>
+<!-- Lock Screen Container (First Screen) -->
+<div id="chatLockContainer" class="chat-lock-container">
+    <div class="lock-icon">🔒</div>
+    <p>চ্যাট বক্সটি পাসওয়ার্ড দিয়ে সুরক্ষিত</p>
+    <div class="name-input-group">
+        <input type="password" id="chatPasswordInput" placeholder="পাসওয়ার্ড দিন..." autocomplete="off">
+        <button id="unlockChatBtn">Unlock</button>
+    </div>
+    <small id="lockErrorMsg" style="color: #ff6b6b; display: none; margin-top: 8px;">ভুল পাসওয়ার্ড!</small>
+</div>
+    <!-- User Name Setup (First Time) -->
+    <div id="chatNameContainer" class="chat-name-container">
+        <p>আপনার নাম লিখুন চ্যাট শুরু করতে 👇</p>
+        <div class="name-input-group">
+            <input type="text" id="chatUserNameInput" placeholder="আপনার নাম (e.g. Lata / Rakib)" maxlength="20">
+            <button id="saveNameBtn">Start</button>
+        </div>
+    </div>
+
+    <!-- Messages Container -->
+    <div id="chatMessages" class="chat-messages" style="display: none;">
+        <!-- Dynamic messages will be injected here -->
+    </div>
+
+    <!-- Chat Input Area -->
+    <div id="chatInputArea" class="chat-input-area" style="display: none;">
+        <input type="text" id="chatMessageInput" placeholder="একটি বার্তা লিখুন..." autocomplete="off">
+        <button id="sendMessageBtn" type="button">
+            <span>💖</span>
+        </button>
+    </div>
+</div>
 </body>
 </html>
